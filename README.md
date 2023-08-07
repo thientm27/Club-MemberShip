@@ -1,5 +1,5 @@
-#  PRN221 RETAKE Lecteter PhuongLHK
-Clup MemberShip - Time Table
+#  PRN221 Retake
+Clup MemberShip 
 
 #DATABASE #1
 - Major
