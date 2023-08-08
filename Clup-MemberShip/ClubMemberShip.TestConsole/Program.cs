@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClubMemberShip.Repo.Repository;
+using System;
 
 namespace TestConsole // Note: actual namespace depends on the project name.
 {
@@ -6,7 +7,7 @@ namespace TestConsole // Note: actual namespace depends on the project name.
     {
         public static void Main(string[] args)
         {
-         
+            StudentRepo studentRepo = new StudentRepo();    
             var choose = -1;
             while(choose != 0)
             {
@@ -29,6 +30,10 @@ namespace TestConsole // Note: actual namespace depends on the project name.
                         }
                     case 1:
                         {
+                            foreach (var item in studentRepo.GetAllStudents())
+                            {
+                                Console.WriteLine(item.Name);
+                            }
                             break;
                         }
                     case 2:

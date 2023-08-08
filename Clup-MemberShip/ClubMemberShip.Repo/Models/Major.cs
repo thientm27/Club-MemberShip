@@ -15,7 +15,7 @@ namespace ClubMemberShip.Repo.Models
         public string Name { get; set; } = null!;
         public string? Detail { get; set; }
         public int Semeter { get; set; }
-        public int? Status { get; set; }
+        public Status? Status { get; set; }
 
         public virtual ICollection<Student> Students { get; set; }
     }

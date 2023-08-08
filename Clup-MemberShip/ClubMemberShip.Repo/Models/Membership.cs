@@ -17,7 +17,7 @@ namespace ClubMemberShip.Repo.Models
         public DateTime? JoinDate { get; set; }
         public DateTime? QuitDate { get; set; }
         public string? NickName { get; set; }
-        public int? Status { get; set; }
+        public Status? Status { get; set; }
 
         public virtual Club Club { get; set; } = null!;
         public virtual Student Student { get; set; } = null!;

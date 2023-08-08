@@ -16,7 +16,7 @@ namespace ClubMemberShip.Repo.Models
         public int MajorId { get; set; }
         public int GradeId { get; set; }
         public DateTime? DateOfBirth { get; set; }
-        public int? Status { get; set; }
+        public Status? Status { get; set; }
 
         public virtual Grade Grade { get; set; } = null!;
         public virtual Major Major { get; set; } = null!;

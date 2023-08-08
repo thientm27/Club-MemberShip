@@ -16,7 +16,7 @@ namespace ClubMemberShip.Repo.Models
         public DateTime StartDay { get; set; }
         public DateTime? EndDay { get; set; }
         public DateTime CreateDay { get; set; }
-        public int? Status { get; set; }
+        public Status? Status { get; set; }
 
         public virtual Club Club { get; set; } = null!;
         public virtual ICollection<Participant> Participants { get; set; }
