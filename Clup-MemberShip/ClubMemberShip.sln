@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessObjects", "Business
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repositories", "Repositories\Repositories.csproj", "{30BCE4D9-57E8-408E-A33B-D878CA9FA770}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAccessObject", "DataAccessObject\DataAccessObject.csproj", "{0B7A9B85-A79C-4DB2-93E9-FA1E3AC7C5B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{30BCE4D9-57E8-408E-A33B-D878CA9FA770}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30BCE4D9-57E8-408E-A33B-D878CA9FA770}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30BCE4D9-57E8-408E-A33B-D878CA9FA770}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B7A9B85-A79C-4DB2-93E9-FA1E3AC7C5B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B7A9B85-A79C-4DB2-93E9-FA1E3AC7C5B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B7A9B85-A79C-4DB2-93E9-FA1E3AC7C5B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B7A9B85-A79C-4DB2-93E9-FA1E3AC7C5B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
