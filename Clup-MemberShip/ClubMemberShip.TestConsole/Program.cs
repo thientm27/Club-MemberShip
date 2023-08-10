@@ -10,6 +10,7 @@ namespace TestConsole // Note: actual namespace depends on the project name.
         public static void Main(string[] args)
         {
             StudentRepo studentRepo = new StudentRepo();    
+            MajorRepo majorRepo = new MajorRepo();    
             var choose = -1;
             while(choose != 0)
             {
@@ -40,17 +41,17 @@ namespace TestConsole // Note: actual namespace depends on the project name.
                         }
                     case 2:
                     {
-                        Console.Write("Input id: ");
-                        var id = Console.ReadLine();
-                        var item = studentRepo.GetById(id);
-                        if (item == null)
-                        {
-                            Console.WriteLine("Not found");
-                        }
-                        else
-                        {
-                            Console.WriteLine(item.Id + " | " + item.Name );
-                        }
+                        // Console.Write("Input id: ");
+                        // var id = Console.ReadLine();
+                        // var item = studentRepo.GetById(id);
+                        // if (item == null)
+                        // {
+                        //     Console.WriteLine("Not found");
+                        // }
+                        // else
+                        // {
+                        //     Console.WriteLine(item.Id + " | " + item.Name );
+                        // }
                         break;
                         }
                     case 3:
@@ -63,8 +64,21 @@ namespace TestConsole // Note: actual namespace depends on the project name.
                         }
                     case 5:
                         {
+                            foreach (var item in majorRepo.GetAll(includeProperties: ""))
+                            {
+                                Console.WriteLine(item.Id + " | " + item.Code + " | " + item.Detail);
+                            }
                             break;
                         }
+                    case 6:
+                    {
+                        
+                        break;
+                    }
+                    case 7:
+                    {
+                        break;
+                    }
                 }
                 
             }
@@ -75,9 +89,14 @@ namespace TestConsole // Note: actual namespace depends on the project name.
         public static void ShowMenu()
         {
             Console.WriteLine("-------------------&&&&&-------------------");
-            Console.WriteLine("            Club Member Test");
-            Console.WriteLine("            1. List all students");
-            Console.WriteLine("            2. Find student with id");
+            Console.WriteLine("Club Member Test");
+            Console.WriteLine("1. List all students");
+            Console.WriteLine("2. Find student with id");
+            Console.WriteLine("3. N/A");
+            Console.WriteLine("4. N/A");
+            Console.WriteLine("5. List All Major");
+            Console.WriteLine("6. Find Major with Code");
+            Console.WriteLine("7. Add new major");
             Console.WriteLine("-------------------&&&&&-------------------");
             Console.Write("Your choice: ");
             

@@ -1,15 +1,12 @@
-﻿
-
-using ClubMemberShip.Repo.Models;
+﻿using ClubMemberShip.Repo.Models;
 using ClubMemberShip.Repo.Repository.Interface;
 
-namespace ClubMemberShip.Repo.Repository
+namespace ClubMemberShip.Repo.Repository;
+
+public class ClubRepo : GenericRepo<Club>, IClubRepo
 {
-    public class ClubRepo : GenericRepo<Club>, IClubRepo
+    public override void Delete(object? id)
     {
-        public override void Delete(object? id)
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
     }
 }
