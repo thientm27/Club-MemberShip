@@ -6,6 +6,19 @@ namespace ClubMemberShip.Repo.Repository
 {
     public class StudentRepo : GenericRepo<Student>, IStudentRepo
     {
+        public override void Delete(object? id)
+        {
+            using var context = new ClubMembershipContext();
+            Student? std = GetById(id);
+                // context.Students.FirstOrDefault(o => o.Id == id);
+            if (std != null)
+            {
+                std.Status = 0;
+                context.Attach(std).State = EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
+        
         // public List<Student>? GetAllStudents(){
         //       var _context = new ClubMembershipContext();
         //     return _context.Students
@@ -24,28 +37,11 @@ namespace ClubMemberShip.Repo.Repository
         //     return _context.Majors.ToList();
         //
         // }
-        public Student? GetStudent(string id)
-        {
-            using var context = new ClubMembershipContext();
-            return context.Students.FirstOrDefault(m => m.Id == id);
-        }
-
-        /// <summary>
-        /// Set status to 0
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public void DeleteStudent(string id)
-        {
-            using var context = new ClubMembershipContext();
-            Student? std = context.Students.FirstOrDefault(o => o.Id == id);
-            if (std != null)
-            {
-                std.Status = 0;
-               context.Attach(std).State = EntityState.Modified;
-               context.SaveChanges();
-            }
-        }
+        // public Student? GetStudent(string id)
+        // {
+        //     using var context = new ClubMembershipContext();
+        //     return context.Students.FirstOrDefault(m => m.Id == id);
+        // }
 
         // public Result UpdateStudent(Student student)
         // {
@@ -75,5 +71,6 @@ namespace ClubMemberShip.Repo.Repository
         //     _context.SaveChanges();
         //     return Result.Ok;
         // }
+
     }
 }

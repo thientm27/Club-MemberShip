@@ -11,7 +11,7 @@ public class ClubMemberShipService : IStudentServices, IClubActivityService, ICl
 
     public Result DeleteStudent(string id)
     {
-        _studentRepo.DeleteStudent(id);
+        _studentRepo.Delete(id);
         return Result.Ok;
     }
 
@@ -27,12 +27,13 @@ public class ClubMemberShipService : IStudentServices, IClubActivityService, ICl
 
     public Student? GetStudent(string id)
     {
-        return _studentRepo.GetStudent(id);
+        return _studentRepo.GetById(id);
     }
 
     public List<Student>? GetStudents()
     {
-        return _studentRepo.GetAll().ToList();
+        return _studentRepo.GetAll(includeProperties: "Major,Grade").ToList();
+        // return _studentRepo.GetAll().ToList();
     }
 
     public int Login(string id)
@@ -41,7 +42,7 @@ public class ClubMemberShipService : IStudentServices, IClubActivityService, ICl
         {
             return -1;
         }
-        return _studentRepo.GetStudent(id) == null ? 0 : 1;
+        return _studentRepo.GetById(id) == null ? 0 : 1;
     }
 
     public Result Register(Student student)

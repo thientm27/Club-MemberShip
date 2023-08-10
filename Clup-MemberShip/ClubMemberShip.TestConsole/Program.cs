@@ -32,15 +32,26 @@ namespace TestConsole // Note: actual namespace depends on the project name.
                         }
                     case 1:
                         {
-                            foreach (var item in studentRepo.GetAll())
+                            foreach (var item in studentRepo.GetAll(includeProperties: "Major,Grade"))
                             {
-                                Console.WriteLine(item.Name);
+                                Console.WriteLine(item.Id + " | " + item.Name + " | " + item.Grade.GradeYear);
                             }
                             break;
                         }
                     case 2:
+                    {
+                        Console.Write("Input id: ");
+                        var id = Console.ReadLine();
+                        var item = studentRepo.GetById(id);
+                        if (item == null)
                         {
-                            break;
+                            Console.WriteLine("Not found");
+                        }
+                        else
+                        {
+                            Console.WriteLine(item.Id + " | " + item.Name );
+                        }
+                        break;
                         }
                     case 3:
                         {
@@ -63,9 +74,13 @@ namespace TestConsole // Note: actual namespace depends on the project name.
 
         public static void ShowMenu()
         {
-            Console.WriteLine("Club Member Test");
-            Console.WriteLine("1.");
-            Console.WriteLine("2.");
+            Console.WriteLine("-------------------&&&&&-------------------");
+            Console.WriteLine("            Club Member Test");
+            Console.WriteLine("            1. List all students");
+            Console.WriteLine("            2. Find student with id");
+            Console.WriteLine("-------------------&&&&&-------------------");
+            Console.Write("Your choice: ");
+            
         }
     }
 }
