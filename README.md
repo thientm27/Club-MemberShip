@@ -1,5 +1,4 @@
-#  PRN221 Retake
-Clup MemberShip 
+#  PRN221 Retake (Clup MemberShip)
 
 #DATABASE #1
 - Major
