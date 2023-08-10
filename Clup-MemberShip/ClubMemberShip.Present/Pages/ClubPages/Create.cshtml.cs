@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ClubMemberShip.Repo.Models;
 
-namespace ClubMemberShip.Present.Pages.Students
+namespace ClubMemberShip.Present.Pages.ClubPages
 {
     public class CreateModel : PageModel
     {
@@ -20,24 +20,22 @@ namespace ClubMemberShip.Present.Pages.Students
 
         public IActionResult OnGet()
         {
-         ViewData["GradeId"] = new SelectList(_context.Grades, "Id", "GradeYear");
-         ViewData["MajorId"] = new SelectList(_context.Majors, "Id", "Name");
-             return Page();
+            return Page();
         }
 
         [BindProperty]
-        public Student Student { get; set; } = default!;
+        public Club Club { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Students == null || Student == null)
+          if (!ModelState.IsValid || _context.Clubs == null || Club == null)
             {
                 return Page();
             }
 
-            _context.Students.Add(Student);
+            _context.Clubs.Add(Club);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

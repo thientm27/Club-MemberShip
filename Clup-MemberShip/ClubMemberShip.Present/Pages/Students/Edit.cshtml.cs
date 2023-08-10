@@ -7,36 +7,30 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Service.Service;
+using ClubMemberShip.Service;
 
 namespace ClubMemberShip.Present.Pages.Students
 {
     public class EditModel : PageModel
     {
-        private readonly ClubMemberShip.Repo.Models.ClubMembershipContext _context;
 
-        public EditModel(ClubMemberShip.Repo.Models.ClubMembershipContext context)
-        {
-            _context = context;
-        }
-
+        private IStudentServices _studentServices = new ClubMemberShipService();
         [BindProperty]
         public Student Student { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(string id)
         {
-            if (id == null || _context.Students == null)
-            {
-                return NotFound();
-            }
 
-            var student =  await _context.Students.FirstOrDefaultAsync(m => m.Id == id);
+            var student = _studentServices.GetStudent(id);
             if (student == null)
             {
                 return NotFound();
             }
             Student = student;
-           ViewData["GradeId"] = new SelectList(_context.Grades, "Id", "Id");
-           ViewData["MajorId"] = new SelectList(_context.Majors, "Id", "Code");
+
+            ViewData["GradeId"] = new SelectList(_studentServices.GetGrades(), "Id", "GradeYear");
+            ViewData["MajorId"] = new SelectList(_studentServices.GetMajors(), "Id", "Name");
             return Page();
         }
 
@@ -49,30 +43,10 @@ namespace ClubMemberShip.Present.Pages.Students
                 return Page();
             }
 
-            _context.Attach(Student).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StudentExists(Student.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            var result = _studentServices.UpdateStudent(Student);
 
             return RedirectToPage("./Index");
         }
 
-        private bool StudentExists(string id)
-        {
-          return (_context.Students?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
     }
 }

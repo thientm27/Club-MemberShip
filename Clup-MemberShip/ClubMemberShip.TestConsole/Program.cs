@@ -1,5 +1,7 @@
 ﻿using ClubMemberShip.Repo.Repository;
 using System;
+using System.Diagnostics;
+using ClubMemberShip.Repo.Models;
 
 namespace TestConsole // Note: actual namespace depends on the project name.
 {
@@ -30,7 +32,7 @@ namespace TestConsole // Note: actual namespace depends on the project name.
                         }
                     case 1:
                         {
-                            foreach (var item in studentRepo.GetAllStudents())
+                            foreach (var item in studentRepo.GetAll())
                             {
                                 Console.WriteLine(item.Name);
                             }

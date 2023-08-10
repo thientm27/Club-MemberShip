@@ -1,6 +1,6 @@
 ﻿@page
-@model ClubMemberShip.Present.Pages.Students.IndexModel
 
+@model ClubMemberShip.Present.Pages.Students.IndexModel
 @{
     ViewData["Title"] = "Index";
 }
@@ -35,7 +35,8 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Student) {
+        @foreach (var item in @Model.Student)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)

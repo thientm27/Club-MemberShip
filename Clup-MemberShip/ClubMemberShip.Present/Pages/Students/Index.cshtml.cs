@@ -1,33 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Service;
+using ClubMemberShip.Service.Service;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ClubMemberShip.Present.Pages.Students
 {
     public class IndexModel : PageModel
     {
-        private readonly ClubMemberShip.Repo.Models.ClubMembershipContext _context;
+        private IStudentServices _studentServices = new ClubMemberShipService();
+        public IList<Student> Student { get; set; } = default!;
 
-        public IndexModel(ClubMemberShip.Repo.Models.ClubMembershipContext context)
+        public void OnGet()
         {
-            _context = context;
-        }
-
-        public IList<Student> Student { get;set; } = default!;
-
-        public async Task OnGetAsync()
-        {
-            if (_context.Students != null)
-            {
-                Student = await _context.Students
-                .Include(s => s.Grade)
-                .Include(s => s.Major).ToListAsync();
-            }
+            Student = _studentServices.GetStudents() ?? new List<Student>();
         }
     }
 }

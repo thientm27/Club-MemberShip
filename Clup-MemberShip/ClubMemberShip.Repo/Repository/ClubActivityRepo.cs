@@ -4,15 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ClubMemberShip.Repo.Repository.Interface;
 
 namespace ClubMemberShip.Repo.Repository
 {
-    public class ClubActivityRepo
+    public class ClubActivityRepo : GenericRepo<ClubActivity>, IClubActivityRepo
     {
 
-        public void AddActivity(ClubActivity clubActivity)
-        {
-
-        }
     }
 }
