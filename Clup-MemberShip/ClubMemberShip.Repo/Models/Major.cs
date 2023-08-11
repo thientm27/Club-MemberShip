@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ClubMemberShip.Repo.Models
 {
-    public partial class Major: BaseEntity
+    public partial class Major : BaseEntity
     {
         public Major()
         {

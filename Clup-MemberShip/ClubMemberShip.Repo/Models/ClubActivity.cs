@@ -12,10 +12,10 @@ namespace ClubMemberShip.Repo.Models
 
         public int Id { get; set; }
         public int ClubId { get; set; }
-        public string StatusId { get; set; } = null!;
         public DateTime StartDay { get; set; }
         public DateTime? EndDay { get; set; }
         public DateTime CreateDay { get; set; }
+        public int? TimeLine { get; set; }
 
         public virtual Club Club { get; set; } = null!;
         public virtual ICollection<Participant> Participants { get; set; }

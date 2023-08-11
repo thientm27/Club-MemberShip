@@ -13,7 +13,7 @@ namespace ClubMemberShip.Repo.Models
         public int Id { get; set; }
         public DateTime GradeYear { get; set; }
         public DateTime? GraduateYear { get; set; }
-        public DateTime? GraduateExpected { get; set; }
+        public DateTime? ExpeiredYear { get; set; }
 
         public virtual ICollection<Student> Students { get; set; }
     }

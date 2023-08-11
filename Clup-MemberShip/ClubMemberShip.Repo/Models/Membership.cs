@@ -11,7 +11,7 @@ namespace ClubMemberShip.Repo.Models
             Participants = new HashSet<Participant>();
         }
 
-        public string StudentId { get; set; } = null!;
+        public int StudentId { get; set; }
         public int ClubId { get; set; }
         public int Id { get; set; }
         public DateTime? JoinDate { get; set; }

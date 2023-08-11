@@ -1,10 +1,11 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Configuration;
 
 namespace ClubMemberShip.Repo.Models
 {
-   
     public partial class ClubMembershipContext : DbContext
     {
         public ClubMembershipContext()
@@ -30,7 +31,7 @@ namespace ClubMemberShip.Repo.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-              optionsBuilder.UseSqlServer(GetConnectionString());
+                optionsBuilder.UseSqlServer(GetConnectionString());
             }
         }
         private string GetConnectionString()
@@ -42,6 +43,7 @@ namespace ClubMemberShip.Repo.Models
             var strConn = config["ConnectionString"];
             return strConn;
         }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Club>(entity =>
@@ -79,10 +81,6 @@ namespace ClubMemberShip.Repo.Models
 
                 entity.Property(e => e.StartDay).HasColumnType("date");
 
-                entity.Property(e => e.StatusId)
-                    .HasMaxLength(10)
-                    .IsFixedLength();
-
                 entity.HasOne(d => d.Club)
                     .WithMany(p => p.ClubActivities)
                     .HasForeignKey(d => d.ClubId)
@@ -115,9 +113,9 @@ namespace ClubMemberShip.Repo.Models
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.GradeYear).HasColumnType("date");
+                entity.Property(e => e.ExpeiredYear).HasColumnType("date");
 
-                entity.Property(e => e.GraduateExpected).HasColumnType("date");
+                entity.Property(e => e.GradeYear).HasColumnType("date");
 
                 entity.Property(e => e.GraduateYear).HasColumnType("date");
             });
@@ -128,9 +126,7 @@ namespace ClubMemberShip.Repo.Models
 
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.Code)
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                entity.Property(e => e.Code).HasMaxLength(10);
 
                 entity.Property(e => e.Detail).HasMaxLength(100);
 
@@ -171,10 +167,6 @@ namespace ClubMemberShip.Repo.Models
                 entity.Property(e => e.NickName).HasMaxLength(50);
 
                 entity.Property(e => e.QuitDate).HasColumnType("date");
-
-                entity.Property(e => e.StudentId)
-                    .HasMaxLength(10)
-                    .IsFixedLength();
 
                 entity.HasOne(d => d.Club)
                     .WithMany(p => p.Memberships)
@@ -218,11 +210,11 @@ namespace ClubMemberShip.Repo.Models
             {
                 entity.ToTable("Student");
 
-                entity.Property(e => e.Id)
-                    .HasMaxLength(10)
-                    .IsFixedLength();
+                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Address).HasMaxLength(50);
+
+                entity.Property(e => e.Code).HasMaxLength(10);
 
                 entity.Property(e => e.DateOfBirth).HasColumnType("date");
 
