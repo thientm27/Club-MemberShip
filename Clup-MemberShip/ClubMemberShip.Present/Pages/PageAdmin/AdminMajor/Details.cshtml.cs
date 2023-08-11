@@ -1,42 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Service;
 
-namespace ClubMemberShip.Web.Pages.PageAdmin.AdminMajor
+namespace ClubMemberShip.Web.Pages.PageAdmin.AdminMajor;
+
+public class DetailsModel : PageModel
 {
-    public class DetailsModel : PageModel
+    private readonly IMajorService _majorService;
+
+    public DetailsModel(IMajorService majorService)
     {
-        private readonly ClubMemberShip.Repo.Models.ClubMembershipContext _context;
+        _majorService = majorService;
+    }
 
-        public DetailsModel(ClubMemberShip.Repo.Models.ClubMembershipContext context)
+    public Major Major { get; set; } = default!;
+
+    public IActionResult OnGet(int? id)
+    {
+        if (id != null)
         {
-            _context = context;
-        }
-
-      public Major Major { get; set; } = default!; 
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null || _context.Majors == null)
-            {
-                return NotFound();
-            }
-
-            var major = await _context.Majors.FirstOrDefaultAsync(m => m.Id == id);
+            var major = _majorService.GetById(id);
             if (major == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                Major = major;
-            }
-            return Page();
+
+            Major = major;
         }
+
+        return Page();
     }
 }

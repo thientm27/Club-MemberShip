@@ -1,76 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Service;
 
-namespace ClubMemberShip.Web.Pages.PageAdmin.AdminMajor
+namespace ClubMemberShip.Web.Pages.PageAdmin.AdminMajor;
+
+public class EditModel : PageModel
 {
-    public class EditModel : PageModel
+    private readonly IMajorService _majorService;
+
+    public EditModel(IMajorService majorService)
     {
-        private readonly ClubMemberShip.Repo.Models.ClubMembershipContext _context;
+        _majorService = majorService;
+    }
 
-        public EditModel(ClubMemberShip.Repo.Models.ClubMembershipContext context)
+    [BindProperty] public Major Major { get; set; } = default!;
+
+    public IActionResult OnGet(int? id)
+    {
+        if (id != null)
         {
-            _context = context;
-        }
-
-        [BindProperty]
-        public Major Major { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null || _context.Majors == null)
-            {
-                return NotFound();
-            }
-
-            var major =  await _context.Majors.FirstOrDefaultAsync(m => m.Id == id);
+            var major = _majorService.GetById(id);
             if (major == null)
             {
                 return NotFound();
             }
+
             Major = major;
+        }
+
+        return Page();
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see https://aka.ms/RazorPagesCRUD.
+    public IActionResult OnPost()
+    {
+        if (!ModelState.IsValid)
+        {
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            _context.Attach(Major).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MajorExists(Major.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
-        }
-
-        private bool MajorExists(int id)
-        {
-          return (_context.Majors?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+        _majorService.Update(Major);
+        return RedirectToPage("./Index");
     }
 }

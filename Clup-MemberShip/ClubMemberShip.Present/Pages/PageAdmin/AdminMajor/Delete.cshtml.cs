@@ -1,62 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Service;
 
-namespace ClubMemberShip.Web.Pages.PageAdmin.AdminMajor
+namespace ClubMemberShip.Web.Pages.PageAdmin.AdminMajor;
+
+public class DeleteModel : PageModel
 {
-    public class DeleteModel : PageModel
+    private readonly IMajorService _majorService;
+
+    public DeleteModel(IMajorService majorService)
     {
-        private readonly ClubMemberShip.Repo.Models.ClubMembershipContext _context;
+        _majorService = majorService;
+    }
 
-        public DeleteModel(ClubMemberShip.Repo.Models.ClubMembershipContext context)
+    [BindProperty] public Major Major { get; set; } = default!;
+
+    public IActionResult OnGet(int? id)
+    {
+        if (id != null)
         {
-            _context = context;
-        }
-
-        [BindProperty]
-      public Major Major { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null || _context.Majors == null)
-            {
-                return NotFound();
-            }
-
-            var major = await _context.Majors.FirstOrDefaultAsync(m => m.Id == id);
-
+            var major = _majorService.GetById(id);
             if (major == null)
             {
                 return NotFound();
             }
-            else 
-            {
-                Major = major;
-            }
-            return Page();
+
+            Major = major;
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
-            if (id == null || _context.Majors == null)
-            {
-                return NotFound();
-            }
-            var major = await _context.Majors.FindAsync(id);
+        return Page();
+    }
 
-            if (major != null)
-            {
-                Major = major;
-                _context.Majors.Remove(Major);
-                await _context.SaveChangesAsync();
-            }
+    public IActionResult OnPost(int? id)
+    {
+        if (id != null) _majorService.GetById(id);
 
-            return RedirectToPage("./Index");
-        }
+        return RedirectToPage("./Index");
     }
 }

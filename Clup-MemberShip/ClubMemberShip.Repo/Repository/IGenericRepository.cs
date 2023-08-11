@@ -14,6 +14,7 @@ public interface IGenericRepository<TEntity>
         string includeProperties = "");
 
     public void Create(TEntity entity);
+    public void CreateAutoId(TEntity entity);
     public TEntity? GetById(object? id);
     public void Update(TEntity entity);
     public void Delete(object? id);

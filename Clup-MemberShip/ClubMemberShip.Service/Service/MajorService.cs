@@ -14,7 +14,7 @@ public class MajorService : GenericService<Major>, IMajorService
         return UnitOfWork.MajorRepo.GetAll().ToList();
     }
 
-    public override Major GetById(object id)
+    public override Major? GetById(object id)
     {
         return UnitOfWork.MajorRepo.GetById(id);
     }

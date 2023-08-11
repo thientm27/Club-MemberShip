@@ -50,6 +50,11 @@ public abstract class GenericRepo<TEntity> : IGenericRepository<TEntity>
         return query.Where(x => x.Status != Status.Deleted).ToList();
     }
 
+    public void CreateAutoId(TEntity entity)
+    {
+        throw new NotImplementedException();
+    }
+
     public TEntity? GetById(object? id)
     {
         // using var context = new ClubMembershipContext();
