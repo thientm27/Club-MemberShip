@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Repo.Repository.Implement;
 
 namespace TestConsole // Note: actual namespace depends on the project name.
 {

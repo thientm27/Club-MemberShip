@@ -1,8 +1,7 @@
 ﻿using ClubMemberShip.Repo.Models;
-using ClubMemberShip.Repo.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClubMemberShip.Repo.Repository;
+namespace ClubMemberShip.Repo.Repository.Implement;
 
 public class StudentRepo : GenericRepo<Student>, IStudentRepo
 {

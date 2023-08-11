@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace ClubMemberShip.Repo.Repository.Interface;
+namespace ClubMemberShip.Repo.Repository;
 
 public interface IGenericRepository<TEntity>
     where TEntity : class

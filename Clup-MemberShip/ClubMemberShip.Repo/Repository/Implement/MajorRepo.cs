@@ -1,7 +1,6 @@
 ﻿using ClubMemberShip.Repo.Models;
-using ClubMemberShip.Repo.Repository.Interface;
 
-namespace ClubMemberShip.Repo.Repository;
+namespace ClubMemberShip.Repo.Repository.Implement;
 
 public class MajorRepo : GenericRepo<Major>, IMajorRepo 
 {

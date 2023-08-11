@@ -1,9 +1,8 @@
 ﻿using System.Linq.Expressions;
 using ClubMemberShip.Repo.Models;
-using ClubMemberShip.Repo.Repository.Interface;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClubMemberShip.Repo.Repository;
+namespace ClubMemberShip.Repo.Repository.Implement;
 
 public abstract class GenericRepo<TEntity> : IGenericRepository<TEntity>
     where TEntity : class
