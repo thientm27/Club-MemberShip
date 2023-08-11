@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ClubMemberShip.Repo.Models
 {
-    public partial class Grade
+    public partial class Grade : BaseEntity
     {
         public Grade()
         {
@@ -14,7 +14,6 @@ namespace ClubMemberShip.Repo.Models
         public DateTime GradeYear { get; set; }
         public DateTime? GraduateYear { get; set; }
         public DateTime? GraduateExpected { get; set; }
-        public Status Status { get; set; }
 
         public virtual ICollection<Student> Students { get; set; }
     }

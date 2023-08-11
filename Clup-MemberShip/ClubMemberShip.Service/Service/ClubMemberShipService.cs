@@ -6,9 +6,9 @@ namespace ClubMemberShip.Service.Service;
 
 public class ClubMemberShipService : IStudentServices, IClubActivityService, IClubServices
 {
-    readonly StudentRepo _studentRepo = new();
-    readonly MajorRepo _majorRepo = new();
-    readonly GradeRepo _gradeRepo = new();
+    private readonly StudentRepo _studentRepo;
+    private readonly MajorRepo _majorRepo ;
+    private readonly GradeRepo _gradeRepo;
 
     public Result DeleteStudent(string id)
     {

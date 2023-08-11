@@ -71,4 +71,7 @@ public class StudentRepo : GenericRepo<Student>, IStudentRepo
     //     return Result.Ok;
     // }
 
+    public StudentRepo(ClubMembershipContext context) : base(context)
+    {
+    }
 }

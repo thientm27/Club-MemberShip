@@ -8,4 +8,8 @@ public class ClubActivityRepo : GenericRepo<ClubActivity>, IClubActivityRepo
     {
         throw new NotImplementedException();
     }
+
+    public ClubActivityRepo(ClubMembershipContext context) : base(context)
+    {
+    }
 }

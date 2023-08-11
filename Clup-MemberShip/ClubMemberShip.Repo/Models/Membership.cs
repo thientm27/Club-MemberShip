@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ClubMemberShip.Repo.Models
 {
-    public partial class Membership
+    public partial class Membership : BaseEntity
     {
         public Membership()
         {
@@ -17,7 +17,6 @@ namespace ClubMemberShip.Repo.Models
         public DateTime? JoinDate { get; set; }
         public DateTime? QuitDate { get; set; }
         public string? NickName { get; set; }
-        public Status? Status { get; set; }
 
         public virtual Club Club { get; set; } = null!;
         public virtual Student Student { get; set; } = null!;

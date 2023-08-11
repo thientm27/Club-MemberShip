@@ -4,17 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace ClubMemberShip.Repo.Models
 {
-    public enum Status
-    {
-        Deleted = -1,
-        Na = 0,
-        Active = 1,
-        Pending = 2,
-        Prepare = 3,
-        OnGoing = 4,
-        Finish = 5,
-    }
-
+   
     public partial class ClubMembershipContext : DbContext
     {
         public ClubMembershipContext()

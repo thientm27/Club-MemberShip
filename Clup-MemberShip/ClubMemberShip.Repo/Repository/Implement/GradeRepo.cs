@@ -8,4 +8,8 @@ public class GradeRepo : GenericRepo<Grade>, IGradeRepo
     {
         throw new NotImplementedException();
     }
+
+    public GradeRepo(ClubMembershipContext context) : base(context)
+    {
+    }
 }

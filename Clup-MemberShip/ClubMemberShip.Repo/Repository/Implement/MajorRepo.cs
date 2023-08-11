@@ -8,4 +8,8 @@ public class MajorRepo : GenericRepo<Major>, IMajorRepo
     {
         // throw new NotImplementedException();
     }
+
+    public MajorRepo(ClubMembershipContext context) : base(context)
+    {
+    }
 }

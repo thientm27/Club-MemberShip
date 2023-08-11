@@ -5,9 +5,8 @@ namespace ClubMemberShip.Repo.Repository;
 public interface IGenericRepository<TEntity>
     where TEntity : class
 {
-    public IQueryable<TEntity> GetAll();
-
-    public IEnumerable<TEntity> GetAll(
+    List<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includes);
+    public List<TEntity> GetAll(
         Expression<Func<TEntity, bool>>? filter = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         string includeProperties = "");

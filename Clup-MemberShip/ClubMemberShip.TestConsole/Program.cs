@@ -10,8 +10,8 @@ namespace TestConsole // Note: actual namespace depends on the project name.
     {
         public static void Main(string[] args)
         {
-            StudentRepo studentRepo = new StudentRepo();    
-            MajorRepo majorRepo = new MajorRepo();    
+            // StudentRepo studentRepo = new StudentRepo();    
+            // MajorRepo majorRepo = new MajorRepo();    
             var choose = -1;
             while(choose != 0)
             {
@@ -34,10 +34,10 @@ namespace TestConsole // Note: actual namespace depends on the project name.
                         }
                     case 1:
                         {
-                            foreach (var item in studentRepo.GetAll(includeProperties: "Major,Grade"))
-                            {
-                                Console.WriteLine(item.Id + " | " + item.Name + " | " + item.Grade.GradeYear);
-                            }
+                            // foreach (var item in studentRepo.GetAll(includeProperties: "Major,Grade"))
+                            // {
+                            //     Console.WriteLine(item.Id + " | " + item.Name + " | " + item.Grade.GradeYear);
+                            // }
                             break;
                         }
                     case 2:
@@ -65,10 +65,10 @@ namespace TestConsole // Note: actual namespace depends on the project name.
                         }
                     case 5:
                         {
-                            foreach (var item in majorRepo.GetAll(includeProperties: ""))
-                            {
-                                Console.WriteLine(item.Id + " | " + item.Code + " | " + item.Detail);
-                            }
+                            // foreach (var item in majorRepo.GetAll(includeProperties: ""))
+                            // {
+                            //     Console.WriteLine(item.Id + " | " + item.Code + " | " + item.Detail);
+                            // }
                             break;
                         }
                     case 6:
