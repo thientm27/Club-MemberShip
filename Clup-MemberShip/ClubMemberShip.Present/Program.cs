@@ -1,4 +1,3 @@
-
 using ClubMemberShip.Service;
 using ClubMemberShip.Service.Service;
 
@@ -7,13 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddSession();
-builder.Services.AddScoped<IStudentServices,ClubMemberShipService>();
-builder.Services.AddScoped<IClubServices,ClubMemberShipService>();
-builder.Services.AddScoped<IClubActivityService,ClubMemberShipService>();
-builder.Services.AddRazorPages(options =>
-{
-    options.Conventions.AddPageRoute("/Login", "");
-});
+builder.Services.AddScoped<IStudentServices, StudentService>();
+builder.Services.AddScoped<IClubServices, ClubService>();
+builder.Services.AddScoped<IClubActivityService, ClubActivityService>();
+builder.Services.AddRazorPages(options => { options.Conventions.AddPageRoute("/Login", ""); });
 
 var app = builder.Build();
 

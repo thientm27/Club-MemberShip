@@ -30,18 +30,18 @@ public abstract class GenericRepo<TEntity> : IGenericRepository<TEntity>
     {
         // using var context = new ClubMembershipContext();
         IQueryable<TEntity> query = Context.Set<TEntity>();
-
         if (filter != null)
         {
             query = query.Where(filter);
         }
-
-        foreach (var includeProperty in includeProperties.Split
-                     (new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+        if (!string.IsNullOrEmpty(includeProperties))
         {
-            query = query.Include(includeProperty);
+            foreach (var includeProperty in includeProperties.Split
+                         (new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
         }
-
         if (orderBy != null)
         {
             return orderBy(query).ToList();

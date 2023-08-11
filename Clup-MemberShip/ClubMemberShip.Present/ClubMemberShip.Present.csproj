@@ -32,7 +32,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\FE\" />
+    <_ContentIncludedByDefault Remove="Pages\Students\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Students\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Students\Details.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Students\Edit.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\Students\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\ClubPages\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\ClubPages\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\ClubPages\Details.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\ClubPages\Edit.cshtml" />
+    <_ContentIncludedByDefault Remove="Pages\ClubPages\Index.cshtml" />
   </ItemGroup>
 
 </Project>
