@@ -1,9 +1,10 @@
 ﻿using System.Linq.Expressions;
+using ClubMemberShip.Repo.Models;
 
 namespace ClubMemberShip.Repo.Repository;
 
 public interface IGenericRepository<TEntity>
-    where TEntity : class
+    where TEntity : BaseEntity
 {
     List<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includes);
     public List<TEntity> GetAll(

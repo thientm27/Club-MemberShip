@@ -5,19 +5,21 @@ using Microsoft.EntityFrameworkCore;
 namespace ClubMemberShip.Repo.Repository.Implement;
 
 public abstract class GenericRepo<TEntity> : IGenericRepository<TEntity>
-    where TEntity : class
+    where TEntity : BaseEntity
 {
-    private ClubMembershipContext context;
+    protected readonly ClubMembershipContext Context;
 
-    public GenericRepo(ClubMembershipContext context)
+    protected GenericRepo(ClubMembershipContext context)
     {
-        this.context = context;
+        this.Context = context;
     }
 
     public List<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includes)
     {
         return includes
-            .Aggregate(context.Set<TEntity>().AsQueryable(), (entity, property) => entity.Include(property))
+            .Aggregate(Context.Set<TEntity>().AsQueryable(),
+                (entity, property) => entity.Include(property))
+            .Where(x => x.Status != Status.Deleted)
             .ToList();
     }
 
@@ -27,7 +29,7 @@ public abstract class GenericRepo<TEntity> : IGenericRepository<TEntity>
         string includeProperties = "")
     {
         // using var context = new ClubMembershipContext();
-        IQueryable<TEntity> query = context.Set<TEntity>();
+        IQueryable<TEntity> query = Context.Set<TEntity>();
 
         if (filter != null)
         {
@@ -45,32 +47,32 @@ public abstract class GenericRepo<TEntity> : IGenericRepository<TEntity>
             return orderBy(query).ToList();
         }
 
-        return query.ToList();
+        return query.Where(x => x.Status != Status.Deleted).ToList();
     }
 
     public TEntity? GetById(object? id)
     {
         // using var context = new ClubMembershipContext();
-        return context.Set<TEntity>().Find(id);
+        return Context.Set<TEntity>().Find(id);
     }
 
     public IQueryable<TEntity> GetAll()
     {
         // using var context = new ClubMembershipContext();
-        return context.Set<TEntity>();
+        return Context.Set<TEntity>();
     }
 
     public void Create(TEntity entity)
     {
         // using var context = new ClubMembershipContext();
-        context.Set<TEntity>().Add(entity);
+        Context.Set<TEntity>().Add(entity);
     }
 
     public void Update(TEntity entityToUpdate)
     {
         // using var context = new ClubMembershipContext();
-        context.Set<TEntity>().Attach(entityToUpdate);
-        context.Entry(entityToUpdate).State = EntityState.Modified;
+        Context.Set<TEntity>().Attach(entityToUpdate);
+        Context.Entry(entityToUpdate).State = EntityState.Modified;
     }
 
     public abstract void Delete(object? id);
