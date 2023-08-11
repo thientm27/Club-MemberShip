@@ -6,26 +6,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Service;
 
 namespace ClubMemberShip.Web.Pages.PageAdmin.AdminMajor
 {
     public class IndexModel : PageModel
     {
-        private readonly ClubMemberShip.Repo.Models.ClubMembershipContext _context;
+        private readonly IMajorService _majorService;
 
-        public IndexModel(ClubMemberShip.Repo.Models.ClubMembershipContext context)
+        public IndexModel(IMajorService majorService)
         {
-            _context = context;
+            _majorService = majorService;
         }
 
         public IList<Major> Major { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public void OnGetAsync()
         {
-            if (_context.Majors != null)
-            {
-                Major = await _context.Majors.ToListAsync();
-            }
+            Major = _majorService.GetAll();
         }
     }
 }

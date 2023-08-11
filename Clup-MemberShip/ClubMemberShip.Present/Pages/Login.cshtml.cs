@@ -34,7 +34,7 @@ namespace ClubMemberShip.Present.Pages
             {
                 // admin
                 Msg = "Hi admin";
-                return Page();
+                return RedirectToPage("./PageAdmin/Index");
             }
 
             Msg = "Id not available";

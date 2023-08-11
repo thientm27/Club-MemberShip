@@ -2,7 +2,7 @@
 
 namespace ClubMemberShip.Service;
 
-public interface IClubActivityService : IGenericService<ClubActivity>
+public interface IMajorService : IGenericService<Major>
 {
     
 }

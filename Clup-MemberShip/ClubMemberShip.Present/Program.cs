@@ -12,6 +12,8 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IStudentServices, StudentService>();
 builder.Services.AddScoped<IClubServices, ClubService>();
 builder.Services.AddScoped<IClubActivityService, ClubActivityService>();
+builder.Services.AddScoped<IGradeService, GradeService>();
+builder.Services.AddScoped<IMajorService, MajorService>();
 builder.Services.AddRazorPages(options => { options.Conventions.AddPageRoute("/Login", ""); });
 
 var app = builder.Build();

@@ -10,14 +10,10 @@ using ClubMemberShip.Service.Service;
 
 namespace ClubMemberShip.Service
 {
-    public interface IStudentServices
+    public interface IStudentServices : IGenericService<Student>
     {
-        public List<Student>? GetStudents();
         public List<Major>? GetMajors();
         public List<Grade>? GetGrades();
-        public Student? GetStudent(string id);
-        public Result UpdateStudent(Student student);
-        public Result DeleteStudent(string id );
         public Result Register(Student student);
         public int Login(string id );
     }

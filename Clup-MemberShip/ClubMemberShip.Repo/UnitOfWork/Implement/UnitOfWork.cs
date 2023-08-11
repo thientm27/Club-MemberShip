@@ -22,8 +22,8 @@ public class UnitOfWork : IUnitOfWork
     public IMajorRepo MajorRepo => _majorRepo ??= new MajorRepo(_context);
 
     public IStudentRepo StudentRepo => _studentRepo??= new StudentRepo(_context);
-    
-    
+
+
     public int SaveChange()
     {
         return _context.SaveChanges();

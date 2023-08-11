@@ -1,6 +1,8 @@
-﻿namespace ClubMemberShip.Service;
+﻿using ClubMemberShip.Repo.Models;
 
-public interface IClubServices
+namespace ClubMemberShip.Service;
+
+public interface IClubServices : IGenericService<Club>
 {
     
 }
