@@ -75,5 +75,13 @@ public abstract class GenericRepo<TEntity> : IGenericRepository<TEntity>
         Context.Entry(entityToUpdate).State = EntityState.Modified;
     }
 
-    public abstract void Delete(object? id);
+    public void Delete(object? id)
+    {
+        var entity = GetById(id);
+        if (entity != null)
+        {
+            entity.Status = Status.Deleted;
+            Update(entity);
+        }
+    }
 }
