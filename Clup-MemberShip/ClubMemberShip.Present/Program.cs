@@ -1,3 +1,5 @@
+using ClubMemberShip.Repo.UnitOfWork.Implement;
+using ClubMemberShip.Repo.UnitOfWork;
 using ClubMemberShip.Service;
 using ClubMemberShip.Service.Service;
 
@@ -6,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddSession();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IStudentServices, StudentService>();
 builder.Services.AddScoped<IClubServices, ClubService>();
 builder.Services.AddScoped<IClubActivityService, ClubActivityService>();

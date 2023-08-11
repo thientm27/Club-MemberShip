@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClubMemberShip.Repo", "ClubMemberShip.Repo\ClubMemberShip.Repo.csproj", "{957F2D8C-298F-4291-B644-8EC3DBE68B5B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClubMemberShip.Present", "ClubMemberShip.Present\ClubMemberShip.Present.csproj", "{D1533B77-BB54-40F3-9CDE-67202504E1BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClubMemberShip.Web", "ClubMemberShip.Present\ClubMemberShip.Web.csproj", "{D1533B77-BB54-40F3-9CDE-67202504E1BE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClubMemberShip.Service", "ClubMemberShip.Service\ClubMemberShip.Service.csproj", "{8A88272E-21C9-49A5-9D48-3BC8DF4ED7C9}"
 EndProject

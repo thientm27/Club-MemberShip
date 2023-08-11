@@ -1,0 +1,55 @@
+﻿@page
+@model ClubMemberShip.Web.Pages.PageAdmin.AdminMajor.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Major</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Major.Id" />
+            <div class="form-group">
+                <label asp-for="Major.Code" class="control-label"></label>
+                <input asp-for="Major.Code" class="form-control" />
+                <span asp-validation-for="Major.Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Major.Name" class="control-label"></label>
+                <input asp-for="Major.Name" class="form-control" />
+                <span asp-validation-for="Major.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Major.Detail" class="control-label"></label>
+                <input asp-for="Major.Detail" class="form-control" />
+                <span asp-validation-for="Major.Detail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Major.Semeter" class="control-label"></label>
+                <input asp-for="Major.Semeter" class="form-control" />
+                <span asp-validation-for="Major.Semeter" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Major.Status" class="control-label"></label>
+                <input asp-for="Major.Status" class="form-control" />
+                <span asp-validation-for="Major.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
