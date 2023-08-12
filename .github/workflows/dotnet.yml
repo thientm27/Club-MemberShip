@@ -19,8 +19,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
 
-    - name: Restore dependencies
-      run: dotnet restore Clup-MemberShip/ClubMemberShip.sln
+    - name: Restore dependencies repository
+      run: dotnet restore Clup-MemberShip/ClubMemberShip.Repo/ClubMemberShip.Repo.csproj
 
-    - name: Build
-      run: dotnet build --no-restore Clup-MemberShip/ClubMemberShip.sln
+    - name: Build repository
+      run: dotnet build --no-restore Clup-MemberShip/ClubMemberShip.Repo/ClubMemberShip.Repo.csproj
