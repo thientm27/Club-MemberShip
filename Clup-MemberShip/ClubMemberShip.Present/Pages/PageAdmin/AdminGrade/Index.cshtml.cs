@@ -6,24 +6,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ClubMemberShip.Repo.Models;
-using ClubMemberShip.Service;
 
 namespace ClubMemberShip.Web.Pages.PageAdmin.AdminGrade
 {
     public class IndexModel : PageModel
     {
-        private readonly IGradeService _gradeService;
+        private readonly ClubMemberShip.Repo.Models.ClubMembershipContext _context;
 
-        public IndexModel(IGradeService gradeService)
+        public IndexModel(ClubMemberShip.Repo.Models.ClubMembershipContext context)
         {
-            _gradeService = gradeService;
+            _context = context;
         }
-        
-        public IList<Grade> Grade { get; set; } = default!;
 
-        public void OnGetAsync()
+        public IList<Grade> Grade { get;set; } = default!;
+
+        public async Task OnGetAsync()
         {
-            Grade = _gradeService.GetAll();
+            if (_context.Grades != null)
+            {
+                Grade = await _context.Grades.ToListAsync();
+            }
         }
     }
 }

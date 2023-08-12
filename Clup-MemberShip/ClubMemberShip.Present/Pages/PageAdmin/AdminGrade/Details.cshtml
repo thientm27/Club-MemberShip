@@ -2,7 +2,6 @@
 @model ClubMemberShip.Web.Pages.PageAdmin.AdminGrade.DetailsModel
 
 @{
-    Layout = "Shared/_AdminLayout";
     ViewData["Title"] = "Details";
 }
 
@@ -25,10 +24,10 @@
             @Html.DisplayFor(model => model.Grade.GraduateYear)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Grade.GraduateExpected)
+            @Html.DisplayNameFor(model => model.Grade.ExpeiredYear)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Grade.GraduateExpected)
+            @Html.DisplayFor(model => model.Grade.ExpeiredYear)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Grade.Status)

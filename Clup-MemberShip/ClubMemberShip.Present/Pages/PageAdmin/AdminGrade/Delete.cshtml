@@ -2,7 +2,6 @@
 @model ClubMemberShip.Web.Pages.PageAdmin.AdminGrade.DeleteModel
 
 @{
-    Layout = "Shared/_AdminLayout";
     ViewData["Title"] = "Delete";
 }
 
@@ -26,10 +25,10 @@
             @Html.DisplayFor(model => model.Grade.GraduateYear)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Grade.GraduateExpected)
+            @Html.DisplayNameFor(model => model.Grade.ExpeiredYear)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Grade.GraduateExpected)
+            @Html.DisplayFor(model => model.Grade.ExpeiredYear)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Grade.Status)

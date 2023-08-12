@@ -2,7 +2,6 @@
 @model ClubMemberShip.Web.Pages.PageAdmin.AdminGrade.EditModel
 
 @{
-    Layout = "Shared/_AdminLayout";
     ViewData["Title"] = "Edit";
 }
 
@@ -26,9 +25,9 @@
                 <span asp-validation-for="Grade.GraduateYear" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Grade.GraduateExpected" class="control-label"></label>
-                <input asp-for="Grade.GraduateExpected" class="form-control" />
-                <span asp-validation-for="Grade.GraduateExpected" class="text-danger"></span>
+                <label asp-for="Grade.ExpeiredYear" class="control-label"></label>
+                <input asp-for="Grade.ExpeiredYear" class="form-control" />
+                <span asp-validation-for="Grade.ExpeiredYear" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Grade.Status" class="control-label"></label>

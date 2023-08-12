@@ -2,7 +2,6 @@
 @model ClubMemberShip.Web.Pages.PageAdmin.AdminGrade.IndexModel
 
 @{
-    Layout = "Shared/_AdminLayout";
     ViewData["Title"] = "Index";
 }
 
@@ -21,7 +20,7 @@
                 @Html.DisplayNameFor(model => model.Grade[0].GraduateYear)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Grade[0].GraduateExpected)
+                @Html.DisplayNameFor(model => model.Grade[0].ExpeiredYear)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Grade[0].Status)
@@ -39,7 +38,7 @@
                 @Html.DisplayFor(modelItem => item.GraduateYear)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.GraduateExpected)
+                @Html.DisplayFor(modelItem => item.ExpeiredYear)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
