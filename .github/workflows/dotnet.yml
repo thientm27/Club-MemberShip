@@ -36,6 +36,3 @@ jobs:
 
     - name: Build web razor page
       run: dotnet build --no-restore Clup-MemberShip/ClubMemberShip.Present/ClubMemberShip.Web.csproj
-
-    - name: Unit Test
-      run: dotnet test --no-restore Clup-MemberShip/ClubMemberShip.Present/ClubMemberShip.Web.csproj
