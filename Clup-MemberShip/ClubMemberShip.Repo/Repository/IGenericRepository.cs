@@ -18,4 +18,5 @@ public interface IGenericRepository<TEntity>
     public TEntity? GetById(object? id);
     public void Update(TEntity entity);
     public void Delete(object? id);
+    public void SaveChanges();
 }

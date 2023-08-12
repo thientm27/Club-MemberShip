@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClubMemberShip.Repo.Repository.Implement;
 
-public abstract class GenericRepo<TEntity> : IGenericRepository<TEntity>
+public class GenericRepo<TEntity> : IGenericRepository<TEntity>
     where TEntity : BaseEntity
 {
     protected readonly ClubMembershipContext Context;
 
-    protected GenericRepo(ClubMembershipContext context)
+    public GenericRepo(ClubMembershipContext context)
     {
         this.Context = context;
     }
@@ -28,6 +28,7 @@ public abstract class GenericRepo<TEntity> : IGenericRepository<TEntity>
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         string includeProperties = "")
     {
+        // return new List<TEntity>();
         // using var context = new ClubMembershipContext();
         IQueryable<TEntity> query = Context.Set<TEntity>();
         if (filter != null)
@@ -88,5 +89,10 @@ public abstract class GenericRepo<TEntity> : IGenericRepository<TEntity>
             entity.Status = Status.Deleted;
             Update(entity);
         }
+    }
+
+    public void SaveChanges()
+    {
+        Context.SaveChanges();
     }
 }
