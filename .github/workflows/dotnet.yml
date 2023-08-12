@@ -13,8 +13,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with:
-        path: 'Clup-MemberShip/' 
 
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
@@ -22,7 +20,7 @@ jobs:
         dotnet-version: 6.0.x
 
     - name: Restore dependencies
-      run: dotnet restore 'Clup-MemberShip/'
+      run: dotnet restore Clup-MemberShip/
 
     - name: Build
-      run: dotnet build --no-restore 'Clup-MemberShip/'
+      run: dotnet build --no-restore Clup-MemberShip/
