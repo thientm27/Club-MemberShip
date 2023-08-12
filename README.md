@@ -7,6 +7,7 @@
 - Membership : Register to club
 - Club activities
 - Participant
+![alt text](https://github.com/thientm27/Club-MemberShip/main/images/image2.png?raw=true)
 
 #DATABASE #2 (Not do)
 - Semeter
