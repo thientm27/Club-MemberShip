@@ -20,7 +20,7 @@ jobs:
         dotnet-version: 6.0.x
 
     - name: Restore dependencies
-      run: dotnet restore Clup-MemberShip/
+      run: dotnet restore Clup-MemberShip/Clup-MemberShip.csproj
 
     - name: Build
-      run: dotnet build --no-restore Clup-MemberShip/
+      run: dotnet build --no-restore Clup-MemberShip/Clup-MemberShip.csproj
