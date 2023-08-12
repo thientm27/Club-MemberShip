@@ -81,8 +81,8 @@ public class MajorServiceTests
     [TearDown]
     public void Cleanup()
     {
-        productRepositoryMock = null;
-        unitOfWorkMock = null;
-        sut = null;
+        productRepositoryMock = null!;
+        unitOfWorkMock = null!;
+        sut = null!;
     }
 }
