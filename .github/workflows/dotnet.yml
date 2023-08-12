@@ -32,7 +32,7 @@ jobs:
       run: dotnet build --no-restore Clup-MemberShip/ClubMemberShip.Service/ClubMemberShip.Service.csproj
 
     - name: Restore dependencies web razor page
-      run: dotnet restore Clup-MemberShip/ClubMemberShip.Test/ClubMemberShip.Test.csproj
+      run: dotnet restore Clup-MemberShip/ClubMemberShip.Present/ClubMemberShip.Web.csproj
 
     - name: Build web razor page
       run: dotnet build --no-restore Clup-MemberShip/ClubMemberShip.Present/ClubMemberShip.Web.csproj
