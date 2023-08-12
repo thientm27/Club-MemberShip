@@ -1,5 +1,6 @@
 #  PRN221 Retake (Clup MemberShip)
-[![.NET build](https://github.com/thientm27/Club-MemberShip/actions/workflows/dotnet.yml/badge.svg)](https://github.com/thientm27/Club-MemberShip/actions/workflows/dotnet.yml) [![.NET Unit Test](https://github.com/thientm27/Club-MemberShip/actions/workflows/test.yml/badge.svg)](https://github.com/thientm27/Club-MemberShip/actions/workflows/test.yml)
+[![.NET build](https://github.com/thientm27/Club-MemberShip/actions/workflows/dotnet.yml/badge.svg)](https://github.com/thientm27/Club-MemberShip/actions/workflows/dotnet.yml) 
+[![.NET Unit Test](https://github.com/thientm27/Club-MemberShip/actions/workflows/test.yml/badge.svg)](https://github.com/thientm27/Club-MemberShip/actions/workflows/test.yml)
 
 #DATABASE #1
 - Major
