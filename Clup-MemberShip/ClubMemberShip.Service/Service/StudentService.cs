@@ -18,8 +18,6 @@ public class StudentService : GenericService<Student>, IStudentServices
     {
         return UnitOfWork.MajorRepo.GetAll().ToList();
     }
-    
-
 
     public int Login(string id)
     {
@@ -48,9 +46,9 @@ public class StudentService : GenericService<Student>, IStudentServices
         return UnitOfWork.StudentRepo.GetAll(includeProperties: "Major,Grade").ToList();
     }
 
-    public override Student GetById(object id)
+    public override Student? GetById(object id)
     {
-        return UnitOfWork.StudentRepo.GetById(id);
+        return UnitOfWork.StudentRepo.GetByStudentCode(id.ToString());
     }
 
     public override Result Update(Student newEntity)
@@ -71,6 +69,7 @@ public class StudentService : GenericService<Student>, IStudentServices
     public override Result Add(Student newEntity)
     {
         UnitOfWork.StudentRepo.Create(newEntity);
+        UnitOfWork.SaveChange();
         return Result.Ok;
     }
 }

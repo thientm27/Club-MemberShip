@@ -1,79 +1,120 @@
-﻿using ClubMemberShip.Repo.Repository;
-using System;
-using System.Diagnostics;
-using ClubMemberShip.Repo.Models;
-using ClubMemberShip.Repo.Repository.Implement;
+﻿using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Repo.UnitOfWork;
+using ClubMemberShip.Repo.UnitOfWork.Implement;
+using ClubMemberShip.Service;
+using ClubMemberShip.Service.Service;
 
-namespace TestConsole // Note: actual namespace depends on the project name.
+namespace ClubMemberShip.TestConsole
 {
     internal class Program
     {
-        public static void Main(string[] args)
+        public static void Main()
         {
-            // StudentRepo studentRepo = new StudentRepo();    
-            // MajorRepo majorRepo = new MajorRepo();    
+            IUnitOfWork unitOfWork = new UnitOfWork();
+            IStudentServices studentRepo = new StudentService(unitOfWork);
+            IMajorService majorRepo = new MajorService(unitOfWork);
             var choose = -1;
-            while(choose != 0)
+            while (choose != 0)
             {
                 ShowMenu();
                 try
                 {
-                    choose = int.Parse(Console.ReadLine());
+                    choose = int.Parse(Console.ReadLine() ?? string.Empty);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine(ex.Message.ToString());
+                    Console.WriteLine(ex.Message);
                     choose = -1;
                 }
 
                 switch (choose)
                 {
                     case 0:
-                        {
-                            break;
-                        }
+                    {
+                        break;
+                    }
                     case 1:
+                    {
+                        foreach (var item in studentRepo.GetAll() ?? new List<Student>())
                         {
-                            // foreach (var item in studentRepo.GetAll(includeProperties: "Major,Grade"))
-                            // {
-                            //     Console.WriteLine(item.Id + " | " + item.Name + " | " + item.Grade.GradeYear);
-                            // }
-                            break;
+                            Console.WriteLine(item.Id + " | " + item.Code + " | " + item.Name + " | " +
+                                              item.Grade.GradeYear);
                         }
+
+                        break;
+                    }
                     case 2:
                     {
-                        // Console.Write("Input id: ");
-                        // var id = Console.ReadLine();
-                        // var item = studentRepo.GetById(id);
-                        // if (item == null)
-                        // {
-                        //     Console.WriteLine("Not found");
-                        // }
-                        // else
-                        // {
-                        //     Console.WriteLine(item.Id + " | " + item.Name );
-                        // }
+                        Console.Write("Input id: ");
+                        var id = Console.ReadLine();
+                        var item = studentRepo.GetById(id ?? "-1");
+                        if (item == null)
+                        {
+                            Console.WriteLine("Not found");
+                        }
+                        else
+                        {
+                            Console.WriteLine(item.Id + " | " + item.Name);
+                        }
+
                         break;
-                        }
+                    }
                     case 3:
+                    {
+                        try
                         {
-                            break;
+                            Console.Write("Input id: ");
+                            var id = int.Parse(Console.ReadLine() ?? string.Empty);
+                            Console.Write("Input student code: ");
+                            var code = Console.ReadLine();
+                            Console.Write("Input name: ");
+                            var name = Console.ReadLine();
+                            studentRepo.Add(new Student
+                            {
+                                Status = Status.Active,
+                                Id = id,
+                                Code = code,
+                                Name = name,
+                                Address = "",
+                                MajorId = 1,
+                                GradeId = 1,
+                                DateOfBirth = null,
+                            });
+                            Console.WriteLine("Student added");
                         }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+
+                        break;
+                    }
                     case 4:
-                        {
-                            break;
-                        }
+                    {
+                        break;
+                    }
                     case 5:
+                    {
+                        foreach (var item in majorRepo.GetAll() ?? new List<Major>())
                         {
-                            // foreach (var item in majorRepo.GetAll(includeProperties: ""))
-                            // {
-                            //     Console.WriteLine(item.Id + " | " + item.Code + " | " + item.Detail);
-                            // }
-                            break;
+                            Console.WriteLine(item.Id + " | " + item.Code + " | " + item.Detail);
                         }
+
+                        break;
+                    }
                     case 6:
                     {
-                        
+                        Console.Write("Input id: ");
+                        var id = int.Parse(Console.ReadLine() ?? "-1");
+                        var item = majorRepo.GetById(id);
+                        if (item == null)
+                        {
+                            Console.WriteLine("Not found");
+                        }
+                        else
+                        {
+                            Console.WriteLine(item.Id + " | " + item.Name );
+                        }
                         break;
                     }
                     case 7:
@@ -81,26 +122,22 @@ namespace TestConsole // Note: actual namespace depends on the project name.
                         break;
                     }
                 }
-                
             }
-            
-
         }
 
-        public static void ShowMenu()
+        private static void ShowMenu()
         {
             Console.WriteLine("-------------------&&&&&-------------------");
             Console.WriteLine("Club Member Test");
             Console.WriteLine("1. List all students");
             Console.WriteLine("2. Find student with id");
-            Console.WriteLine("3. N/A");
+            Console.WriteLine("3. Add new student");
             Console.WriteLine("4. N/A");
             Console.WriteLine("5. List All Major");
             Console.WriteLine("6. Find Major with Code");
             Console.WriteLine("7. Add new major");
             Console.WriteLine("-------------------&&&&&-------------------");
             Console.Write("Your choice: ");
-            
         }
     }
 }

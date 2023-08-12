@@ -58,7 +58,6 @@ public class GenericRepo<TEntity> : IGenericRepository<TEntity>
 
     public TEntity? GetById(object? id)
     {
-        // using var context = new ClubMembershipContext();
         return Context.Set<TEntity>().Find(id);
     }
 
