@@ -15,7 +15,7 @@ public class GradeService : GenericService<Grade>, IGradeService
         return UnitOfWork.GradeRepo.GetAll().ToList();
     }
 
-    public override Grade GetById(object id)
+    public override Grade? GetById(object id)
     {
         return UnitOfWork.GradeRepo.GetById(id);
     }

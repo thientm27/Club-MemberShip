@@ -6,36 +6,39 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Service;
 
 namespace ClubMemberShip.Web.Pages.PageAdmin.AdminGrade
 {
     public class DetailsModel : PageModel
     {
-        private readonly ClubMemberShip.Repo.Models.ClubMembershipContext _context;
+        private readonly IGradeService _gradeService;
 
-        public DetailsModel(ClubMemberShip.Repo.Models.ClubMembershipContext context)
+        public DetailsModel(IGradeService gradeService)
         {
-            _context = context;
+            _gradeService = gradeService;
         }
 
-      public Grade Grade { get; set; } = default!; 
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public Grade Grade { get; set; } = default!;
+
+        public IActionResult OnGet(int? id)
         {
-            if (id == null || _context.Grades == null)
+            if (id == null  )
             {
                 return NotFound();
             }
 
-            var grade = await _context.Grades.FirstOrDefaultAsync(m => m.Id == id);
+            var grade = _gradeService.GetById(id);
             if (grade == null)
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Grade = grade;
             }
+
             return Page();
         }
     }

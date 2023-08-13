@@ -6,54 +6,57 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Service;
 
 namespace ClubMemberShip.Web.Pages.PageAdmin.AdminGrade
 {
     public class DeleteModel : PageModel
     {
-        private readonly ClubMemberShip.Repo.Models.ClubMembershipContext _context;
+        private readonly IGradeService _gradeService;
 
-        public DeleteModel(ClubMemberShip.Repo.Models.ClubMembershipContext context)
+        public DeleteModel(IGradeService gradeService)
         {
-            _context = context;
+            _gradeService = gradeService;
         }
 
-        [BindProperty]
-      public Grade Grade { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        [BindProperty] public Grade Grade { get; set; } = default!;
+
+        public  IActionResult OnGetAsync(int? id)
         {
-            if (id == null || _context.Grades == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var grade = await _context.Grades.FirstOrDefaultAsync(m => m.Id == id);
+            var grade =  _gradeService.GetById(id);
 
             if (grade == null)
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Grade = grade;
             }
+
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public  IActionResult OnPost(int? id)
         {
-            if (id == null || _context.Grades == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            var grade = await _context.Grades.FindAsync(id);
+
+            var grade = _gradeService.GetById(id);
 
             if (grade != null)
             {
                 Grade = grade;
-                _context.Grades.Remove(Grade);
-                await _context.SaveChangesAsync();
+                _gradeService.Delete(id);
+  
             }
 
             return RedirectToPage("./Index");
