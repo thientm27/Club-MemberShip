@@ -1,4 +1,5 @@
-﻿using ClubMemberShip.Repo.Models;
+﻿using ClubMemberShip.Repo;
+using ClubMemberShip.Repo.Models;
 using ClubMemberShip.Repo.UnitOfWork;
 
 namespace ClubMemberShip.Service.Service;
@@ -11,7 +12,7 @@ public class ClubService : GenericService<Club>, IClubServices
 
     public override List<Club> GetAll()
     {
-        return UnitOfWork.ClubRepo.GetAll().ToList();
+        return UnitOfWork.ClubRepo.Get().ToList();
     }
 
     public override Club GetById(object id)

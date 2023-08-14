@@ -2,7 +2,7 @@
 using ClubMemberShip.Repo.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClubMemberShip.Repo.Repository.Implement;
+namespace ClubMemberShip.Repo.Repository;
 
 public class GenericRepo<TEntity> : IGenericRepository<TEntity>
     where TEntity : BaseEntity
@@ -14,7 +14,7 @@ public class GenericRepo<TEntity> : IGenericRepository<TEntity>
         this.Context = context;
     }
 
-    public List<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includes)
+    public List<TEntity> Get(params Expression<Func<TEntity, object>>[] includes)
     {
         return includes
             .Aggregate(Context.Set<TEntity>().AsQueryable(),
@@ -23,13 +23,11 @@ public class GenericRepo<TEntity> : IGenericRepository<TEntity>
             .ToList();
     }
 
-    public List<TEntity> GetAll(
+    public List<TEntity> Get(
         Expression<Func<TEntity, bool>>? filter = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         string includeProperties = "")
     {
-        // return new List<TEntity>();
-        // using var context = new ClubMembershipContext();
         IQueryable<TEntity> query = Context.Set<TEntity>();
         if (filter != null)
         {

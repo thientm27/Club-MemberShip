@@ -1,4 +1,5 @@
-﻿using ClubMemberShip.Repo.Models;
+﻿using ClubMemberShip.Repo;
+using ClubMemberShip.Repo.Models;
 using ClubMemberShip.Repo.UnitOfWork;
 
 namespace ClubMemberShip.Service.Service;
@@ -12,7 +13,7 @@ public class GradeService : GenericService<Grade>, IGradeService
 
     public override List<Grade> GetAll()
     {
-        return UnitOfWork.GradeRepo.GetAll().ToList();
+        return UnitOfWork.GradeRepo.Get().ToList();
     }
 
     public override Grade? GetById(object id)

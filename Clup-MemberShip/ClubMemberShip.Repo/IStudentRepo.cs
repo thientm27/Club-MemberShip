@@ -1,6 +1,6 @@
 ﻿using ClubMemberShip.Repo.Models;
 
-namespace ClubMemberShip.Repo.Repository;
+namespace ClubMemberShip.Repo;
 
 public interface IStudentRepo :  IGenericRepository<Student>
 {

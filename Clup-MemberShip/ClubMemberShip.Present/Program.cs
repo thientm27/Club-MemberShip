@@ -1,4 +1,4 @@
-using ClubMemberShip.Repo.UnitOfWork.Implement;
+using ClubMemberShip.Repo;
 using ClubMemberShip.Repo.UnitOfWork;
 using ClubMemberShip.Service;
 using ClubMemberShip.Service.Service;

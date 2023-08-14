@@ -1,14 +1,14 @@
 ﻿using System.Linq.Expressions;
 using ClubMemberShip.Repo.Models;
 
-namespace ClubMemberShip.Repo.Repository;
+namespace ClubMemberShip.Repo;
 
 public interface IGenericRepository<TEntity>
     where TEntity : BaseEntity
 {
-    List<TEntity> GetAll(params Expression<Func<TEntity, object>>[] includes);
+    List<TEntity> Get(params Expression<Func<TEntity, object>>[] includes);
 
-    public List<TEntity> GetAll(
+    public List<TEntity> Get(
         Expression<Func<TEntity, bool>>? filter = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         string includeProperties = "");

@@ -1,6 +1,4 @@
-﻿using ClubMemberShip.Repo.Repository;
-
-namespace ClubMemberShip.Repo.UnitOfWork;
+﻿namespace ClubMemberShip.Repo;
 
 public interface IUnitOfWork
 {

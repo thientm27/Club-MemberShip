@@ -2,6 +2,7 @@
 @model ClubMemberShip.Web.Pages.PageAdmin.AdminGrade.IndexModel
 
 @{
+    Layout = "Shared/_AdminLayout";
     ViewData["Title"] = "Index";
 }
 
@@ -22,9 +23,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Grade[0].ExpeiredYear)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Grade[0].Status)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -32,16 +30,13 @@
 @foreach (var item in Model.Grade) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.GradeYear)
+                @Html.DisplayFor(modelItem => item.GradeYear.Year)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.GraduateYear)
+                @Html.DisplayFor(modelItem => item.GraduateYear.Value.Year)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ExpeiredYear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
+                @Html.DisplayFor(modelItem => item.ExpeiredYear.Value.Year)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

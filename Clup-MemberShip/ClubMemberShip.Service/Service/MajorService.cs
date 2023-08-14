@@ -1,4 +1,5 @@
-﻿using ClubMemberShip.Repo.Models;
+﻿using ClubMemberShip.Repo;
+using ClubMemberShip.Repo.Models;
 using ClubMemberShip.Repo.UnitOfWork;
 
 namespace ClubMemberShip.Service.Service;
@@ -11,7 +12,7 @@ public class MajorService : GenericService<Major>, IMajorService
 
     public override List<Major> GetAll()
     {
-        return UnitOfWork.MajorRepo.GetAll().ToList();
+        return UnitOfWork.MajorRepo.Get().ToList();
     }
 
     public override Major? GetById(object id)

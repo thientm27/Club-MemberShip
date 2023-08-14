@@ -1,4 +1,5 @@
-﻿using ClubMemberShip.Repo.Models;
+﻿using ClubMemberShip.Repo;
+using ClubMemberShip.Repo.Models;
 using ClubMemberShip.Repo.UnitOfWork;
 
 namespace ClubMemberShip.Service.Service;
@@ -11,12 +12,12 @@ public class StudentService : GenericService<Student>, IStudentServices
 
     public List<Grade>? GetGrades()
     {
-        return UnitOfWork.GradeRepo.GetAll().ToList();
+        return UnitOfWork.GradeRepo.Get().ToList();
     }
 
     public List<Major>? GetMajors()
     {
-        return UnitOfWork.MajorRepo.GetAll().ToList();
+        return UnitOfWork.MajorRepo.Get().ToList();
     }
 
     public int Login(string id)
@@ -43,7 +44,7 @@ public class StudentService : GenericService<Student>, IStudentServices
 
     public override List<Student> GetAll()
     {
-        return UnitOfWork.StudentRepo.GetAll(includeProperties: "Major,Grade").ToList();
+        return UnitOfWork.StudentRepo.Get(includeProperties: "Major,Grade").ToList();
     }
 
     public override Student? GetById(object id)

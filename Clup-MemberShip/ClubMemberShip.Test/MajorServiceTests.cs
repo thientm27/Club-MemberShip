@@ -1,4 +1,5 @@
-﻿using ClubMemberShip.Repo.Models;
+﻿using ClubMemberShip.Repo;
+using ClubMemberShip.Repo.Models;
 using ClubMemberShip.Repo.Repository;
 using ClubMemberShip.Repo.UnitOfWork;
 using ClubMemberShip.Service;
@@ -66,7 +67,7 @@ public class MajorServiceTests
                 Status = Status.Active
             },
         };
-        productRepositoryMock.Setup(m => m.GetAll(null, null, "")).Returns(majors).Verifiable();
+        productRepositoryMock.Setup(m => m.Get(null, null, "")).Returns(majors).Verifiable();
         unitOfWorkMock.Setup(m => m.MajorRepo).Returns(productRepositoryMock.Object);
 
         //Action

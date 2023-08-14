@@ -1,8 +1,7 @@
 ﻿using ClubMemberShip.Repo.Models;
 using ClubMemberShip.Repo.Repository;
-using ClubMemberShip.Repo.Repository.Implement;
 
-namespace ClubMemberShip.Repo.UnitOfWork.Implement;
+namespace ClubMemberShip.Repo.UnitOfWork;
 
 public class UnitOfWork : IUnitOfWork
 {

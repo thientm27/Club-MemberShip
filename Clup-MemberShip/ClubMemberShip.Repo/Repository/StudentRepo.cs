@@ -1,7 +1,6 @@
 ﻿using ClubMemberShip.Repo.Models;
-using Microsoft.EntityFrameworkCore;
 
-namespace ClubMemberShip.Repo.Repository.Implement;
+namespace ClubMemberShip.Repo.Repository;
 
 public class StudentRepo : GenericRepo<Student>, IStudentRepo
 {
@@ -11,6 +10,6 @@ public class StudentRepo : GenericRepo<Student>, IStudentRepo
 
     public Student? GetByStudentCode(string id)
     {
-        return GetAll(filter: student => student.Code.ToLower().Equals(id.ToLower())).FirstOrDefault();
+        return Get(filter: student => student.Code.ToLower().Equals(id.ToLower())).FirstOrDefault();
     }
 }
