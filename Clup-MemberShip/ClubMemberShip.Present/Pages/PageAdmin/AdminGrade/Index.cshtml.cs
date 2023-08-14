@@ -1,13 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using ClubMemberShip.Repo.Models;
 using ClubMemberShip.Service;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ClubMemberShip.Web.Pages.PageAdmin.AdminGrade
 {
     public class IndexModel : PageModel
     {
         private readonly IGradeService _gradeService;
-
+        [BindProperty(SupportsGet = true)] public int PageIndex { get; set; } = 1;
+        public int Count { get; set; }
+        public int PageSize { get; set; } = 3;
+        public int TotalPages;
         public IndexModel(IGradeService gradeService)
         {
             _gradeService = gradeService;
@@ -18,7 +22,14 @@ namespace ClubMemberShip.Web.Pages.PageAdmin.AdminGrade
 
         public void OnGet()
         {
-            Grade = _gradeService.GetAll() ?? new List<Grade>();
+            var data = _gradeService.GetPagination(PageIndex - 1, PageSize);
+            TotalPages = data.TotalPagesCount - 1;
+            Grade = data.Items.ToList();
+        }
+        public IActionResult OnPost()
+        {
+            OnGet();
+            return Page();
         }
     }
 }

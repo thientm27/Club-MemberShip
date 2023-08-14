@@ -1,6 +1,7 @@
 ﻿using ClubMemberShip.Repo;
 using ClubMemberShip.Repo.Models;
 using ClubMemberShip.Repo.UnitOfWork;
+using ClubMemberShip.Repo.Utils;
 
 namespace ClubMemberShip.Service.Service;
 
@@ -12,8 +13,11 @@ public abstract class GenericService<TEntity> : IGenericService<TEntity> where T
     {
         UnitOfWork = unitOfWork;
     }
-    
-    public abstract List<TEntity>? GetAll();
+
+    public abstract List<TEntity>? Get();
+    public abstract Pagination<TEntity> GetPagination(int pageIndex, int pageSize);
+
+
     public abstract TEntity? GetById(object id);
     public abstract Result Update(TEntity newEntity);
     public abstract Result Delete(object idToDelete);

@@ -35,7 +35,7 @@ namespace ClubMemberShip.TestConsole
                     }
                     case 1:
                     {
-                        foreach (var item in studentRepo.GetAll() ?? new List<Student>())
+                        foreach (var item in studentRepo.Get() ?? new List<Student>())
                         {
                             Console.WriteLine(item.Id + " | " + item.Code + " | " + item.Name + " | " +
                                               item.Grade.GradeYear);
@@ -95,7 +95,7 @@ namespace ClubMemberShip.TestConsole
                     }
                     case 5:
                     {
-                        foreach (var item in majorRepo.GetAll() ?? new List<Major>())
+                        foreach (var item in majorRepo.Get() ?? new List<Major>())
                         {
                             Console.WriteLine(item.Id + " | " + item.Code + " | " + item.Detail);
                         }

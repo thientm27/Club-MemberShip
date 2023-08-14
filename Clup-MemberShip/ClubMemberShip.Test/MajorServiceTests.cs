@@ -71,7 +71,7 @@ public class MajorServiceTests
         unitOfWorkMock.Setup(m => m.MajorRepo).Returns(productRepositoryMock.Object);
 
         //Action
-        var actual = sut.GetAll();
+        var actual = sut.Get();
 
         //Assert
         productRepositoryMock.Verify();

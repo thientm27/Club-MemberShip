@@ -1,6 +1,7 @@
 ﻿using ClubMemberShip.Repo;
 using ClubMemberShip.Repo.Models;
 using ClubMemberShip.Repo.UnitOfWork;
+using ClubMemberShip.Repo.Utils;
 
 namespace ClubMemberShip.Service.Service;
 
@@ -11,9 +12,15 @@ public class GradeService : GenericService<Grade>, IGradeService
     }
 
 
-    public override List<Grade> GetAll()
+    public override List<Grade> Get()
     {
         return UnitOfWork.GradeRepo.Get().ToList();
+    }
+
+    public override Pagination<Grade> GetPagination(int pageIndex, int pageSize)
+    {
+        var listEntities = Get();
+        return UnitOfWork.GradeRepo.ToPagination(listEntities, pageIndex, pageSize);
     }
 
     public override Grade? GetById(object id)

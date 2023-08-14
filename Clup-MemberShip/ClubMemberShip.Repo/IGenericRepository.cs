@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Repo.Utils;
 
 namespace ClubMemberShip.Repo;
 
@@ -19,4 +20,7 @@ public interface IGenericRepository<TEntity>
     public void Update(TEntity entity);
     public void Delete(object? id);
     public void SaveChanges();
+    Pagination<TEntity> ToPagination(int pageNumber = 0, int pageSize = 10, params Expression<Func<TEntity, object>>[] includes);
+    Pagination<TEntity> ToPagination(IEnumerable<TEntity> list,int pageNumber = 0, int pageSize = 10, params Expression<Func<TEntity, object>>[] includes);
+
 }

@@ -1,6 +1,7 @@
 ﻿using ClubMemberShip.Repo;
 using ClubMemberShip.Repo.Models;
 using ClubMemberShip.Repo.UnitOfWork;
+using ClubMemberShip.Repo.Utils;
 
 namespace ClubMemberShip.Service.Service;
 
@@ -10,9 +11,15 @@ public class ClubActivityService : GenericService<ClubActivity>, IClubActivitySe
     {
     }
 
-    public override List<ClubActivity> GetAll()
+    public override List<ClubActivity> Get()
     {
         throw new NotImplementedException();
+    }
+
+    public override Pagination<ClubActivity> GetPagination(int pageIndex, int pageSize)
+    {
+        var listEntities = Get();
+        return UnitOfWork.ClubActivityRepo.ToPagination(listEntities, pageIndex, pageSize);
     }
 
     public override ClubActivity GetById(object id)
