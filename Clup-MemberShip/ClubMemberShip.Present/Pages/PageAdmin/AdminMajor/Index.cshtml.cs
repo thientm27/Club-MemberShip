@@ -24,7 +24,7 @@ public class IndexModel : PageModel
     public void OnGet()
     {
         var data = _majorService.GetPagination(PageIndex - 1, PageSize);
-        TotalPages = data.TotalPagesCount - 1;
+        TotalPages = data.TotalPagesCount;
         Major = data.Items.ToList();
     }
 

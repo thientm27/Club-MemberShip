@@ -23,7 +23,7 @@ namespace ClubMemberShip.Web.Pages.PageAdmin.AdminGrade
         public void OnGet()
         {
             var data = _gradeService.GetPagination(PageIndex - 1, PageSize);
-            TotalPages = data.TotalPagesCount - 1;
+            TotalPages = data.TotalPagesCount;
             Grade = data.Items.ToList();
         }
         public IActionResult OnPost()

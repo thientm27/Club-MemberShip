@@ -22,7 +22,7 @@ namespace ClubMemberShip.Web.Pages.PageAdmin.AdminClub
         public void OnGet()
         {
             var data = _clubServices.GetPagination(PageIndex - 1, PageSize);
-            TotalPages = data.TotalPagesCount - 1;
+            TotalPages = data.TotalPagesCount;
             Club = data.Items.ToList();
         }
     }

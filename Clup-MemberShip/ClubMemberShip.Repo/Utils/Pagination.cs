@@ -6,14 +6,17 @@ public class Pagination<T>
     private ICollection<T> _items;
 
     public int TotalItemsCount { get; set; }
+
     public int PageSize
     {
-        get => _pageSize; set
+        get => _pageSize;
+        set
         {
             if (value == 0) throw new InvalidDataException("PageSize equals 0");
             _pageSize = value;
         }
     }
+
     public int TotalPagesCount
     {
         get
@@ -23,24 +26,19 @@ public class Pagination<T>
             {
                 return count;
             }
-            return count + 2;
+
+            return count + 1;
         }
     }
-    
+
     public int PageIndex { get; set; }
 
     /// <summary>
     /// page number start from 0
     /// </summary>
-    public bool Next => PageIndex + 1 < TotalPagesCount;
-    public bool Previous => PageIndex > 0;
     public ICollection<T> Items
     {
-        get
-        {
-            return _items;
-        }
+        get { return _items; }
         set => _items = value;
     }
-
 }
