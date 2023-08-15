@@ -75,6 +75,9 @@ public class StudentService : GenericService<Student>, IStudentServices
 
     public override Result Add(Student newEntity)
     {
+        var maxId = Get().Max(o => o.Id);
+        newEntity.Id = maxId + 1;
+        
         UnitOfWork.StudentRepo.Create(newEntity);
         UnitOfWork.SaveChange();
         return Result.Ok;

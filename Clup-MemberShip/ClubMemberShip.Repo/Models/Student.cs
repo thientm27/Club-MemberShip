@@ -18,8 +18,8 @@ namespace ClubMemberShip.Repo.Models
         public int GradeId { get; set; }
         public DateTime? DateOfBirth { get; set; }
 
-        public virtual Grade Grade { get; set; } = null!;
-        public virtual Major Major { get; set; } = null!;
+        public virtual Grade? Grade { get; set; } = null!;
+        public virtual Major? Major { get; set; } = null!;
         public virtual ICollection<Membership> Memberships { get; set; }
     }
 }
