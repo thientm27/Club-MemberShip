@@ -1,6 +1,5 @@
 ﻿using ClubMemberShip.Repo;
 using ClubMemberShip.Repo.Models;
-using ClubMemberShip.Repo.UnitOfWork;
 using ClubMemberShip.Repo.Utils;
 
 namespace ClubMemberShip.Service.Service;
@@ -22,23 +21,29 @@ public class ClubService : GenericService<Club>, IClubServices
         return UnitOfWork.ClubRepo.ToPagination(listEntities, pageIndex, pageSize);
     }
 
-    public override Club GetById(object id)
+    public override Club? GetById(object id)
     {
-        throw new NotImplementedException();
+        return UnitOfWork.ClubRepo.GetById(id);
     }
 
     public override Result Update(Club newEntity)
     {
-        throw new NotImplementedException();
+         UnitOfWork.ClubRepo.Update(newEntity);
+         UnitOfWork.SaveChange();
+         return Result.Ok;
     }
 
     public override Result Delete(object idToDelete)
     {
-        throw new NotImplementedException();
+        UnitOfWork.ClubRepo.Delete(idToDelete);
+        UnitOfWork.SaveChange();
+        return Result.Ok;
     }
 
     public override Result Add(Club newEntity)
     {
-        throw new NotImplementedException();
+        UnitOfWork.ClubRepo.Create(newEntity);
+        UnitOfWork.SaveChange();
+        return Result.Ok;
     }
 }

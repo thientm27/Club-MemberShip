@@ -1,0 +1,70 @@
+﻿@page
+@model ClubMemberShip.Web.Pages.PageAdmin.AdminClub.CreateModel
+
+@{
+    Layout = "Shared/_AdminLayout";
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Club</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Club.Id" class="control-label"></label>
+                <input asp-for="Club.Id" class="form-control" />
+                <span asp-validation-for="Club.Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Club.Code" class="control-label"></label>
+                <input asp-for="Club.Code" class="form-control" />
+                <span asp-validation-for="Club.Code" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Club.Name" class="control-label"></label>
+                <input asp-for="Club.Name" class="form-control" />
+                <span asp-validation-for="Club.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Club.Logo" class="control-label"></label>
+                <input asp-for="Club.Logo" class="form-control" />
+                <span asp-validation-for="Club.Logo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Club.ShortDecription" class="control-label"></label>
+                <input asp-for="Club.ShortDecription" class="form-control" />
+                <span asp-validation-for="Club.ShortDecription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Club.LongDecription" class="control-label"></label>
+                <input asp-for="Club.LongDecription" class="form-control" />
+                <span asp-validation-for="Club.LongDecription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Club.DateOfEstablishment" class="control-label"></label>
+                <input asp-for="Club.DateOfEstablishment" class="form-control" />
+                <span asp-validation-for="Club.DateOfEstablishment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Club.Status" class="control-label"></label>
+                <input asp-for="Club.Status" class="form-control" />
+                <span asp-validation-for="Club.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

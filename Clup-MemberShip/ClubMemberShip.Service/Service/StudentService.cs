@@ -1,6 +1,5 @@
 ﻿using ClubMemberShip.Repo;
 using ClubMemberShip.Repo.Models;
-using ClubMemberShip.Repo.UnitOfWork;
 using ClubMemberShip.Repo.Utils;
 
 namespace ClubMemberShip.Service.Service;
