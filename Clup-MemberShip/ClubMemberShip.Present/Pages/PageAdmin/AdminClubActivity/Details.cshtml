@@ -1,0 +1,55 @@
+﻿@page
+@model ClubMemberShip.Web.Pages.PageAdmin.AdminClubActivity.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ClubActivity</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClubActivity.StartDay)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClubActivity.StartDay)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClubActivity.EndDay)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClubActivity.EndDay)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClubActivity.CreateDay)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClubActivity.CreateDay)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClubActivity.TimeLine)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClubActivity.TimeLine)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClubActivity.Club)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClubActivity.Club.Code)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClubActivity.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClubActivity.Status)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.ClubActivity?.Id">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>
