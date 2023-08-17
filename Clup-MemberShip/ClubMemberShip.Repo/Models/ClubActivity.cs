@@ -17,12 +17,4 @@
         public virtual Club Club { get; set; } = null!;
         public virtual ICollection<Participant> Participants { get; set; }
     }
-
-    public enum TimeLineStatus
-    {
-        Pending = 0,
-        OnGoing = 0,
-        Finished = 0,
-        
-    }
 }
