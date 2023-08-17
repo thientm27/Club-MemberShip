@@ -32,9 +32,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Club[0].DateOfEstablishment)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Club[0].Status)
-        </th>
         <th></th>
     </tr>
     </thead>
@@ -58,9 +55,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateOfEstablishment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

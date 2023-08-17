@@ -8,44 +8,50 @@
 <h1>Edit</h1>
 
 <h4>ClubActivity</h4>
-<hr />
+<hr/>
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ClubActivity.Id" />
+            <input type="hidden" asp-for="ClubActivity.Id"/>
             <div class="form-group">
                 <label asp-for="ClubActivity.ClubId" class="control-label"></label>
                 <select asp-for="ClubActivity.ClubId" class="form-control" asp-items="ViewBag.ClubId"></select>
                 <span asp-validation-for="ClubActivity.ClubId" class="text-danger"></span>
             </div>
             <div class="form-group">
+                @{
+                    DateTime defaultDate = DateTime.Today;
+                }
                 <label asp-for="ClubActivity.StartDay" class="control-label"></label>
-                <input asp-for="ClubActivity.StartDay" class="form-control" />
+                <input asp-for="ClubActivity.StartDay" class="form-control" max="@defaultDate.ToString("yyyy-MM-dd")" value="@defaultDate.ToString("yyyy-MM-dd")"/>
                 <span asp-validation-for="ClubActivity.StartDay" class="text-danger"></span>
             </div>
             <div class="form-group">
+                @{
+                    DateTime nextDate = Model.ClubActivity.StartDay.AddDays(1);
+                }
                 <label asp-for="ClubActivity.EndDay" class="control-label"></label>
-                <input asp-for="ClubActivity.EndDay" class="form-control" />
+                <input asp-for="ClubActivity.EndDay" class="form-control" min="@nextDate.ToString("yyyy-MM-dd")" value="@nextDate.ToString("yyyy-MM-dd")"/>
                 <span asp-validation-for="ClubActivity.EndDay" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ClubActivity.CreateDay" class="control-label"></label>
-                <input asp-for="ClubActivity.CreateDay" class="form-control" />
+                <input asp-for="ClubActivity.CreateDay" class="form-control" readonly="readonly"/>
                 <span asp-validation-for="ClubActivity.CreateDay" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ClubActivity.TimeLine" class="control-label"></label>
-                <input asp-for="ClubActivity.TimeLine" class="form-control" />
+                <input asp-for="ClubActivity.TimeLine" class="form-control"/>
                 <span asp-validation-for="ClubActivity.TimeLine" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ClubActivity.Status" class="control-label"></label>
-                <input asp-for="ClubActivity.Status" class="form-control" />
+                <input asp-for="ClubActivity.Status" class="form-control"/>
                 <span asp-validation-for="ClubActivity.Status" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary"/>
             </div>
         </form>
     </div>
@@ -56,5 +62,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

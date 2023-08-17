@@ -1,6 +1,5 @@
 ﻿using ClubMemberShip.Repo;
 using ClubMemberShip.Repo.Models;
-using ClubMemberShip.Repo.UnitOfWork;
 using ClubMemberShip.Repo.Utils;
 
 namespace ClubMemberShip.Service.Service;
@@ -13,7 +12,7 @@ public class ClubActivityService : GenericService<ClubActivity>, IClubActivitySe
 
     public override List<ClubActivity> Get()
     {
-        throw new NotImplementedException();
+        return UnitOfWork.ClubActivityRepo.Get().ToList();
     }
 
     public override Pagination<ClubActivity> GetPagination(int pageIndex, int pageSize)
@@ -22,23 +21,34 @@ public class ClubActivityService : GenericService<ClubActivity>, IClubActivitySe
         return UnitOfWork.ClubActivityRepo.ToPagination(listEntities, pageIndex, pageSize);
     }
 
-    public override ClubActivity GetById(object id)
+    public override ClubActivity? GetById(object id)
     {
-        throw new NotImplementedException();
+        return UnitOfWork.ClubActivityRepo.GetById(id);
     }
 
     public override Result Update(ClubActivity newEntity)
     {
-        throw new NotImplementedException();
+        UnitOfWork.ClubActivityRepo.Update(newEntity);
+        UnitOfWork.SaveChange();
+        return Result.Ok;
     }
 
     public override Result Delete(object idToDelete)
     {
-        throw new NotImplementedException();
+        UnitOfWork.ClubActivityRepo.Delete(idToDelete);
+        UnitOfWork.SaveChange();
+        return Result.Ok;
     }
 
     public override Result Add(ClubActivity newEntity)
     {
-        throw new NotImplementedException();
+       
+        var maxId = Get().Max(o => o.Id);
+        newEntity.Id = maxId + 1;
+        newEntity.Status = Status.Active;
+        
+        UnitOfWork.ClubActivityRepo.Create(newEntity);
+        UnitOfWork.SaveChange();
+        return Result.Ok;
     }
 }

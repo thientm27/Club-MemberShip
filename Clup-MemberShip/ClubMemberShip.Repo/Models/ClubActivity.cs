@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ClubMemberShip.Repo.Models
+﻿namespace ClubMemberShip.Repo.Models
 {
     public partial class ClubActivity : BaseEntity
     {
@@ -15,9 +12,17 @@ namespace ClubMemberShip.Repo.Models
         public DateTime StartDay { get; set; }
         public DateTime? EndDay { get; set; }
         public DateTime CreateDay { get; set; }
-        public int? TimeLine { get; set; }
+        public TimeLineStatus? TimeLine { get; set; }
 
         public virtual Club Club { get; set; } = null!;
         public virtual ICollection<Participant> Participants { get; set; }
+    }
+
+    public enum TimeLineStatus
+    {
+        Pending = 0,
+        OnGoing = 0,
+        Finished = 0,
+        
     }
 }

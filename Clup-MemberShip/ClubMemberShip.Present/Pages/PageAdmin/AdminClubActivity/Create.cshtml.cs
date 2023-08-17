@@ -10,7 +10,7 @@ namespace ClubMemberShip.Web.Pages.PageAdmin.AdminClubActivity
     {
         private readonly IClubActivityService _clubActivityService;
         private readonly IClubServices _clubServices;
-
+        [BindProperty] public ClubActivity ClubActivity { get; set; } = default!;
         public CreateModel(IClubActivityService clubActivityService, IClubServices clubServices)
         {
             _clubActivityService = clubActivityService;
@@ -20,11 +20,12 @@ namespace ClubMemberShip.Web.Pages.PageAdmin.AdminClubActivity
 
         public IActionResult OnGet()
         {
+            ClubActivity.TimeLine = TimeLineStatus.Pending;
             ViewData["ClubId"] = new SelectList(_clubServices.Get(), "Id", "Name");
             return Page();
         }
 
-        [BindProperty] public ClubActivity ClubActivity { get; set; } = default!;
+
 
 
         public IActionResult OnPost()
