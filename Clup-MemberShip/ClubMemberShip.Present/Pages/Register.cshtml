@@ -1,5 +1,5 @@
 ﻿@page
-@model ClubMemberShip.Present.Pages.RegisterModel
+@model ClubMemberShip.Web.Pages.RegisterModel
 
 @{
     ViewData["Title"] = "Register";
@@ -8,46 +8,44 @@
 <h1>Register</h1>
 
 <h4>Student</h4>
-<hr />
+<hr/>
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Student.Id" class="control-label"></label>
-                <input asp-for="Student.Id" class="form-control" />
-                <span asp-validation-for="Student.Id" class="text-danger"></span>
+                <label asp-for="Student.Code" class="control-label"></label>
+                <input asp-for="Student.Code" class="form-control" required="required"/>
+                <span asp-validation-for="Student.Code" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Student.Name" class="control-label"></label>
-                <input asp-for="Student.Name" class="form-control" />
+                <input asp-for="Student.Name" class="form-control" required="required"/>
                 <span asp-validation-for="Student.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Student.Address" class="control-label"></label>
-                <input asp-for="Student.Address" class="form-control" />
+                <input asp-for="Student.Address" class="form-control"/>
                 <span asp-validation-for="Student.Address" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Student.MajorId" class="control-label"></label>
-                <select asp-for="Student.MajorId" class ="form-control" asp-items="ViewBag.MajorId"></select>
+                <select asp-for="Student.MajorId" class="form-control" asp-items="ViewBag.MajorId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Student.GradeId" class="control-label"></label>
-                <select asp-for="Student.GradeId" class ="form-control" asp-items="ViewBag.GradeId"></select>
+                <select asp-for="Student.GradeId" class="form-control" asp-items="ViewBag.GradeId"></select>
             </div>
             <div class="form-group">
+                @{
+                    DateTime defaultDate = DateTime.Today.AddYears(-18);
+                }
                 <label asp-for="Student.DateOfBirth" class="control-label"></label>
-                <input asp-for="Student.DateOfBirth" class="form-control" />
+                <input asp-for="Student.DateOfBirth" class="form-control" max="@defaultDate.ToString("yyyy-MM-dd")" value="@defaultDate.ToString("yyyy-MM-dd")"/>
                 <span asp-validation-for="Student.DateOfBirth" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Student.Status" class="control-label"></label>
-                <input asp-for="Student.Status" class="form-control" />
-                <span asp-validation-for="Student.Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary"/>
             </div>
         </form>
     </div>
@@ -58,5 +56,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

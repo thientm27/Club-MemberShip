@@ -1,9 +1,8 @@
 using ClubMemberShip.Service;
-using ClubMemberShip.Service.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ClubMemberShip.Present.Pages
+namespace ClubMemberShip.Web.Pages
 {
     public class LoginModel : PageModel
     {
@@ -17,29 +16,37 @@ namespace ClubMemberShip.Present.Pages
             _clubMemberShipService = clubMemberShipService;
         }
 
-        public void OnGet()
-        {
-        }
-
         public IActionResult OnPostLogin()
         {
+            if (!ModelState.IsValid)
+            {
+                Msg = "Please input your id";
+                return Page();
+            }
+
             var result = _clubMemberShipService.Login(Id);
             if (result == 1)
             {
-                Msg = "Hi user";
-                return Page();
+                HttpContext.Session.SetString("User", Id);
+                return RedirectToPage("./PageUser/Index");
             }
 
             if (result == -1)
             {
-                // admin
-                Msg = "Hi admin";
+                HttpContext.Session.SetString("User", "Admin");
                 return RedirectToPage("./PageAdmin/Index");
             }
 
-            Msg = "Id not available";
+            Msg = "You student code not found";
+            HttpContext.Session.SetString("User", "None");
             return Page();
         }
+
+        public void OnPostLogout()
+        {
+            HttpContext.Session.Clear();
+        }
+
         public IActionResult OnPostRegister()
         {
             return RedirectToPage("./Register");

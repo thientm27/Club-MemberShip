@@ -49,11 +49,6 @@ public class GenericRepo<TEntity> : IGenericRepository<TEntity>
         return Context.Set<TEntity>().Find(id);
     }
 
-    public int GetMaxId()
-    {
-        throw new NotImplementedException();
-    }
-
 
     public void Create(TEntity entity)
     {

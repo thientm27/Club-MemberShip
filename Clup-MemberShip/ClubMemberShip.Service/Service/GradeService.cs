@@ -44,7 +44,11 @@ public class GradeService : GenericService<Grade>, IGradeService
 
     public override Result Add(Grade newEntity)
     {
+        var maxId = Get().Max(o => o.Id);
+        newEntity.Id = maxId + 1;
+        
         UnitOfWork.GradeRepo.Create(newEntity);
+        UnitOfWork.SaveChange();
         return Result.Ok;
     }
 }

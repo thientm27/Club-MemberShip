@@ -28,9 +28,9 @@ public class ClubService : GenericService<Club>, IClubServices
 
     public override Result Update(Club newEntity)
     {
-         UnitOfWork.ClubRepo.Update(newEntity);
-         UnitOfWork.SaveChange();
-         return Result.Ok;
+        UnitOfWork.ClubRepo.Update(newEntity);
+        UnitOfWork.SaveChange();
+        return Result.Ok;
     }
 
     public override Result Delete(object idToDelete)
@@ -42,6 +42,16 @@ public class ClubService : GenericService<Club>, IClubServices
 
     public override Result Add(Club newEntity)
     {
+        var isExisted = UnitOfWork.ClubRepo.Get(filter: club => club.Code == newEntity.Code);
+        if (isExisted.Count > 0)
+        {
+            return Result.DuplicatedId;
+        }
+
+        var maxId = Get().Max(o => o.Id);
+        newEntity.Id = maxId + 1;
+        newEntity.Status = Status.Active;
+        
         UnitOfWork.ClubRepo.Create(newEntity);
         UnitOfWork.SaveChange();
         return Result.Ok;

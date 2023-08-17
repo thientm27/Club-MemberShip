@@ -43,7 +43,17 @@ public class MajorService : GenericService<Major>, IMajorService
 
     public override Result Add(Major newEntity)
     {
+        var isExisted = UnitOfWork.MajorRepo.Get(filter: mj => mj.Code == newEntity.Code);
+        if (isExisted.Count > 0)
+        {
+            return Result.DuplicatedId;
+        }
+        
+        var maxId = Get().Max(o => o.Id);
+        newEntity.Id = maxId + 1;
+        
         UnitOfWork.MajorRepo.Create(newEntity);
+        UnitOfWork.SaveChange();
         return Result.Ok;
     }
 }

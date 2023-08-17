@@ -1,55 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ClubMemberShip.Repo;
+﻿using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Service;
+using ClubMemberShip.Service.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ClubMemberShip.Repo.Models;
-using ClubMemberShip.Service;
-using ClubMemberShip.Repo.Repository;
 
-namespace ClubMemberShip.Present.Pages
+namespace ClubMemberShip.Web.Pages
 {
     public class RegisterModel : PageModel
     {
-        private readonly IStudentServices _context;
+        private readonly IStudentServices _studentServices;
 
-        public RegisterModel(IStudentServices context)
+        public RegisterModel(IStudentServices context, IStudentServices studentServices)
         {
-            _context = context;
+            _studentServices = studentServices;
         }
 
         public IActionResult OnGet()
         {
-            ViewData["GradeId"] = new SelectList(_context.GetGrades(), "Id", "GradeYear");
-            ViewData["MajorId"] = new SelectList(_context.GetMajors(), "Id", "Name");
+            ViewData["GradeId"] = new SelectList(_studentServices.GetGrades(), "Id", "GradeYear");
+            ViewData["MajorId"] = new SelectList(_studentServices.GetMajors(), "Id", "Name");
             return Page();
         }
 
-        [BindProperty]
-        public Student Student { get; set; } = default!;
-        
+        [BindProperty] public Student Student { get; set; } = default!;
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+
         public IActionResult OnPost()
         {
-            var result = _context.Register(Student);
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
-            // switch (result)
-            // {
-            //     case Result.Null:
-            //         break;
-            //     case Result.Ok:
-            //         break;
-            //     case Result.DuplicatedId:
-            //         break;
-            //     case Result.Fail:
-            //         break;
-            // }
+            var result = _studentServices.Add(Student);
 
-            return Page();
+            switch (result)
+            {
+                case Result.Ok:
+                    return RedirectToPage("./Index");
+                case Result.DuplicatedId:
+                    ModelState.AddModelError("Student.Code", "Student code is duplicated");
+                    return OnGet();
+            }
+
+            return RedirectToPage("./Index");
         }
     }
 }

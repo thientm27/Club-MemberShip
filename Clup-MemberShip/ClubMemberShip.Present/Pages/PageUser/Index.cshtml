@@ -1,42 +1,42 @@
 ﻿@page
-@model ClubMemberShip.Web.Pages.PageAdmin.AdminStudent.IndexModel
+@model ClubMemberShip.Web.Pages.PageUser.IndexModel
 
 @{
-    Layout = "Shared/_AdminLayout";
+    Layout = "Shared/_UserLayout";
     ViewData["Title"] = "Index";
 }
+<h1>WELCOME @Model.StudentLogin.Name</h1>
 
-<h1>Index</h1>
-
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
+<h1>ALL CLUB AVAILABLE</h1>
 <table class="table">
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Student[0].Code)
+            @Html.DisplayNameFor(model => model.Club[0].Code)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Student[0].Name)
+            @Html.DisplayNameFor(model => model.Club[0].Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Student[0].Address)
+            @Html.DisplayNameFor(model => model.Club[0].Logo)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Student[0].DateOfBirth)
+            @Html.DisplayNameFor(model => model.Club[0].ShortDecription)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Student[0].Grade)
+            @Html.DisplayNameFor(model => model.Club[0].LongDecription)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Student[0].Major)
+            @Html.DisplayNameFor(model => model.Club[0].DateOfEstablishment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Club[0].Status)
         </th>
         <th></th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model.Student)
+    @foreach (var item in Model.Club)
     {
         <tr>
             <td>
@@ -46,17 +46,19 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Address)
+                @Html.DisplayFor(modelItem => item.Logo)
             </td>
             <td>
-          
-                @Html.DisplayFor(modelItem => item.DateOfBirth)
+                @Html.DisplayFor(modelItem => item.ShortDecription)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Grade!.GradeYear.Year)
+                @Html.DisplayFor(modelItem => item.LongDecription)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Major!.Name)
+                @Html.DisplayFor(modelItem => item.DateOfEstablishment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
@@ -67,7 +69,6 @@
     }
     </tbody>
 </table>
-
 <div>
     <ul class="pagination">
         @for (var i = 1; i <= Model.TotalPages; i++)

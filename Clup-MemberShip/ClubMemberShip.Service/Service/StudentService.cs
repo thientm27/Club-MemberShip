@@ -27,12 +27,13 @@ public class StudentService : GenericService<Student>, IStudentServices
             return -1;
         }
 
-        return UnitOfWork.StudentRepo.GetById(id) == null ? 0 : 1;
+        return UnitOfWork.StudentRepo.GetByStudentCode(id) == null ? 0 : 1;
     }
 
     public Result DeleteStudent(string id)
     {
-        throw new NotImplementedException();
+        UnitOfWork.StudentRepo.Delete(id);
+        return Result.Ok;
     }
 
     public Result Register(Student student)
@@ -75,9 +76,15 @@ public class StudentService : GenericService<Student>, IStudentServices
 
     public override Result Add(Student newEntity)
     {
+        var isExisted = UnitOfWork.StudentRepo.Get(filter: st => st.Code == newEntity.Code);
+        if (isExisted.Count > 0)
+        {
+            return Result.DuplicatedId;
+        }
+
         var maxId = Get().Max(o => o.Id);
         newEntity.Id = maxId + 1;
-        
+
         UnitOfWork.StudentRepo.Create(newEntity);
         UnitOfWork.SaveChange();
         return Result.Ok;

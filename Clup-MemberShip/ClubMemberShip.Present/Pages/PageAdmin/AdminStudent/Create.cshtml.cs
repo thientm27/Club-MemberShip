@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ClubMemberShip.Repo.Models;
 using ClubMemberShip.Service;
+using ClubMemberShip.Service.Service;
 
 namespace ClubMemberShip.Web.Pages.PageAdmin.AdminStudent
 {
@@ -29,7 +30,6 @@ namespace ClubMemberShip.Web.Pages.PageAdmin.AdminStudent
 
         [BindProperty] public Student Student { get; set; } = default!;
 
-
         public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
@@ -37,7 +37,17 @@ namespace ClubMemberShip.Web.Pages.PageAdmin.AdminStudent
                 return Page();
             }
 
-            _studentServices.Add(Student);
+            var result = _studentServices.Add(Student);
+
+            switch (result)
+            {
+                case Result.Ok:
+                    return RedirectToPage("./Index");
+                case Result.DuplicatedId:
+                    ModelState.AddModelError("Student.Code", "Student code is duplicated");
+                    return OnGet();
+            }
+
             return RedirectToPage("./Index");
         }
     }

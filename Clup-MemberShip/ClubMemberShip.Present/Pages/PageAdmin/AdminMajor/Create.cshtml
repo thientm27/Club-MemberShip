@@ -15,18 +15,13 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Major.Id" class="control-label"></label>
-                <input asp-for="Major.Id" class="form-control" />
-                <span asp-validation-for="Major.Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Major.Code" class="control-label"></label>
-                <input asp-for="Major.Code" class="form-control" />
+                <input asp-for="Major.Code" class="form-control" required="required" />
                 <span asp-validation-for="Major.Code" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Major.Name" class="control-label"></label>
-                <input asp-for="Major.Name" class="form-control" />
+                <input asp-for="Major.Name" class="form-control"  required="required"/>
                 <span asp-validation-for="Major.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -36,13 +31,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Major.Semeter" class="control-label"></label>
-                <input asp-for="Major.Semeter" class="form-control" />
+                <input asp-for="Major.Semeter" class="form-control" max="9" min="0" />
                 <span asp-validation-for="Major.Semeter" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Major.Status" class="control-label"></label>
-                <input asp-for="Major.Status" class="form-control" />
-                <span asp-validation-for="Major.Status" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

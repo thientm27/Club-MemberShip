@@ -1,5 +1,5 @@
 ﻿@page
-@model LoginModel
+@model ClubMemberShip.Web.Pages.LoginModel
 @{
     ViewData["Title"] = "Home page";
 }
@@ -7,31 +7,32 @@
 <!DOCTYPE html>
 
 <head>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width"/>
     <title>Index</title>
 </head >
 <body>
 <div style="margin: 0 auto">
     <h3 style="margin: 0 auto; width: max-content">Login Form</h3>
-        @Model.Msg
-        <form method="post" asp-page="Index" style="margin: 10px auto; width: max-content">
-            <table>
-                <tr>
-                    <td>StudentId</td>
-                    <td><input type="text" asp-for="@Model.Id" /></td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    
-                    <td> <div style="margin: 10px auto">
-                            <input type="submit" asp-page-handler="Login" value="Login" />
-                            <input type="submit" asp-page-handler="Register" value="Register" />
-                        </div>
-                      
-                    </td>
-                </tr>
-            </table>
-        </form>
+    <form method="post" asp-page="Index" style="margin: 10px auto; width: max-content">
+        <table>
+            <tr>
+                <td>StudentId</td>
+                <td>
+                    <input type="text" asp-for="@Model.Id"/>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <div style="margin: 10px auto">
+                        <input type="submit" asp-page-handler="Login" value="Login"/>
+                        <input type="submit" asp-page-handler="Register" value="Register" required="required"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <h4 style="color: red; margin: 10px auto; width: max-content"> @Model.Msg</h4>
 </div>
-    
+
 </body>

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ClubMemberShip.Repo.Models
 {
-    public partial class Grade : BaseEntity
+    public class Grade : BaseEntity
     {
         public Grade()
         {
@@ -11,9 +12,9 @@ namespace ClubMemberShip.Repo.Models
         }
 
         public int Id { get; set; }
-        public DateTime GradeYear { get; set; }
-        public DateTime? GraduateYear { get; set; }
-        public DateTime? ExpeiredYear { get; set; }
+        [DataType(DataType.Date)] public DateTime GradeYear { get; set; }
+        [DataType(DataType.Date)] public DateTime? GraduateYear { get; set; }
+        [DataType(DataType.Date)] public DateTime? ExpeiredYear { get; set; }
 
         public virtual ICollection<Student> Students { get; set; }
     }
