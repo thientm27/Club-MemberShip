@@ -1,43 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Service;
 
 namespace ClubMemberShip.Web.Pages.PageAdmin.AdminClubActivity
 {
     public class CreateModel : PageModel
     {
-        private readonly ClubMemberShip.Repo.Models.ClubMembershipContext _context;
+        private readonly IClubActivityService _clubActivityService;
+        private readonly IClubServices _clubServices;
 
-        public CreateModel(ClubMemberShip.Repo.Models.ClubMembershipContext context)
+        public CreateModel(IClubActivityService clubActivityService, IClubServices clubServices)
         {
-            _context = context;
+            _clubActivityService = clubActivityService;
+            _clubServices = clubServices;
         }
+
 
         public IActionResult OnGet()
         {
-        ViewData["ClubId"] = new SelectList(_context.Clubs, "Id", "Code");
+            ViewData["ClubId"] = new SelectList(_clubServices.Get(), "Id", "Name");
             return Page();
         }
 
-        [BindProperty]
-        public ClubActivity ClubActivity { get; set; } = default!;
-        
+        [BindProperty] public ClubActivity ClubActivity { get; set; } = default!;
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+
+        public IActionResult OnPost()
         {
-          if (!ModelState.IsValid || _context.ClubActivities == null || ClubActivity == null)
+            if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.ClubActivities.Add(ClubActivity);
-            await _context.SaveChangesAsync();
+            _clubActivityService.Add(ClubActivity);
 
             return RedirectToPage("./Index");
         }

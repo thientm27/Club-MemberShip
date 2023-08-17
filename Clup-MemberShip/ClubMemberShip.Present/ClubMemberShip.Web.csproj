@@ -51,6 +51,7 @@
 
   <ItemGroup>
     <Folder Include="Pages\FE\" />
+    <Folder Include="Pages\PageUser\" />
   </ItemGroup>
 
 </Project>

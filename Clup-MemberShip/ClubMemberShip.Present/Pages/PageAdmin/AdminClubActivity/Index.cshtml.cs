@@ -1,32 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Service;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ClubMemberShip.Web.Pages.PageAdmin.AdminClubActivity
 {
     public class IndexModel : PageModel
     {
-        private readonly ClubMemberShip.Repo.Models.ClubMembershipContext _context;
+        private readonly IClubActivityService _clubActivityService;
+        [BindProperty(SupportsGet = true)] public int PageIndex { get; set; } = 1;
+        public int Count { get; set; }
+        public int PageSize { get; set; } = 3;
+        public int TotalPages;
 
-        public IndexModel(ClubMemberShip.Repo.Models.ClubMembershipContext context)
+        public IndexModel(IClubActivityService clubActivityService)
         {
-            _context = context;
+            _clubActivityService = clubActivityService;
         }
 
-        public IList<ClubActivity> ClubActivity { get;set; } = default!;
+        public IList<ClubActivity> ClubActivity { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public void OnGet()
         {
-            if (_context.ClubActivities != null)
-            {
-                ClubActivity = await _context.ClubActivities
-                .Include(c => c.Club).ToListAsync();
-            }
+            var data = _clubActivityService.GetPagination(PageIndex - 1, PageSize);
+            TotalPages = data.TotalPagesCount;
+            ClubActivity = data.Items.ToList();
         }
     }
 }

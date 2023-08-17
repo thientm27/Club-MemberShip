@@ -1,41 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Service;
 
 namespace ClubMemberShip.Web.Pages.PageAdmin.AdminClubActivity
 {
     public class DetailsModel : PageModel
     {
-        private readonly ClubMemberShip.Repo.Models.ClubMembershipContext _context;
+        private readonly IClubActivityService _clubActivityService;
 
-        public DetailsModel(ClubMemberShip.Repo.Models.ClubMembershipContext context)
+        public DetailsModel(IClubActivityService clubActivityService)
         {
-            _context = context;
+            _clubActivityService = clubActivityService;
         }
 
-      public ClubActivity ClubActivity { get; set; } = default!; 
+        public ClubActivity ClubActivity { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int? id)
         {
-            if (id == null || _context.ClubActivities == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var clubactivity = await _context.ClubActivities.FirstOrDefaultAsync(m => m.Id == id);
+            var clubactivity = _clubActivityService.GetById(id);
             if (clubactivity == null)
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 ClubActivity = clubactivity;
             }
+
             return Page();
         }
     }
