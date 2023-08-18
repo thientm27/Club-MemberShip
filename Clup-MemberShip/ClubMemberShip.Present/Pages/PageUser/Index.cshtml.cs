@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using ClubMemberShip.Repo.Models;
-using ClubMemberShip.Repo.Utils;
 using ClubMemberShip.Service;
 using Microsoft.AspNetCore.Mvc;
 
