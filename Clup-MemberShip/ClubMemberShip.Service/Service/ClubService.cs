@@ -138,17 +138,62 @@ public class ClubService : GenericService<Club>, IClubServices
         throw new NotImplementedException();
     }
 
-    public Pagination<Club> GetJoinedClub(int pageIndex, int pageSize, int studentId)
+    public Pagination<Club>? GetJoinedClub(int pageIndex, int pageSize, int studentId)
     {
+        // var joinedList = UnitOfWork.MemberShipRepo.Get(filter: membership => membership.StudentId == studentId);
+        // List<Club> listEntities;
+        //
+        // if (joinedList.Count > 0)
+        // {
+        //     listEntities = UnitOfWork.ClubRepo.Get(filter: club => joinedList.Any(joined => joined.ClubId == club.Id));
+        // }
+        // else
+        // {
+        //     return null;
+        // }
+        //
+        // return UnitOfWork.ClubRepo.ToPagination(listEntities, pageIndex, pageSize);
+
         var joinedList = UnitOfWork.MemberShipRepo.Get(filter: membership => membership.StudentId == studentId);
-        var listEntities = UnitOfWork.ClubRepo.Get(filter: club => joinedList.Any(joined => joined.ClubId == club.Id));
+        if (joinedList.Count == 0)
+        {
+            return null;
+        }
+
+        var clubIds = joinedList.Select(joined => joined.ClubId).ToList();
+        var listEntities = UnitOfWork.ClubRepo.Get(filter: club => clubIds.Contains(club.Id));
+
         return UnitOfWork.ClubRepo.ToPagination(listEntities, pageIndex, pageSize);
     }
 
     public Pagination<Club> GetAvailableClub(int pageIndex, int pageSize, int studentId)
     {
+        // var joinedList = UnitOfWork.MemberShipRepo.Get(filter: membership => membership.StudentId == studentId);
+        // List<Club> listEntities;
+        // if (joinedList.Count > 0)
+        // {
+        //     listEntities = UnitOfWork.ClubRepo.Get(filter: club => joinedList.All(joined => joined.ClubId != club.Id));
+        // }
+        // else
+        // {
+        //     listEntities = UnitOfWork.ClubRepo.Get();
+        // }
+        //
+        // return UnitOfWork.ClubRepo.ToPagination(listEntities, pageIndex, pageSize);
+
         var joinedList = UnitOfWork.MemberShipRepo.Get(filter: membership => membership.StudentId == studentId);
-        var listEntities = UnitOfWork.ClubRepo.Get(filter: club => joinedList.All(joined => joined.ClubId != club.Id));
+        List<Club> listEntities;
+
+        if (joinedList.Count > 0)
+        {
+            var joinedClubIds = joinedList.Select(joined => joined.ClubId).ToList();
+            listEntities = UnitOfWork.ClubRepo.Get(filter: club => !joinedClubIds.Contains(club.Id));
+        }
+        else
+        {
+            listEntities = UnitOfWork.ClubRepo.Get();
+        }
+
         return UnitOfWork.ClubRepo.ToPagination(listEntities, pageIndex, pageSize);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Repo.Utils;
 using ClubMemberShip.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +11,17 @@ namespace ClubMemberShip.Web.Pages.PageUser
         private readonly IStudentServices _studentServices;
         private readonly IClubServices _clubServices;
 
-        [BindProperty(SupportsGet = true)] public int PageIndex { get; set; } = 1;
-        public int PageSize { get; set; } = 3;
-        public int TotalPages;
+        [BindProperty(SupportsGet = true, Name = "PageIndexA")]
+        public int PageIndexJoinedClub { get; set; } = 1;
+
+        public int PageSizeJoinedClub { get; set; } = 3;
+        public int TotalPagesJoinedClub;
+
+        [BindProperty(SupportsGet = true, Name = "PageIndexB")]
+        public int PageIndexAvailableClub { get; set; } = 1;
+
+        public int PageSizeAvailableClub { get; set; } = 3;
+        public int TotalPagesAvailableClub;
 
         public IndexModel(IStudentServices studentServices, IClubServices clubServices)
         {
@@ -20,21 +29,35 @@ namespace ClubMemberShip.Web.Pages.PageUser
             _clubServices = clubServices;
         }
 
-        public IList<Club> Club { get; set; } = default!;
+        public IList<Club> JoinedClub { get; set; } = default!;
+        public IList<Club> AvailableClub { get; set; } = default!;
         public Student StudentLogin { get; set; } = default!;
 
-        public void OnGet()
-        {
-            Authentication();
-
-            var data = _clubServices.GetPagination(PageIndex - 1, PageSize);
-            TotalPages = data.TotalPagesCount;
-            Club = data.Items.ToList();
-        }
-
-        public IActionResult Authentication()
+        public IActionResult OnGet()
         {
             var id = HttpContext.Session.GetString("User");
+            Authentication(id);
+
+            var data = _clubServices.GetJoinedClub(PageIndexJoinedClub - 1, PageSizeJoinedClub, StudentLogin.Id);
+            if (data != null)
+            {
+                TotalPagesJoinedClub = data.TotalPagesCount;
+                JoinedClub = data.Items.ToList();
+            }
+            else
+            {
+                JoinedClub = new List<Club>();
+            }
+
+            var data2 = _clubServices.GetAvailableClub(PageIndexAvailableClub - 1, PageSizeAvailableClub,
+                StudentLogin.Id);
+            TotalPagesAvailableClub = data2.TotalPagesCount;
+            AvailableClub = data2.Items.ToList();
+            return Page();
+        }
+
+        public IActionResult Authentication(string? id)
+        {
             if (id == null)
             {
                 return RedirectToPage("/Login");

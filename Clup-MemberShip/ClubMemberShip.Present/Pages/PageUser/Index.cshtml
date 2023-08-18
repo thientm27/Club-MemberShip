@@ -1,42 +1,37 @@
 ﻿@page
 @model ClubMemberShip.Web.Pages.PageUser.IndexModel
-
 @{
     Layout = "Shared/_UserLayout";
     ViewData["Title"] = "Index";
 }
-<h1>WELCOME @Model.StudentLogin.Name</h1>
-
-<h1>ALL CLUB AVAILABLE</h1>
+<h1 style="width: fit-content; margin: 0 auto">WELCOME @Model.StudentLogin.Name</h1>
+<br/>
+<h3>YOUR Joined CLUB</h3>
 <table class="table">
     <thead>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Club[0].Code)
+            @Html.DisplayNameFor(model => model.JoinedClub[0].Code)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Club[0].Name)
+            @Html.DisplayNameFor(model => model.JoinedClub[0].Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Club[0].Logo)
+            @Html.DisplayNameFor(model => model.JoinedClub[0].Logo)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Club[0].ShortDecription)
+            @Html.DisplayNameFor(model => model.JoinedClub[0].ShortDecription)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Club[0].LongDecription)
+            @Html.DisplayNameFor(model => model.JoinedClub[0].LongDecription)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Club[0].DateOfEstablishment)
+            @Html.DisplayNameFor(model => model.JoinedClub[0].DateOfEstablishment)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Club[0].Status)
-        </th>
-        <th></th>
     </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model.Club)
+    @foreach (var item in Model.JoinedClub)
     {
         <tr>
             <td>
@@ -57,13 +52,67 @@
             <td>
                 @Html.DisplayFor(modelItem => item.DateOfEstablishment)
             </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<div>
+    <ul class="pagination">
+        @for (var i = 1; i <= Model.TotalPagesJoinedClub; i++)
+        {
+            <li class="page-item @(i == Model.PageIndexJoinedClub ? "active" : "")">
+                <a asp-page="Index" asp-route-PageIndexA="@i" class="page-link">@i</a>
+            </li>
+        }
+    </ul>
+</div>
+
+<h3>Order CLUB</h3>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.JoinedClub[0].Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JoinedClub[0].Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JoinedClub[0].Logo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JoinedClub[0].ShortDecription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JoinedClub[0].LongDecription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JoinedClub[0].DateOfEstablishment)
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.AvailableClub)
+    {
+        <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
+                @Html.DisplayFor(modelItem => item.Code)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Logo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShortDecription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LongDecription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfEstablishment)
             </td>
         </tr>
     }
@@ -71,10 +120,10 @@
 </table>
 <div>
     <ul class="pagination">
-        @for (var i = 1; i <= Model.TotalPages; i++)
+        @for (var i = 1; i <= Model.TotalPagesAvailableClub; i++)
         {
-            <li class="page-item @(i == Model.PageIndex ? "active" : "")">
-                <a asp-page="Index" asp-route-PageIndex="@i" class="page-link">@i</a>
+            <li class="page-item @(i == Model.PageIndexAvailableClub ? "active" : "")">
+                <a asp-page="Index" asp-route-PageIndexB="@i" class="page-link">@i</a>
             </li>
         }
     </ul>
