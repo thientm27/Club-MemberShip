@@ -81,6 +81,7 @@ public class ClubService : GenericService<Club>, IClubServices
             LongDecription = "Manage the club",
             ShortDecription = "Owner club",
         });
+
         // CREATE STUDENT JOIN CLUB (membership)
         var memberShip = JoinClub(new Membership
         {
@@ -92,16 +93,20 @@ public class ClubService : GenericService<Club>, IClubServices
         });
 
         // CREATE STUDENT JOIN CLUB BOARD (owner)
-        JoinClubBoard(new MemberRole
+        if (memberShip != null && newClubBoardCreated != null)
         {
-            MembershipId = memberShip.Id,
-            ClubBoardId = 0,
-            StartDay = DateTime.Today,
-            EndDay = default,
-            Role = 1,
-        });
-        
-        
+            JoinClubBoard(new MemberRole
+            {
+                MembershipId = memberShip.Id,
+                ClubBoardId = newClubBoardCreated.Id,
+                StartDay = DateTime.Today,
+                EndDay = default,
+                Role = 1,
+            });
+        }
+           
+
+
         UnitOfWork.SaveChange();
         return newClub;
     }
@@ -121,7 +126,7 @@ public class ClubService : GenericService<Club>, IClubServices
         throw new NotImplementedException();
     }
 
-    public Result? LeaveClub(MemberRole memberRole)
+    public Result? LeaveClub(Membership memberRole)
     {
         throw new NotImplementedException();
     }

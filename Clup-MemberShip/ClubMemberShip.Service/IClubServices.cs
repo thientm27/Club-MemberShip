@@ -9,5 +9,5 @@ public interface IClubServices : IGenericService<Club>
     public ClubBoard? CreateClubBoard(ClubBoard newClubBoard); // also create new board and join
     public Membership? JoinClub(Membership membership);
     public MemberRole? JoinClubBoard(MemberRole memberRole);
-    public Result? LeaveClub(MemberRole memberRole);
+    public Result? LeaveClub(Membership memberRole);
 }
