@@ -137,4 +137,18 @@ public class ClubService : GenericService<Club>, IClubServices
     {
         throw new NotImplementedException();
     }
+
+    public Pagination<Club> GetJoinedClub(int pageIndex, int pageSize, int studentId)
+    {
+        var joinedList = UnitOfWork.MemberShipRepo.Get(filter: membership => membership.StudentId == studentId);
+        var listEntities = UnitOfWork.ClubRepo.Get(filter: club => joinedList.Any(joined => joined.ClubId == club.Id));
+        return UnitOfWork.ClubRepo.ToPagination(listEntities, pageIndex, pageSize);
+    }
+
+    public Pagination<Club> GetAvailableClub(int pageIndex, int pageSize, int studentId)
+    {
+        var joinedList = UnitOfWork.MemberShipRepo.Get(filter: membership => membership.StudentId == studentId);
+        var listEntities = UnitOfWork.ClubRepo.Get(filter: club => joinedList.All(joined => joined.ClubId != club.Id));
+        return UnitOfWork.ClubRepo.ToPagination(listEntities, pageIndex, pageSize);
+    }
 }
