@@ -10,22 +10,21 @@ namespace ClubMemberShip.Web.Pages.PageUser
         private readonly IClubServices _clubServices;
         private readonly IStudentServices _studentServices;
 
+        [BindProperty] public Club Club { get; set; } = default!;
+        public string Msg { get; set; }
+
         public CreateClubModel(IClubServices clubServices, IStudentServices studentServices)
         {
             _clubServices = clubServices;
             _studentServices = studentServices;
         }
 
-        public IActionResult OnGet()
+        public void OnGet()
         {
             var id = HttpContext.Session.GetString("User");
             Authentication(id);
-
-            return Page();
         }
 
-        [BindProperty] public Club Club { get; set; } = default!;
-        public Student StudentLogin { get; set; } = default!;
 
         public IActionResult OnPost()
         {
@@ -33,8 +32,19 @@ namespace ClubMemberShip.Web.Pages.PageUser
             {
                 return Page();
             }
+            var studentLogin = _studentServices.GetById(HttpContext.Session.GetString("User"));
+            if (studentLogin == null)
+            {
+                return RedirectToPage("/Login");
+            }
+            var clubCreated = _clubServices.StudentCreateClub(Club, studentLogin.Id, out var messageString);
+            if (clubCreated == null)
+            {
+                Msg = messageString;
+                OnGet();
+                return Page();
+            }
 
-            _clubServices.StudentCreateClub(Club, StudentLogin.Id);
             return RedirectToPage("./Index");
         }
 
@@ -51,8 +61,7 @@ namespace ClubMemberShip.Web.Pages.PageUser
                 return RedirectToPage("/Login");
             }
 
-            StudentLogin = studentLogin;
-            return Page();
+            return null;
         }
     }
 }

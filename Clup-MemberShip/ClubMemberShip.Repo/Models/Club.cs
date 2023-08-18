@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ClubMemberShip.Repo.Models
 {
@@ -18,6 +19,7 @@ namespace ClubMemberShip.Repo.Models
         public string? Logo { get; set; }
         public string? ShortDecription { get; set; }
         public string? LongDecription { get; set; }
+        [DataType(DataType.Date)]
         public DateTime DateOfEstablishment { get; set; }
 
         public virtual ICollection<ClubActivity> ClubActivities { get; set; }

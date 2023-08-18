@@ -40,10 +40,10 @@
             </div>
             <div class="form-group">
                 @{
-                    DateTime defaultDate = DateTime.Today.AddDays(-1);
+                    DateTime defaultDate = DateTime.Today;
                 }
                 <label asp-for="Club.DateOfEstablishment" class="control-label"></label>
-                <input asp-for="Club.DateOfEstablishment" class="form-control" max="@defaultDate.ToString("yyyy-MM-dd")" value="@defaultDate.ToString("yyyy-MM-dd")"/>
+                <input asp-for="Club.DateOfEstablishment" class="form-control" value="@defaultDate.ToString("yyyy-MM-dd")" readonly="readonly"/>
                 <span asp-validation-for="Club.DateOfEstablishment" class="text-danger"></span>
             </div>
             <div class="form-group">

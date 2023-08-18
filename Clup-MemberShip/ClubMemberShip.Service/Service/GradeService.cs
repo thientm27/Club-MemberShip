@@ -23,7 +23,7 @@ public class GradeService : GenericService<Grade>, IGradeService
         return UnitOfWork.GradeRepo.ToPagination(listEntities, pageIndex, pageSize);
     }
 
-    public override Grade? GetById(object id)
+    public override Grade? GetById(object? id)
     {
         return UnitOfWork.GradeRepo.GetById(id);
     }

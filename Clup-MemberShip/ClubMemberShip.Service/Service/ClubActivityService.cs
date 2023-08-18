@@ -21,7 +21,7 @@ public class ClubActivityService : GenericService<ClubActivity>, IClubActivitySe
         return UnitOfWork.ClubActivityRepo.ToPagination(listEntities, pageIndex, pageSize);
     }
 
-    public override ClubActivity? GetById(object id)
+    public override ClubActivity? GetById(object? id)
     {
         return UnitOfWork.ClubActivityRepo.GetById(id);
     }

@@ -17,7 +17,7 @@ public abstract class GenericService<TEntity> : IGenericService<TEntity> where T
     public abstract Pagination<TEntity> GetPagination(int pageIndex, int pageSize);
 
 
-    public abstract TEntity? GetById(object id);
+    public abstract TEntity? GetById(object? id);
     public abstract Result Update(TEntity newEntity);
     public abstract Result Delete(object idToDelete);
     public abstract Result Add(TEntity newEntity);

@@ -21,7 +21,7 @@ public class ClubService : GenericService<Club>, IClubServices
         return UnitOfWork.ClubRepo.ToPagination(listEntities, pageIndex, pageSize);
     }
 
-    public override Club? GetById(object id)
+    public override Club? GetById(object? id)
     {
         return UnitOfWork.ClubRepo.GetById(id);
     }
@@ -57,12 +57,14 @@ public class ClubService : GenericService<Club>, IClubServices
         return Result.Ok;
     }
 
-    public Club? StudentCreateClub(Club newClub, int studentId)
+    public Club? StudentCreateClub(Club newClub, int studentId, out string message)
     {
         // VALIDATION
+        message = "";
         var isExisted = UnitOfWork.ClubRepo.Get(filter: club => club.Code == newClub.Code);
         if (isExisted.Count > 0)
         {
+            message = "Duplicated Club code";
             return null;
         }
 
@@ -80,7 +82,7 @@ public class ClubService : GenericService<Club>, IClubServices
             Name = "Owner",
             LongDecription = "Manage the club",
             ShortDecription = "Owner club",
-        });
+        }, false);
 
         // CREATE STUDENT JOIN CLUB (membership)
         var memberShip = JoinClub(new Membership
@@ -90,7 +92,7 @@ public class ClubService : GenericService<Club>, IClubServices
             QuitDate = null,
             NickName = "Club Creator",
             StudentId = studentId,
-        });
+        }, false);
 
         // CREATE STUDENT JOIN CLUB BOARD (owner)
         if (memberShip != null && newClubBoardCreated != null)
@@ -102,7 +104,7 @@ public class ClubService : GenericService<Club>, IClubServices
                 StartDay = DateTime.Today,
                 EndDay = default,
                 Role = 1,
-            });
+            }, false);
         }
 
 
@@ -110,32 +112,47 @@ public class ClubService : GenericService<Club>, IClubServices
         return newClub;
     }
 
-    public ClubBoard? CreateClubBoard(ClubBoard newClubBoard)
+    public ClubBoard? CreateClubBoard(ClubBoard newClubBoard, bool save = true)
     {
         var maxId = UnitOfWork.ClubBoardRepo.Get().Max(o => o.Id);
         newClubBoard.Id = maxId + 1;
         var result = UnitOfWork.ClubBoardRepo.Create(newClubBoard);
-        UnitOfWork.SaveChange();
+        if (save)
+        {
+            UnitOfWork.SaveChange();
+        }
+       
         return result;
     }
 
-    public Membership? JoinClub(Membership membership)
+    public Membership? JoinClub(Membership membership, bool save = true)
     {
         var result = UnitOfWork.MemberShipRepo.Create(membership);
-        UnitOfWork.SaveChange();
+        if (save)
+        {
+            UnitOfWork.SaveChange();
+        }
         return result;
     }
 
-    public MemberRole? JoinClubBoard(MemberRole memberRole)
+    public MemberRole? JoinClubBoard(MemberRole memberRole, bool save = true)
     {
         var result = UnitOfWork.MemberRoleRepo.Create(memberRole);
-        UnitOfWork.SaveChange();
+        if (save)
+        {
+            UnitOfWork.SaveChange();
+        }
         return result;
     }
 
-    public Result? LeaveClub(Membership memberRole)
+    public Result? LeaveClub(Membership memberRole, bool save = true)
     {
-        throw new NotImplementedException();
+        if (save)
+        {
+            UnitOfWork.SaveChange();
+        }
+
+        return Result.Ok;
     }
 
     public Pagination<Club>? GetJoinedClub(int pageIndex, int pageSize, int studentId)

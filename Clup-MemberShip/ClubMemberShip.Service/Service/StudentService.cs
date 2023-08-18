@@ -54,7 +54,7 @@ public class StudentService : GenericService<Student>, IStudentServices
         return UnitOfWork.StudentRepo.ToPagination(listEntities, pageIndex, pageSize);
     }
 
-    public override Student? GetById(object id)
+    public override Student? GetById(object? id)
     {
         return UnitOfWork.StudentRepo.GetByStudentCode(id.ToString());
     }

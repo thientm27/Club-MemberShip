@@ -22,7 +22,7 @@ public class MajorService : GenericService<Major>, IMajorService
         return UnitOfWork.MajorRepo.ToPagination(listEntities, pageIndex, pageSize);
     }
 
-    public override Major? GetById(object id)
+    public override Major? GetById(object? id)
     {
         return UnitOfWork.MajorRepo.GetById(id);
     }
