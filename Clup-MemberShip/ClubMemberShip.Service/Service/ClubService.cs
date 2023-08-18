@@ -104,7 +104,6 @@ public class ClubService : GenericService<Club>, IClubServices
                 Role = 1,
             });
         }
-           
 
 
         UnitOfWork.SaveChange();
@@ -113,17 +112,25 @@ public class ClubService : GenericService<Club>, IClubServices
 
     public ClubBoard? CreateClubBoard(ClubBoard newClubBoard)
     {
-        throw new NotImplementedException();
+        var maxId = UnitOfWork.ClubBoardRepo.Get().Max(o => o.Id);
+        newClubBoard.Id = maxId + 1;
+        var result = UnitOfWork.ClubBoardRepo.Create(newClubBoard);
+        UnitOfWork.SaveChange();
+        return result;
     }
 
     public Membership? JoinClub(Membership membership)
     {
-        throw new NotImplementedException();
+        var result = UnitOfWork.MemberShipRepo.Create(membership);
+        UnitOfWork.SaveChange();
+        return result;
     }
 
     public MemberRole? JoinClubBoard(MemberRole memberRole)
     {
-        throw new NotImplementedException();
+        var result = UnitOfWork.MemberRoleRepo.Create(memberRole);
+        UnitOfWork.SaveChange();
+        return result;
     }
 
     public Result? LeaveClub(Membership memberRole)

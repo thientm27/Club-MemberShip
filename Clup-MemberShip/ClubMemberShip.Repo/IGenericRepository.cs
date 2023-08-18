@@ -12,7 +12,7 @@ public interface IGenericRepository<TEntity>
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         string includeProperties = "");
 
-    public void Create(TEntity entity);
+    public TEntity Create(TEntity entity);
     public TEntity? GetById(object? id);
     public void Update(TEntity entity);
     public void Delete(object? id);

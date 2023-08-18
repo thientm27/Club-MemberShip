@@ -50,10 +50,10 @@ public class GenericRepo<TEntity> : IGenericRepository<TEntity>
     }
 
 
-    public void Create(TEntity entity)
+    public TEntity Create(TEntity entity)
     {
         entity.Status = Status.Active;
-        Context.Set<TEntity>().Add(entity);
+        return Context.Set<TEntity>().Add(entity).Entity;
     }
 
     public void Update(TEntity entityToUpdate)
