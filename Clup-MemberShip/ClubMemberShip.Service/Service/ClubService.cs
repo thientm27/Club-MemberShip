@@ -152,6 +152,7 @@ public class ClubService : GenericService<Club>, IClubServices
         return result;
     }
 
+
     public MemberRole? JoinClubBoard(MemberRole memberRole, bool save = true)
     {
         var result = UnitOfWork.MemberRoleRepo.Create(memberRole);
@@ -175,7 +176,8 @@ public class ClubService : GenericService<Club>, IClubServices
 
     public Pagination<Club>? GetJoinedClub(int pageIndex, int pageSize, int studentId)
     {
-        var joinedList = UnitOfWork.MemberShipRepo.Get(filter: membership => membership.StudentId == studentId);
+        var joinedList = UnitOfWork.MemberShipRepo.Get(filter: membership =>
+            membership.StudentId == studentId && membership.Status == Status.Active);
         if (joinedList.Count == 0)
         {
             return null;
@@ -203,20 +205,7 @@ public class ClubService : GenericService<Club>, IClubServices
 
     public Pagination<Club> GetAvailableClub(int pageIndex, int pageSize, int studentId)
     {
-        // var joinedList = UnitOfWork.MemberShipRepo.Get(filter: membership => membership.StudentId == studentId);
-        // List<Club> listEntities;
-        // if (joinedList.Count > 0)
-        // {
-        //     listEntities = UnitOfWork.ClubRepo.Get(filter: club => joinedList.All(joined => joined.ClubId != club.Id));
-        // }
-        // else
-        // {
-        //     listEntities = UnitOfWork.ClubRepo.Get();
-        // }
-        //
-        // return UnitOfWork.ClubRepo.ToPagination(listEntities, pageIndex, pageSize);
-
-        var joinedList = UnitOfWork.MemberShipRepo.Get(filter: membership => membership.StudentId == studentId);
+        var joinedList = UnitOfWork.MemberShipRepo.Get(filter: membership => membership.StudentId == studentId && membership.Status == Status.Active);
         List<Club> listEntities;
 
         if (joinedList.Count > 0)

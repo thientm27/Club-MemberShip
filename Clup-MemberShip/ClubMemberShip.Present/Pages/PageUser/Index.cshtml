@@ -125,7 +125,19 @@
                 @Html.DisplayFor(modelItem => item.DateOfEstablishment)
             </td>
             <td>
-                <a asp-page="#" asp-route-id="@item.Id">Join</a>
+                @{
+                    if (!Model.CheckRegister(item.Id)) // false = already registered
+                    {
+                        <p>registered</p>
+                    }
+                    else
+                    {
+                        <form method="post">
+                            <input type="submit" asp-route-id="@item.Id" value="Register" class="btn btn-primary"/>
+                        </form>
+                    }
+                }
+
             </td>
         </tr>
     }

@@ -55,6 +55,28 @@ namespace ClubMemberShip.Web.Pages.PageUser
             return Page();
         }
 
+        public IActionResult OnPost(int? id)
+        {
+            if (id == null)
+            {
+                return OnGet();
+            }
+
+            var studentId = HttpContext.Session.GetString("User");
+            Authentication(studentId);
+
+            _studentServices.RegisterToClub(new Membership
+            {
+                StudentId = StudentLogin.Id,
+                ClubId = (int)id,
+                JoinDate = null,
+                QuitDate = null,
+                NickName = StudentLogin.Name,
+            });
+            
+            return OnGet();
+        }
+
         public IActionResult Authentication(string? id)
         {
             if (id == null)
@@ -70,6 +92,11 @@ namespace ClubMemberShip.Web.Pages.PageUser
 
             StudentLogin = studentLogin;
             return Page();
+        }
+
+        public bool CheckRegister(int clubId)
+        {
+            return _studentServices.CheckRegisterToClub(StudentLogin.Id, clubId);
         }
     }
 }

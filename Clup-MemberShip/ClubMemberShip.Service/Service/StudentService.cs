@@ -21,6 +21,51 @@ public class StudentService : GenericService<Student>, IStudentServices
             .ToList();
     }
 
+    public bool CheckRegisterToClub(int studentId, int clubId)
+    {
+        var result = UnitOfWork.MemberShipRepo.Get(filter: membership =>
+            membership.ClubId == clubId && membership.StudentId == studentId);
+
+        if (result.Count > 0 &&
+            (result[0].Status != Status.Active || result[0].Status != Status.Pending)) // already register/Inside
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public Membership? RegisterToClub(Membership membership, bool save = true)
+    {
+        var existed =
+            UnitOfWork.MemberShipRepo.Get(filter: o =>
+                o.ClubId == membership.ClubId && o.StudentId == membership.StudentId);
+
+        if (existed.Count > 0 && existed[0].Status == Status.Pending) // Already registered
+        {
+            return null;
+        }
+
+        var maxId = UnitOfWork.MemberShipRepo.Get().Max(o => o.Id);
+        membership.Id = maxId + 1;
+
+        var result = UnitOfWork.MemberShipRepo.Create(membership);
+        UnitOfWork.SaveChange();
+        if (result == null)
+        {
+            return null;
+        }
+
+        result.Status = Status.Pending;
+        UnitOfWork.MemberShipRepo.Update(result);
+        if (save)
+        {
+            UnitOfWork.SaveChange();
+        }
+
+        return result;
+    }
+
     public List<Major>? GetMajors()
     {
         return UnitOfWork.MajorRepo.Get().ToList();
