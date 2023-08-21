@@ -67,6 +67,12 @@ public class ClubService : GenericService<Club>, IClubServices
         return UnitOfWork.StudentRepo.ToPagination(listEntities, pageIndex, pageSize);
     }
 
+    public Pagination<ClubActivity> GetActivityInClub(int pageIndex, int pageSize, int clubId)
+    {
+        var listEntities = UnitOfWork.ClubActivityRepo.Get(filter: o => o.ClubId == clubId);
+        return UnitOfWork.ClubActivityRepo.ToPagination(listEntities, pageIndex, pageSize);
+    }
+
     public Club? StudentCreateClub(Club newClub, int studentId, out string message)
     {
         // VALIDATION
