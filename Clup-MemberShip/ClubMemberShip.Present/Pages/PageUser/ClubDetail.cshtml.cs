@@ -17,6 +17,7 @@ namespace ClubMemberShip.Web.Pages.PageUser
         public int Count { get; set; }
         public int PageSize2 { get; set; } = 3;
         public int TotalPages2;
+        
 
         public ClubDetailModel(IStudentServices studentServices, IClubServices clubServices)
         {
@@ -26,6 +27,7 @@ namespace ClubMemberShip.Web.Pages.PageUser
 
         public IList<Student> Student { get; set; } = default!;
         public IList<ClubActivity> ClubActivity { get; set; } = default!;
+        public int ClubId { get; set; } = default!;
 
         public IActionResult OnGet(int? id)
         {
@@ -34,6 +36,7 @@ namespace ClubMemberShip.Web.Pages.PageUser
                 return Redirect("./Index");
             }
 
+            ClubId = (int)id;
             var data = _clubServices.GetStudentInClub(PageIndex1 - 1, PageSize1, (int)id); // take student in club
             TotalPages1 = data.TotalPagesCount;
             Student = data.Items.ToList();

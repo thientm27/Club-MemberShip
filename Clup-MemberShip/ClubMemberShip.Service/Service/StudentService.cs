@@ -15,6 +15,12 @@ public class StudentService : GenericService<Student>, IStudentServices
         return UnitOfWork.GradeRepo.Get().ToList();
     }
 
+    public List<Student> GetClubOfStudent(int id)
+    {
+        return UnitOfWork.StudentRepo.Get(filter: student => student.Id == id, includeProperties: "Major,Grade")
+            .ToList();
+    }
+
     public List<Major>? GetMajors()
     {
         return UnitOfWork.MajorRepo.Get().ToList();

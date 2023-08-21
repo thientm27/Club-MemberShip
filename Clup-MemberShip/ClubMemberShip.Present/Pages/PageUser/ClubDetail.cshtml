@@ -6,7 +6,7 @@
     ViewData["Title"] = "ClubDetail";
 }
 
-<h1>Member in club</h1>
+<h3>Member in club</h3>
 <table class="table">
     <thead>
     <tr>
@@ -68,9 +68,10 @@
     </ul>
 </div>
 
-<h1>Club activities</h1>
-
-
+<h3>Club activities</h3>
+<p>
+    <a asp-page="./CreateClubActivity">Create new activity</a>
+</p>
 <table class="table">
     <thead>
     <tr>
@@ -89,7 +90,6 @@
         <th>
             @Html.DisplayNameFor(model => model.ClubActivity[0].Club)
         </th>
-        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -110,11 +110,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Club.Code)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
     }

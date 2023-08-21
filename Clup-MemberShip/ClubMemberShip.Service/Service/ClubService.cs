@@ -187,6 +187,20 @@ public class ClubService : GenericService<Club>, IClubServices
         return UnitOfWork.ClubRepo.ToPagination(listEntities, pageIndex, pageSize);
     }
 
+    public List<Club>? GetJoinedClub(int studentId)
+    {
+        var joinedList = UnitOfWork.MemberShipRepo.Get(filter: membership => membership.StudentId == studentId);
+        if (joinedList.Count == 0)
+        {
+            return null;
+        }
+
+        var clubIds = joinedList.Select(joined => joined.ClubId).ToList();
+        var listEntities = UnitOfWork.ClubRepo.Get(filter: club => clubIds.Contains(club.Id));
+
+        return listEntities;
+    }
+
     public Pagination<Club> GetAvailableClub(int pageIndex, int pageSize, int studentId)
     {
         // var joinedList = UnitOfWork.MemberShipRepo.Get(filter: membership => membership.StudentId == studentId);

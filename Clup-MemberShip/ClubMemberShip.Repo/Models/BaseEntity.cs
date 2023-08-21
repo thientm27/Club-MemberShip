@@ -8,8 +8,8 @@ public abstract class BaseEntity
 public enum TimeLineStatus
 {
     Pending = 0,
-    OnGoing = 0,
-    Finished = 0,
+    OnGoing = 1,
+    Finished = 2,
 }
 
 public enum Status
