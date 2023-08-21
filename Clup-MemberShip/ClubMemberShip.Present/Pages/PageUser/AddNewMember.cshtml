@@ -1,0 +1,60 @@
+﻿@page
+@model ClubMemberShip.Web.Pages.PageUser.AddNewMemberModel
+
+@{
+    Layout = "Shared/_UserLayout";
+    ViewData["Title"] = "AddNewMember";
+}
+
+<h1>AddNewMember</h1>
+<h4>Membership</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Membership.StudentId" class="control-label"></label>
+                <select asp-for="Membership.StudentId" class="form-control" asp-items="ViewBag.StudentId"></select>
+                <span asp-validation-for="Membership.StudentId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Membership.ClubId" class="control-label"></label>
+                <select asp-for="Membership.ClubId" class="form-control" asp-items="ViewBag.ClubId"></select>
+                <span asp-validation-for="Membership.ClubId" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Membership.Id" />
+            <div class="form-group">
+                <label asp-for="Membership.JoinDate" class="control-label"></label>
+                <input asp-for="Membership.JoinDate" class="form-control" />
+                <span asp-validation-for="Membership.JoinDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Membership.QuitDate" class="control-label"></label>
+                <input asp-for="Membership.QuitDate" class="form-control" />
+                <span asp-validation-for="Membership.QuitDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Membership.NickName" class="control-label"></label>
+                <input asp-for="Membership.NickName" class="form-control" />
+                <span asp-validation-for="Membership.NickName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Membership.Status" class="control-label"></label>
+                <input asp-for="Membership.Status" class="form-control" />
+                <span asp-validation-for="Membership.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

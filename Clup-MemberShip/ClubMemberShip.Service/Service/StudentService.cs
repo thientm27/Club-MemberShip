@@ -21,6 +21,17 @@ public class StudentService : GenericService<Student>, IStudentServices
             .ToList();
     }
 
+    public Membership? GetMemberShipById(int id)
+    {
+        var result = UnitOfWork.MemberShipRepo.Get(filter: student => student.Id == id);
+        if (result.Count > 0)
+        {
+            return result[0];
+        }
+
+        return null;
+    }
+
     public bool CheckRegisterToClub(int studentId, int clubId)
     {
         var result = UnitOfWork.MemberShipRepo.Get(filter: membership =>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace ClubMemberShip.Repo.Models
 {
@@ -14,8 +15,8 @@ namespace ClubMemberShip.Repo.Models
         public int StudentId { get; set; }
         public int ClubId { get; set; }
         public int Id { get; set; }
-        public DateTime? JoinDate { get; set; }
-        public DateTime? QuitDate { get; set; }
+        [DataType(DataType.Date)] public DateTime? JoinDate { get; set; }
+        [DataType(DataType.Date)] public DateTime? QuitDate { get; set; }
         public string? NickName { get; set; }
 
         public virtual Club Club { get; set; } = null!;
