@@ -54,7 +54,7 @@
                 @Html.DisplayFor(modelItem => item.DateOfEstablishment)
             </td>
             <td>
-                <a asp-page="#" asp-route-id="@item.Id">Club information</a>
+                <a asp-page="./ClubDetail" asp-route-id="@item.Id">Club information</a>|
             </td>
         </tr>
     }
@@ -141,4 +141,4 @@
 
 <br/>
 
-Not interest any club? <a asp-page="/PageUser/CreateClub" > create your own club</a>
+Not interest any club? <a asp-page="/PageUser/CreateClub"> create your own club</a>

@@ -1,31 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Service;
 
 namespace ClubMemberShip.Web.Pages.PageUser
 {
     public class ClubDetailModel : PageModel
     {
-        private readonly ClubMemberShip.Repo.Models.ClubMembershipContext _context;
+        private readonly IStudentServices _studentServices;
+        private readonly IClubServices _clubServices;
+        [BindProperty(SupportsGet = true)] public int PageIndex1 { get; set; } = 1;
+        public int PageSize { get; set; } = 3;
+        public int TotalPages1;
 
-        public ClubDetailModel(ClubMemberShip.Repo.Models.ClubMembershipContext context)
+        public ClubDetailModel(IStudentServices studentServices, IClubServices clubServices)
         {
-            _context = context;
+            _studentServices = studentServices;
+            _clubServices = clubServices;
         }
 
-        public IList<Club> Club { get;set; } = default!;
+        public IList<Student> Student { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public IActionResult OnGet(int? id)
         {
-            if (_context.Clubs != null)
+            if (id == null)
             {
-                Club = await _context.Clubs.ToListAsync();
+                return Redirect("./Index");
             }
+            var data = _clubServices.GetStudentInClub(PageIndex1 - 1, PageSize, (int)id); // take student in list
+            TotalPages1 = data.TotalPagesCount;
+            Student = data.Items.ToList();
+
+            
+            return Page();
         }
     }
 }

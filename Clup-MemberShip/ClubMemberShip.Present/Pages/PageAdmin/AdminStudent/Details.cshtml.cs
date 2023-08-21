@@ -16,7 +16,7 @@ namespace ClubMemberShip.Web.Pages.PageAdmin.AdminStudent
 
         public Student Student { get; set; } = default!;
 
-        public  IActionResult OnGet(int? id)
+        public IActionResult OnGet(int? id)
         {
             if (id == null)
             {
@@ -28,10 +28,8 @@ namespace ClubMemberShip.Web.Pages.PageAdmin.AdminStudent
             {
                 return NotFound();
             }
-            else
-            {
-                Student = student;
-            }
+
+            Student = student;
 
             return Page();
         }

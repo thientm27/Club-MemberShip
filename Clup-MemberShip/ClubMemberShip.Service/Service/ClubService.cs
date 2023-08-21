@@ -57,6 +57,16 @@ public class ClubService : GenericService<Club>, IClubServices
         return Result.Ok;
     }
 
+    public Pagination<Student> GetStudentInClub(int pageIndex, int pageSize, int clubId)
+    {
+        var joinedList =
+            UnitOfWork.MemberShipRepo.Get(filter: o => o.ClubId == clubId);
+        var studentInClubId = joinedList.Select(joined => joined.StudentId).ToList();
+        var listEntities = UnitOfWork.StudentRepo.Get(filter: o => studentInClubId.Contains(o.Id),
+            includeProperties: "Major,Grade");
+        return UnitOfWork.StudentRepo.ToPagination(listEntities, pageIndex, pageSize);
+    }
+
     public Club? StudentCreateClub(Club newClub, int studentId, out string message)
     {
         // VALIDATION
@@ -121,7 +131,7 @@ public class ClubService : GenericService<Club>, IClubServices
         {
             UnitOfWork.SaveChange();
         }
-       
+
         return result;
     }
 
@@ -132,6 +142,7 @@ public class ClubService : GenericService<Club>, IClubServices
         {
             UnitOfWork.SaveChange();
         }
+
         return result;
     }
 
@@ -142,6 +153,7 @@ public class ClubService : GenericService<Club>, IClubServices
         {
             UnitOfWork.SaveChange();
         }
+
         return result;
     }
 
@@ -157,20 +169,6 @@ public class ClubService : GenericService<Club>, IClubServices
 
     public Pagination<Club>? GetJoinedClub(int pageIndex, int pageSize, int studentId)
     {
-        // var joinedList = UnitOfWork.MemberShipRepo.Get(filter: membership => membership.StudentId == studentId);
-        // List<Club> listEntities;
-        //
-        // if (joinedList.Count > 0)
-        // {
-        //     listEntities = UnitOfWork.ClubRepo.Get(filter: club => joinedList.Any(joined => joined.ClubId == club.Id));
-        // }
-        // else
-        // {
-        //     return null;
-        // }
-        //
-        // return UnitOfWork.ClubRepo.ToPagination(listEntities, pageIndex, pageSize);
-
         var joinedList = UnitOfWork.MemberShipRepo.Get(filter: membership => membership.StudentId == studentId);
         if (joinedList.Count == 0)
         {
