@@ -69,7 +69,7 @@ public class ClubService : GenericService<Club>, IClubServices
 
     public Pagination<ClubActivity> GetActivityInClub(int pageIndex, int pageSize, int clubId)
     {
-        var listEntities = UnitOfWork.ClubActivityRepo.Get(filter: o => o.ClubId == clubId);
+        var listEntities = UnitOfWork.ClubActivityRepo.Get(filter: o => o.ClubId == clubId, includeProperties: "Club");
         return UnitOfWork.ClubActivityRepo.ToPagination(listEntities, pageIndex, pageSize);
     }
 

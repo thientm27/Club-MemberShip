@@ -31,7 +31,6 @@
                 <input asp-for="ClubActivity.StartDay" class="form-control" min="@defaultDate.ToString("yyyy-MM-dd")" value="@defaultDate.ToString("yyyy-MM-dd")"/>
                 <span asp-validation-for="ClubActivity.StartDay" class="text-danger"></span>
             </div>
-            @* ActivityDetail *@
             <div class="form-group">
                 @{
                     DateTime nextDate = DateTime.Today.AddDays(1);

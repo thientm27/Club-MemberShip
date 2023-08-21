@@ -21,13 +21,8 @@ namespace ClubMemberShip.Web.Pages.PageUser
             _studentServices = studentServices;
         }
 
-        public IActionResult OnGet(int? id)
+        public IActionResult OnGet()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
             var studentLogin = _studentServices.GetById(HttpContext.Session.GetString("User"));
             if (studentLogin == null)
             {
@@ -42,9 +37,12 @@ namespace ClubMemberShip.Web.Pages.PageUser
 
         public IActionResult OnPost()
         {
-            if (!ModelState.IsValid)
+            if (ClubActivity.StartDay > ClubActivity.EndDay)
             {
-                return Page();
+                ModelState.AddModelError("ClubActivity.StartDay", "Start day must be < End day");
+                ModelState.AddModelError("ClubActivity.EndDay", "End day must be > Start day");
+
+                return OnGet();
             }
 
             _clubActivityService.Add(ClubActivity);

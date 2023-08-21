@@ -14,7 +14,7 @@ namespace ClubMemberShip.Repo.Models
         public int Id { get; set; }
         public string Code { get; set; } = null!;
         public string Name { get; set; } = null!;
-        public string? Address { get; set; }
+                                                    public string? Address { get; set; }
         public int MajorId { get; set; }
         public int GradeId { get; set; }
         [DataType(DataType.Date)]

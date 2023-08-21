@@ -76,6 +76,9 @@
     <thead>
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.ClubActivity[0].ActivityDetail)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.ClubActivity[0].StartDay)
         </th>
         <th>
@@ -97,6 +100,9 @@
     {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.ActivityDetail)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.StartDay)
             </td>
             <td>
@@ -109,7 +115,7 @@
                 @Html.DisplayFor(modelItem => item.TimeLine)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Club.Code)
+                @Html.DisplayFor(modelItem => item.Club.Name)
             </td>
         </tr>
     }

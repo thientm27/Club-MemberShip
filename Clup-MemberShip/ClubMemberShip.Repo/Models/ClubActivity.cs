@@ -11,7 +11,7 @@ namespace ClubMemberShip.Repo.Models
 
         public int Id { get; set; }
         public int ClubId { get; set; }
-        public string ActivityDetail { get; set; }
+        public string? ActivityDetail { get; set; }
         [DataType(DataType.Date)]
         public DateTime StartDay { get; set; }
         [DataType(DataType.Date)]

@@ -10,9 +10,9 @@ public class ClubActivityService : GenericService<ClubActivity>, IClubActivitySe
     {
     }
 
-    public override List<ClubActivity> Get()
+    public override List<ClubActivity>? Get()
     {
-        return UnitOfWork.ClubActivityRepo.Get().ToList();
+        return UnitOfWork.ClubActivityRepo.Get(includeProperties: "").ToList();
     }
 
     public override Pagination<ClubActivity> GetPagination(int pageIndex, int pageSize)
@@ -43,7 +43,7 @@ public class ClubActivityService : GenericService<ClubActivity>, IClubActivitySe
     public override Result Add(ClubActivity newEntity)
     {
        
-        var maxId = Get().Max(o => o.Id);
+        var maxId = (Get() ?? new List<ClubActivity>()).Max(o => o.Id);
         newEntity.Id = maxId + 1;
         newEntity.Status = Status.Active;
         
