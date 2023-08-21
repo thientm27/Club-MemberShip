@@ -19,6 +19,11 @@
                 <select asp-for="ClubActivity.ClubId" class="form-control" asp-items="ViewBag.ClubId"></select>
             </div>
             <div class="form-group">
+                <label asp-for="ClubActivity.ActivityDetail" class="control-label"></label>
+                <input asp-for="ClubActivity.ActivityDetail" class="form-control"/>
+                <span asp-validation-for="ClubActivity.ActivityDetail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 @{
                     DateTime defaultDate = DateTime.Today;
                 }
@@ -26,6 +31,7 @@
                 <input asp-for="ClubActivity.StartDay" class="form-control" min="@defaultDate.ToString("yyyy-MM-dd")" value="@defaultDate.ToString("yyyy-MM-dd")"/>
                 <span asp-validation-for="ClubActivity.StartDay" class="text-danger"></span>
             </div>
+            @* ActivityDetail *@
             <div class="form-group">
                 @{
                     DateTime nextDate = DateTime.Today.AddDays(1);
