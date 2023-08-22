@@ -58,4 +58,24 @@ public class ParticipantService : GenericService<Participant>, IParticipantServi
     {
         return UnitOfWork.ParticipantRepo.Get(filter: o => o.ClubActivityId == clubActivityId);
     }
+
+    public void AddMultipleMember(int clubId, int clubActivityId, List<int> studentId)
+    {
+        var membership =
+            UnitOfWork.MemberShipRepo.Get(filter: o => o.ClubId == clubId && studentId.Contains(o.StudentId));
+
+        foreach (var o in membership)
+        {
+            UnitOfWork.ParticipantRepo.Create(new Participant
+            {
+                MembershipId = o.Id,
+                ClubActivityId = clubActivityId,
+                JoinDate = DateTime.Today,
+                LeaveDate = null,
+                RegisterDate = DateTime.Today,
+            });
+        }
+
+        UnitOfWork.SaveChange();
+    }
 }

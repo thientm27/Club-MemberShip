@@ -7,6 +7,7 @@ namespace ClubMemberShip.Service;
 public interface IClubServices : IGenericService<Club>
 {
     public Pagination<Student> GetStudentInClub(int pageIndex, int pageSize, int clubId);
+    public Pagination<Student> GetStudentInClub(int pageIndex, int pageSize, int clubId, List<int> ignoreList);
     public Pagination<Student> GetStudentRegisterInClub(int pageIndex, int pageSize, int clubId);
     public Pagination<ClubActivity> GetActivityInClub(int pageIndex, int pageSize, int clubId);
     public Club? StudentCreateClub(Club newClub, int studentId,out string  message); // also create new board and join

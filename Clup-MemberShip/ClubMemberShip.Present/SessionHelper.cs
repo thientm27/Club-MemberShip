@@ -15,7 +15,7 @@ namespace ClubMemberShip.Web
             session.SetString(key, JsonSerializer.Serialize(value, options));
         }
 
-        public static T GetObjectFromJson<T>(this ISession session, string key)
+        public static T? GetObjectFromJson<T>(this ISession session, string key)
         {
             var value = session.GetString(key);
             if (value == null)

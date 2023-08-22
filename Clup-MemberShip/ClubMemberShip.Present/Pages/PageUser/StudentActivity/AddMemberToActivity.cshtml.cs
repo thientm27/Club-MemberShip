@@ -8,10 +8,19 @@ namespace ClubMemberShip.Web.Pages.PageUser.StudentActivity
     public class AddMemberToActivityModel : PageModel
     {
         private readonly IStudentServices _studentServices;
+        private readonly IParticipantService _participantService;
+        private readonly IClubActivityService _clubActivityService;
+        private readonly IMemberShipService _memberShipService;
+        private readonly IClubServices _clubServices;
 
-        public AddMemberToActivityModel(IStudentServices studentServices)
+        public AddMemberToActivityModel(IStudentServices studentServices, IParticipantService participantService,
+            IClubActivityService clubActivityService, IMemberShipService memberShipService, IClubServices clubServices)
         {
             _studentServices = studentServices;
+            _participantService = participantService;
+            _clubActivityService = clubActivityService;
+            _memberShipService = memberShipService;
+            _clubServices = clubServices;
         }
 
         public IList<Student> NotAddStudent { get; set; } = default!;
@@ -39,8 +48,13 @@ namespace ClubMemberShip.Web.Pages.PageUser.StudentActivity
                 AddedStudent.Add(_studentServices.GetStudentById(o)!);
             }
 
+            var clubActivity = HttpContext.Session.GetObjectFromJson<ClubActivity>("ClubActivity");
+            if (clubActivity == null)
+            {
+                return RedirectToPage("./CreateClubActivity");
+            }
 
-            var data = _studentServices.GetPaginationIgnoreId(PageIndex1 - 1, PageSize1, ignoreList);
+            var data = _clubServices.GetStudentInClub(PageIndex1 - 1, PageSize1, clubActivity.ClubId, ignoreList);
             TotalPages1 = data.TotalPagesCount;
             NotAddStudent = data.Items.ToList();
 
@@ -94,6 +108,36 @@ namespace ClubMemberShip.Web.Pages.PageUser.StudentActivity
             HttpContext.Session.SetObjectAsJson("AddedStudent", sessionData);
 
             return OnGet();
+        }
+
+        public IActionResult OnPostSubmit()
+        {
+            var studentLogin = _studentServices.GetById(HttpContext.Session.GetString("User"));
+            if (studentLogin == null)
+            {
+                return RedirectToPage("/Login");
+            }
+
+            var addedStudent = HttpContext.Session.GetObjectFromJson<AddedStudentObject>("AddedStudent");
+            var clubActivity = HttpContext.Session.GetObjectFromJson<ClubActivity>("ClubActivity");
+
+
+            if (addedStudent == null || clubActivity == null)
+            {
+                return RedirectToPage("./CreateClubActivity");
+            }
+
+            var activity = _clubActivityService.AddWithResult(clubActivity);
+
+            if (activity == null)
+            {
+                return RedirectToPage("./CreateClubActivity");
+            }
+
+            addedStudent.List.Add(studentLogin.Id);
+            _participantService.AddMultipleMember(activity.ClubId, activity.Id, addedStudent.List);
+
+            return RedirectToPage("../Index");
         }
     }
 

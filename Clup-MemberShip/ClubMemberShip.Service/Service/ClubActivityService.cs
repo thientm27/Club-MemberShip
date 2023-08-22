@@ -62,4 +62,15 @@ public class ClubActivityService : GenericService<ClubActivity>, IClubActivitySe
 
         return UnitOfWork.StudentRepo.Get(filter: o => listStudentId.Contains(o.Id));
     }
+
+    public ClubActivity? AddWithResult(ClubActivity newEntity)
+    {
+        var maxId = (Get() ?? new List<ClubActivity>()).Max(o => o.Id);
+        newEntity.Id = maxId + 1;
+        newEntity.Status = Status.Active;
+
+        var entity = UnitOfWork.ClubActivityRepo.Create(newEntity);
+        UnitOfWork.SaveChange();
+        return entity;
+    }
 }
