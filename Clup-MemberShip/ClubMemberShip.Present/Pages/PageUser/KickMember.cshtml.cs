@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using ClubMemberShip.Repo.Models;
 
 namespace ClubMemberShip.Web.Pages.PageUser
@@ -18,27 +18,43 @@ namespace ClubMemberShip.Web.Pages.PageUser
             _context = context;
         }
 
-        public IActionResult OnGet()
+        [BindProperty]
+      public Membership Membership { get; set; } = default!;
+
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
-        ViewData["ClubId"] = new SelectList(_context.Clubs, "Id", "Code");
-        ViewData["StudentId"] = new SelectList(_context.Students, "Id", "Code");
+            if (id == null || _context.Memberships == null)
+            {
+                return NotFound();
+            }
+
+            var membership = await _context.Memberships.FirstOrDefaultAsync(m => m.Id == id);
+
+            if (membership == null)
+            {
+                return NotFound();
+            }
+            else 
+            {
+                Membership = membership;
+            }
             return Page();
         }
 
-        [BindProperty]
-        public Membership Membership { get; set; } = default!;
-        
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int? id)
         {
-          if (!ModelState.IsValid || _context.Memberships == null || Membership == null)
+            if (id == null || _context.Memberships == null)
             {
-                return Page();
+                return NotFound();
             }
+            var membership = await _context.Memberships.FindAsync(id);
 
-            _context.Memberships.Add(Membership);
-            await _context.SaveChangesAsync();
+            if (membership != null)
+            {
+                Membership = membership;
+                _context.Memberships.Remove(Membership);
+                await _context.SaveChangesAsync();
+            }
 
             return RedirectToPage("./Index");
         }
