@@ -4,66 +4,67 @@ using ClubMemberShip.Repo.Utils;
 
 namespace ClubMemberShip.Service.Service;
 
-public class MemberShipService : GenericService<Major>, IMemberShipService
+public class MemberShipService : GenericService<Membership>, IMemberShipService
 {
-   
-
     public MemberShipService(IUnitOfWork unitOfWork) : base(unitOfWork)
     {
     }
 
-    public override List<Major>? Get()
+    public override List<Membership>? Get()
     {
-        throw new NotImplementedException();
+        return UnitOfWork.MemberShipRepo.Get().ToList();
     }
 
-    Pagination<Membership> IGenericService<Membership>.GetPagination(int pageIndex, int pageSize)
+    public override Pagination<Membership> GetPagination(int pageIndex, int pageSize)
     {
-        throw new NotImplementedException();
+        var listEntities = Get();
+        return UnitOfWork.MemberShipRepo.ToPagination(listEntities, pageIndex, pageSize);
     }
 
-    Membership? IGenericService<Membership>.GetById(object? id)
+    public override Membership? GetById(object? id)
     {
-        throw new NotImplementedException();
+        return UnitOfWork.MemberShipRepo.GetById(id);
     }
 
-    public Result Update(Membership newEntity)
+    public override Result Update(Membership newEntity)
     {
-        throw new NotImplementedException();
-    }
-
-    List<Membership>? IGenericService<Membership>.Get()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override Pagination<Major> GetPagination(int pageIndex, int pageSize)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override Major? GetById(object? id)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override Result Update(Major newEntity)
-    {
-        throw new NotImplementedException();
+        UnitOfWork.MemberShipRepo.Update(newEntity);
+        UnitOfWork.SaveChange();
+        return Result.Ok;
     }
 
     public override Result Delete(object idToDelete)
     {
-        throw new NotImplementedException();
+        UnitOfWork.MemberShipRepo.Delete(idToDelete);
+        UnitOfWork.SaveChange();
+        return Result.Ok;
     }
 
-    public Result Add(Membership newEntity)
+    public override Result Add(Membership newEntity)
     {
-        throw new NotImplementedException();
+        var isExisted = UnitOfWork.MemberShipRepo.Get(filter: mj =>
+            mj.ClubId == newEntity.ClubId && mj.StudentId == newEntity.StudentId && mj.Status != Status.Deleted);
+        if (isExisted.Count > 0)
+        {
+            return Result.DuplicatedId;
+        }
+
+        var maxId = Get().Max(o => o.Id);
+        newEntity.Id = maxId + 1;
+
+        UnitOfWork.MemberShipRepo.Create(newEntity);
+        UnitOfWork.SaveChange();
+        return Result.Ok;
     }
 
-    public override Result Add(Major newEntity)
+    public Membership? GetById(int clubId, int studentId)
     {
-        throw new NotImplementedException();
+        var result = UnitOfWork.MemberShipRepo.Get(filter: o => o.ClubId == clubId && o.StudentId == studentId, includeProperties: "Club,Student");
+        if (result.Count > 0)
+        {
+            return result[0];
+        }
+
+        return null;
     }
 }

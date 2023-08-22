@@ -54,7 +54,13 @@
                 @Html.DisplayFor(modelItem => item.Major!.Name)
             </td>
             <td>
-                <a asp-page="./ClubActivityInformationModel" asp-route-studentid="@item.Id" asp-route-clubid="@Model.ClubId">Kick Member</a>
+                @{
+                    if (Model.ClubOwner)
+                    {
+                        <a asp-page="./KickMember" asp-route-studentid="@item.Id" asp-route-clubid="@Model.ClubId">Kick Member</a>
+                    }
+                }
+              
             </td>
         </tr>
     }

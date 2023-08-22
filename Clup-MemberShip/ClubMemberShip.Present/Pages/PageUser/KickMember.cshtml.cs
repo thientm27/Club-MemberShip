@@ -1,61 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Service;
 
 namespace ClubMemberShip.Web.Pages.PageUser
 {
     public class KickMemberModel : PageModel
     {
-        private readonly ClubMemberShip.Repo.Models.ClubMembershipContext _context;
+        private readonly IMemberShipService _memberShipService;
 
-        public KickMemberModel(ClubMemberShip.Repo.Models.ClubMembershipContext context)
+        public KickMemberModel(IMemberShipService memberShipService)
         {
-            _context = context;
+            _memberShipService = memberShipService;
         }
 
-        [BindProperty]
-      public Membership Membership { get; set; } = default!;
+        [BindProperty] public Membership Membership { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int? studentid, int? clubId)
         {
-            if (id == null || _context.Memberships == null)
+            if (studentid == null || clubId == null)
             {
                 return NotFound();
             }
 
-            var membership = await _context.Memberships.FirstOrDefaultAsync(m => m.Id == id);
+            var membership = _memberShipService.GetById((int)clubId, (int)studentid);
 
             if (membership == null)
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Membership = membership;
+                Membership.QuitDate = DateTime.Today;
             }
+           
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public IActionResult OnPost(int? studentid, int? clubId)
         {
-            if (id == null || _context.Memberships == null)
+            if (studentid == null || clubId == null)
             {
                 return NotFound();
             }
-            var membership = await _context.Memberships.FindAsync(id);
 
-            if (membership != null)
-            {
-                Membership = membership;
-                _context.Memberships.Remove(Membership);
-                await _context.SaveChangesAsync();
-            }
-
+            _memberShipService.Delete(Membership.Id);
             return RedirectToPage("./Index");
         }
     }
