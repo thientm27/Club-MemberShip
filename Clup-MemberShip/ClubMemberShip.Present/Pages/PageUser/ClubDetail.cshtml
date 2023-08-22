@@ -28,6 +28,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Student[0].Major)
         </th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -51,6 +52,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Major!.Name)
+            </td>
+            <td>
+                <a asp-page="./ClubActivityInformationModel" asp-route-studentid="@item.Id" asp-route-clubid="@Model.ClubId">Kick Member</a>
             </td>
         </tr>
     }
@@ -93,6 +97,9 @@
         <th>
             @Html.DisplayNameFor(model => model.ClubActivity[0].Club)
         </th>
+        <th>
+
+        </th>
     </tr>
     </thead>
     <tbody>
@@ -116,6 +123,10 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Club.Name)
+            </td>
+            <td>
+                @* <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> | *@
+                <a asp-page="./ClubActivityInformationModel" asp-route-id="@item.Id">Details</a> |
             </td>
         </tr>
     }
