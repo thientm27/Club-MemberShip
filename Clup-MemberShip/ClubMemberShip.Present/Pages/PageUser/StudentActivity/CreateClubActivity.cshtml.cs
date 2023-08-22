@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Service;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using ClubMemberShip.Repo.Models;
-using ClubMemberShip.Service;
 
-namespace ClubMemberShip.Web.Pages.PageUser
+namespace ClubMemberShip.Web.Pages.PageUser.StudentActivity
 {
     public class CreateClubActivityModel : PageModel
     {
@@ -35,7 +35,7 @@ namespace ClubMemberShip.Web.Pages.PageUser
             var joinedList = _clubServices.GetJoinedClub(studentLogin.Id);
             if (joinedList == null || joinedList.Count == 0)
             {
-                return RedirectToPage("./Index");
+                return RedirectToPage("../Index");
             }
 
             ViewData["ClubId"] = new SelectList(joinedList, "Id", "Name");
@@ -58,7 +58,7 @@ namespace ClubMemberShip.Web.Pages.PageUser
             }
 
             var result = _clubActivityService.Add(ClubActivity);
-            return RedirectToPage("./Index");
+            return RedirectToPage("../Index");
         }
     }
 }

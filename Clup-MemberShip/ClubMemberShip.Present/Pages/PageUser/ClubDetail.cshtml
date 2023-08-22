@@ -79,7 +79,7 @@
 
 <h3>Club activities</h3>
 <p>
-    <a asp-page="./CreateClubActivity">Create new activity</a>
+    <a asp-page="./StudentActivity/CreateClubActivity">Create new activity</a>
 </p>
 <table class="table">
     <thead>
@@ -131,7 +131,7 @@
             </td>
             <td>
                 @* <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> | *@
-                <a asp-page="./ClubActivityInformation" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./StudentActivity/ClubActivityInformation" asp-route-id="@item.Id">Details</a> |
             </td>
         </tr>
     }

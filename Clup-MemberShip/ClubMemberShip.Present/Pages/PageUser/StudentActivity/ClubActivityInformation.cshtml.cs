@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using ClubMemberShip.Repo.Models;
+﻿using ClubMemberShip.Repo.Models;
 using ClubMemberShip.Service;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ClubMemberShip.Web.Pages.PageUser
+namespace ClubMemberShip.Web.Pages.PageUser.StudentActivity
 {
     public class ClubActivityInformationModel : PageModel
     {

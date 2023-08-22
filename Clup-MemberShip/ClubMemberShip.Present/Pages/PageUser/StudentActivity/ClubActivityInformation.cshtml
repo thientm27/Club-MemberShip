@@ -1,5 +1,5 @@
 ﻿@page
-@model ClubMemberShip.Web.Pages.PageUser.ClubActivityInformationModel
+@model ClubMemberShip.Web.Pages.PageUser.StudentActivity.ClubActivityInformationModel
 
 @{
     ViewData["Title"] = "ClubActivityInformation";
@@ -50,8 +50,7 @@
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.ClubActivity?.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="../Index">Back to List</a>
 </div>
 
 <h1>Student inside this activity</h1>
