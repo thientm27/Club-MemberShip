@@ -53,7 +53,7 @@ public class ClubActivityService : GenericService<ClubActivity>, IClubActivitySe
 
     public List<Student>? GetListStudentInActivity(int id)
     {
-        var listJoin = UnitOfWork.ParticipantRepo.Get(filter: o => o.ClubActivityId == id);
+        var listJoin = UnitOfWork.ParticipantRepo.Get(filter: o => o.ClubActivityId == id, includeProperties: "Grade,Major");
 
         var listMemberShipId = listJoin.Select(o => o.MembershipId);
         var listMemberShip = UnitOfWork.MemberShipRepo.Get(filter: o => listMemberShipId.Contains(o.Id));
