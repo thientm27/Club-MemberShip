@@ -33,11 +33,11 @@ namespace ClubMemberShip.Web.Pages.PageUser
             {
                 return NotFound();
             }
-            else
-            {
-                ClubActivity = clubActivity;
-            }
 
+            ClubActivity = clubActivity;
+
+            var participants = _clubActivityService.GetListStudentInActivity((int)id);
+            Student = participants ?? new List<Student>();
             return Page();
         }
     }

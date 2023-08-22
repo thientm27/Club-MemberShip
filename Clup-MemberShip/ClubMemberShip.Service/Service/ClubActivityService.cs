@@ -42,13 +42,24 @@ public class ClubActivityService : GenericService<ClubActivity>, IClubActivitySe
 
     public override Result Add(ClubActivity newEntity)
     {
-       
         var maxId = (Get() ?? new List<ClubActivity>()).Max(o => o.Id);
         newEntity.Id = maxId + 1;
         newEntity.Status = Status.Active;
-        
+
         UnitOfWork.ClubActivityRepo.Create(newEntity);
         UnitOfWork.SaveChange();
         return Result.Ok;
+    }
+
+    public List<Student>? GetListStudentInActivity(int id)
+    {
+        var listJoin = UnitOfWork.ParticipantRepo.Get(filter: o => o.ClubActivityId == id);
+
+        var listMemberShipId = listJoin.Select(o => o.MembershipId);
+        var listMemberShip = UnitOfWork.MemberShipRepo.Get(filter: o => listMemberShipId.Contains(o.Id));
+
+        var listStudentId = listMemberShip.Select(o => o.StudentId);
+
+        return UnitOfWork.StudentRepo.Get(filter: o => listStudentId.Contains(o.Id));
     }
 }

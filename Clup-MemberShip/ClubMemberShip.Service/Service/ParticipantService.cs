@@ -53,4 +53,9 @@ public class ParticipantService : GenericService<Participant>, IParticipantServi
         UnitOfWork.SaveChange();
         return Result.Ok;
     }
+
+    public List<Participant>? GetByCluActivityId(int clubActivityId)
+    {
+        return UnitOfWork.ParticipantRepo.Get(filter: o => o.ClubActivityId == clubActivityId);
+    }
 }
