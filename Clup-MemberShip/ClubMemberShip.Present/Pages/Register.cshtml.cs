@@ -38,13 +38,13 @@ namespace ClubMemberShip.Web.Pages
             switch (result)
             {
                 case Result.Ok:
-                    return RedirectToPage("./Index");
+                    return RedirectToPage("/Login");
                 case Result.DuplicatedId:
                     ModelState.AddModelError("Student.Code", "Student code is duplicated");
                     return OnGet();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("/Login");
         }
     }
 }

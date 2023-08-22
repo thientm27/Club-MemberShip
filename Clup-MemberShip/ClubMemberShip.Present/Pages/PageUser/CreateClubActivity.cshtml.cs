@@ -31,7 +31,13 @@ namespace ClubMemberShip.Web.Pages.PageUser
 
             ClubActivity = new();
             ClubActivity.TimeLine = TimeLineStatus.Pending;
-            ViewData["ClubId"] = new SelectList(_clubServices.GetJoinedClub(studentLogin.Id), "Id", "Name");
+
+            var joinedList = _clubServices.GetJoinedClub(studentLogin.Id);
+            if (joinedList == null || joinedList.Count == 0)
+            {
+                return RedirectToPage("./Index");
+            }
+            ViewData["ClubId"] = new SelectList(joinedList, "Id", "Name");
             return Page();
         }
 

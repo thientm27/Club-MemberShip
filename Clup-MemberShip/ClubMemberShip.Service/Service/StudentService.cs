@@ -32,13 +32,23 @@ public class StudentService : GenericService<Student>, IStudentServices
         return null;
     }
 
+    public Membership? GetMemberShipByClubIdAndStudentId(int studentId, int clubId)
+    {
+        var result = UnitOfWork.MemberShipRepo.Get(filter: o => o.StudentId == studentId && o.ClubId == clubId);
+        if (result.Count > 0)
+        {
+            return result[0];
+        }
+
+        return null;
+    }
+
     public bool CheckRegisterToClub(int studentId, int clubId)
     {
         var result = UnitOfWork.MemberShipRepo.Get(filter: membership =>
             membership.ClubId == clubId && membership.StudentId == studentId);
 
-        if (result.Count > 0 &&
-            (result[0].Status != Status.Active || result[0].Status != Status.Pending)) // already register/Inside
+        if (result.Count > 0 && result[0].Status == Status.Pending) // contain + pending = registerd
         {
             return false;
         }
@@ -55,6 +65,15 @@ public class StudentService : GenericService<Student>, IStudentServices
         if (existed.Count > 0 && existed[0].Status == Status.Pending) // Already registered
         {
             return null;
+        }
+
+        if (existed.Count > 0) // Already have but out 
+        {
+            var ship = existed[0];
+            ship.Status = Status.Pending;
+            UnitOfWork.MemberShipRepo.Update(ship);
+            UnitOfWork.SaveChange();
+            return ship;
         }
 
         var maxId = UnitOfWork.MemberShipRepo.Get().Max(o => o.Id);

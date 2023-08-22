@@ -101,6 +101,7 @@ public class ClubService : GenericService<Club>, IClubServices
 
         // CREATE CLUB
         UnitOfWork.ClubRepo.Create(newClub);
+
         // CREATE CLUB BOARD
         var newClubBoardCreated = CreateClubBoard(new ClubBoard
         {
@@ -167,6 +168,7 @@ public class ClubService : GenericService<Club>, IClubServices
     {
         var maxId = UnitOfWork.ClubBoardRepo.Get().Max(o => o.Id);
         newClubBoard.Id = maxId + 1;
+
         var result = UnitOfWork.ClubBoardRepo.Create(newClubBoard);
         if (save)
         {
@@ -178,6 +180,9 @@ public class ClubService : GenericService<Club>, IClubServices
 
     public Membership? JoinClub(Membership membership, bool save = true)
     {
+        var maxId = UnitOfWork.MemberShipRepo.Get().Max(o => o.Id);
+        membership.Id = maxId + 1;
+
         var result = UnitOfWork.MemberShipRepo.Create(membership);
         if (save)
         {
@@ -206,6 +211,13 @@ public class ClubService : GenericService<Club>, IClubServices
             UnitOfWork.SaveChange();
         }
 
+        return Result.Ok;
+    }
+
+    public Result UpdateMembership(Membership newEntity)
+    {
+        UnitOfWork.MemberShipRepo.Update(newEntity);
+        UnitOfWork.SaveChange();
         return Result.Ok;
     }
 

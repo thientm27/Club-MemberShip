@@ -8,7 +8,7 @@
 
 <h1>AddNewMember</h1>
 <h4>Membership</h4>
-<hr />
+<hr/>
 <div class="row">
     <div class="col-md-4">
         <form method="post">
@@ -23,29 +23,25 @@
                 <select asp-for="Membership.ClubId" class="form-control" asp-items="ViewBag.ClubId"></select>
                 <span asp-validation-for="Membership.ClubId" class="text-danger"></span>
             </div>
-            <input type="hidden" asp-for="Membership.Id" />
+            <input type="hidden" asp-for="Membership.Id" value="@Model.Membership.Id"/>
+            @{
+                var today = DateTime.Today;
+            }
             <div class="form-group">
                 <label asp-for="Membership.JoinDate" class="control-label"></label>
-                <input asp-for="Membership.JoinDate" class="form-control" />
+                <input asp-for="Membership.JoinDate" value="@today.ToString("yyyy-MM-dd")" class="form-control" readonly="readonly"/>
                 <span asp-validation-for="Membership.JoinDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Membership.QuitDate" class="control-label"></label>
-                <input asp-for="Membership.QuitDate" class="form-control" />
-                <span asp-validation-for="Membership.QuitDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Membership.NickName" class="control-label"></label>
-                <input asp-for="Membership.NickName" class="form-control" />
-                <span asp-validation-for="Membership.NickName" class="text-danger"></span>
+                <input asp-for="Membership.NickName" class="form-control"/>
+                <span asp-validation-for="Membership.NickName" class="text-danger" readonly="readonly"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Membership.Status" class="control-label"></label>
-                <input asp-for="Membership.Status" class="form-control" />
-                <span asp-validation-for="Membership.Status" class="text-danger"></span>
+            <div class="form-group" style="margin-top: 10px">
+                <input type="submit"  asp-page-handler="Approve" value="Approve" class="btn btn-primary"/>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="form-group" style="margin-top: 10px">
+                <input type="submit" asp-page-handler="Reject" value="Reject" class="btn btn-primary"/>
             </div>
         </form>
     </div>
@@ -56,5 +52,5 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
