@@ -8,19 +8,28 @@ namespace ClubMemberShip.Web.Pages.PageUser.StudentActivity
     public class ClubActivityInformationModel : PageModel
     {
         private readonly IClubActivityService _clubActivityService;
+        private readonly IStudentServices _studentServices;
         public ClubActivity ClubActivity { get; set; } = default!;
         public IList<Student> Student { get; set; } = default!;
         [BindProperty(SupportsGet = true)] public int PageIndex3 { get; set; } = 1;
         public int PageSize3 { get; set; } = 3;
         public int TotalPages3;
 
-        public ClubActivityInformationModel(IClubActivityService clubActivityService)
+        public bool JoinAble { get; set; } = true;
+
+        public ClubActivityInformationModel(IClubActivityService clubActivityService, IStudentServices studentServices)
         {
             _clubActivityService = clubActivityService;
+            _studentServices = studentServices;
         }
 
         public IActionResult OnGetAsync(int? id)
         {
+            var studentLogin = _studentServices.GetById(HttpContext.Session.GetString("User"));
+            if (studentLogin == null)
+            {
+                return RedirectToPage("/Login");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -36,6 +45,15 @@ namespace ClubMemberShip.Web.Pages.PageUser.StudentActivity
 
             var participants = _clubActivityService.GetListStudentInActivity((int)id);
             Student = participants ?? new List<Student>();
+
+            foreach (var oStudent in Student)
+            {
+                if (oStudent.Id == studentLogin.Id)
+                {
+                    JoinAble = false;
+                }
+            }
+            
             return Page();
         }
     }

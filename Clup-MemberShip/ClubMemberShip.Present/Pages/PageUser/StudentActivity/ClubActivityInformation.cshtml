@@ -115,3 +115,12 @@
         }
     </ul>
 </div>
+
+@{
+    if (@Model.JoinAble)
+    {
+        <form asp-page="./ClubActivityInformation" method="post">
+            <button type="submit">Join this activity</button>
+        </form>
+    }
+}
