@@ -15,6 +15,11 @@ public class StudentService : GenericService<Student>, IStudentServices
         return UnitOfWork.GradeRepo.Get().ToList();
     }
 
+    public Student? GetStudentById(int id)
+    {
+        return Get().FirstOrDefault(o => o.Id == id);
+    }
+
     public List<Student> GetClubOfStudent(int id)
     {
         return UnitOfWork.StudentRepo.Get(filter: student => student.Id == id, includeProperties: "Major,Grade")
@@ -94,6 +99,12 @@ public class StudentService : GenericService<Student>, IStudentServices
         }
 
         return result;
+    }
+
+    public Pagination<Student> GetPaginationIgnoreId(int pageIndex, int pageSize, List<int> listIgnore)
+    {
+        var listEntities = UnitOfWork.StudentRepo.Get(filter: o => !listIgnore.Contains(o.Id));
+        return UnitOfWork.StudentRepo.ToPagination(listEntities, pageIndex, pageSize);
     }
 
     public List<Major>? GetMajors()

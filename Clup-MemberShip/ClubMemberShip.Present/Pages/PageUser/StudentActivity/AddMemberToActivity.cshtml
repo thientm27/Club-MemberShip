@@ -2,6 +2,7 @@
 @model ClubMemberShip.Web.Pages.PageUser.StudentActivity.AddMemberToActivityModel
 
 @{
+    Layout = "Shared/_UserLayout";
     ViewData["Title"] = "AddMemberToActivity";
 }
 
@@ -58,7 +59,9 @@
                 @Html.DisplayFor(modelItem => item.Major.Name)
             </td>
             <td>
-                <a asp-page="./AddMemberToActivity" asp-page-handler="Add" asp-route-id="@item.Id">Add</a>
+                <form asp-page="./AddMemberToActivity" method="post" asp-page-handler="Add" asp-route-id="@item.Id">
+                    <button type="submit">Add</button>
+                </form>
             </td>
         </tr>
     }
@@ -121,19 +124,14 @@
                 @Html.DisplayFor(modelItem => item.Major.Name)
             </td>
             <td>
-                <a asp-page="./AddMemberToActivity" asp-page-handler="Remove" asp-route-id="@item.Id">Remove</a>
+                <form asp-page="./AddMemberToActivity" method="post" asp-page-handler="Remove" asp-route-id="@item.Id">
+                    <button type="submit">Remove</button>
+                </form>
             </td>
         </tr>
     }
     </tbody>
 </table>
-<div>
-    <ul class="pagination">
-        @for (var i = 1; i <= Model.TotalPages2; i++)
-        {
-            <li class="page-item @(i == Model.PageIndex2 ? "active" : "")">
-                <a asp-page="./AddMemberToActivity" asp-route-PageIndex2="@i" class="page-link">@i</a>
-            </li>
-        }
-    </ul>
-</div>
+<form asp-page="./AddMemberToActivity" method="post" asp-page-handler="Submit">
+    <button type="submit">Submit</button>
+</form>
