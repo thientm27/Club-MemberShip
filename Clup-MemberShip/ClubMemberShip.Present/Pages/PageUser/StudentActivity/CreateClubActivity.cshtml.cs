@@ -57,9 +57,9 @@ namespace ClubMemberShip.Web.Pages.PageUser.StudentActivity
                 return OnGet();
             }
 
-            // HttpContext.Session.Set();
+            HttpContext.Session.SetObjectAsJson("ClubActivity", ClubActivity);
             // var result = _clubActivityService.Add(ClubActivity);
-            return RedirectToPage("../Index");
+            return RedirectToPage("./AddMemberToActivity");
         }
     }
 }

@@ -5,7 +5,6 @@ namespace ClubMemberShip.Web
 {
     public static class SessionHelper
     {
-     
         public static void SetObjectAsJson(this ISession session, string key, object value)
         {
             var options = new JsonSerializerOptions

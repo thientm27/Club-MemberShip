@@ -8,8 +8,6 @@ namespace ClubMemberShip.Web.Pages.PageUser.StudentActivity
     public class ClubActivityInformationModel : PageModel
     {
         private readonly IClubActivityService _clubActivityService;
-
-
         public ClubActivity ClubActivity { get; set; } = default!;
         public IList<Student> Student { get; set; } = default!;
         [BindProperty(SupportsGet = true)] public int PageIndex3 { get; set; } = 1;

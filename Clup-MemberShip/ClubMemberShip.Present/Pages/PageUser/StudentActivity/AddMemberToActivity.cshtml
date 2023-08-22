@@ -1,0 +1,139 @@
+﻿@page
+@model ClubMemberShip.Web.Pages.PageUser.StudentActivity.AddMemberToActivityModel
+
+@{
+    ViewData["Title"] = "AddMemberToActivity";
+}
+
+<h1>AddMemberToActivity</h1>
+
+<p>
+    <a asp-page="Create">Add student to your activity</a>
+</p>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NotAddStudent[0].Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NotAddStudent[0].Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NotAddStudent[0].Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NotAddStudent[0].DateOfBirth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NotAddStudent[0].Grade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NotAddStudent[0].Major)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.NotAddStudent)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grade.GradeYear.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Major.Name)
+            </td>
+            <td>
+                <a asp-page="./AddMemberToActivity" asp-page-handler="Add" asp-route-id="@item.Id">Add</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<div>
+    <ul class="pagination">
+        @for (var i = 1; i <= Model.TotalPages1; i++)
+        {
+            <li class="page-item @(i == Model.PageIndex1 ? "active" : "")">
+                <a asp-page="./AddMemberToActivity" asp-route-PageIndex1="@i" class="page-link">@i</a>
+            </li>
+        }
+    </ul>
+</div>
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NotAddStudent[0].Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NotAddStudent[0].Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NotAddStudent[0].Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NotAddStudent[0].DateOfBirth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NotAddStudent[0].Grade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NotAddStudent[0].Major)
+        </th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.AddedStudent)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grade.GradeYear.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Major.Name)
+            </td>
+            <td>
+                <a asp-page="./AddMemberToActivity" asp-page-handler="Remove" asp-route-id="@item.Id">Remove</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<div>
+    <ul class="pagination">
+        @for (var i = 1; i <= Model.TotalPages2; i++)
+        {
+            <li class="page-item @(i == Model.PageIndex2 ? "active" : "")">
+                <a asp-page="./AddMemberToActivity" asp-route-PageIndex2="@i" class="page-link">@i</a>
+            </li>
+        }
+    </ul>
+</div>
