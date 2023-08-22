@@ -57,7 +57,8 @@ namespace ClubMemberShip.Web.Pages.PageUser.StudentActivity
                 return OnGet();
             }
 
-            var result = _clubActivityService.Add(ClubActivity);
+            // HttpContext.Session.Set();
+            // var result = _clubActivityService.Add(ClubActivity);
             return RedirectToPage("../Index");
         }
     }
