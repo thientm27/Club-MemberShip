@@ -76,7 +76,7 @@ public class StudentService : GenericService<Student>, IStudentServices
             return ship;
         }
 
-        var maxId = UnitOfWork.MemberShipRepo.Get().Max(o => o.Id);
+        var maxId = UnitOfWork.MemberShipRepo.GetIgnoreDeleted().Max(o => o.Id);
         membership.Id = maxId + 1;
 
         var result = UnitOfWork.MemberShipRepo.Create(membership);

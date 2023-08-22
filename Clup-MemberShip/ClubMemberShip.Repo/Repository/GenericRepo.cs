@@ -49,6 +49,32 @@ public class GenericRepo<TEntity> : IGenericRepository<TEntity>
         return Context.Set<TEntity>().Find(id);
     }
 
+    public List<TEntity> GetIgnoreDeleted(Expression<Func<TEntity, bool>>? filter = null, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null, string includeProperties = "")
+    {
+        IQueryable<TEntity> query = Context.Set<TEntity>();
+        if (filter != null)
+        {
+            query = query.Where(filter);
+        }
+
+        if (!string.IsNullOrEmpty(includeProperties))
+        {
+            foreach (var includeProperty in includeProperties.Split
+                         (new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+        }
+
+        if (orderBy != null)
+        {
+            return orderBy(query).ToList();
+        }
+
+        return query.ToList();
+    }
+
+   
 
     public TEntity Create(TEntity entity)
     {
