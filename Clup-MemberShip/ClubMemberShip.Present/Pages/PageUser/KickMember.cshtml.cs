@@ -34,7 +34,7 @@ namespace ClubMemberShip.Web.Pages.PageUser
                 Membership = membership;
                 Membership.QuitDate = DateTime.Today;
             }
-           
+
             return Page();
         }
 
