@@ -14,6 +14,7 @@ public interface IUnitOfWork
     public IMemberShipRepo MemberShipRepo { get; }
     public IClubBoardRepo ClubBoardRepo { get; }
     public IMemberRoleRepo MemberRoleRepo { get; }
+    public IParticipantRepo ParticipantRepo { get; }
 
     public int SaveChange();
     public Task<int> SaveChangesAsync();

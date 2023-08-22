@@ -37,21 +37,27 @@ namespace ClubMemberShip.Web.Pages.PageUser
             {
                 return RedirectToPage("./Index");
             }
+
             ViewData["ClubId"] = new SelectList(joinedList, "Id", "Name");
             return Page();
         }
 
         public IActionResult OnPost()
         {
+            var studentLogin = _studentServices.GetById(HttpContext.Session.GetString("User"));
+            if (studentLogin == null)
+            {
+                return RedirectToPage("/Login");
+            }
+
             if (ClubActivity.StartDay > ClubActivity.EndDay)
             {
                 ModelState.AddModelError("ClubActivity.StartDay", "Start day must be < End day");
                 ModelState.AddModelError("ClubActivity.EndDay", "End day must be > Start day");
-
                 return OnGet();
             }
 
-            _clubActivityService.Add(ClubActivity);
+            var result = _clubActivityService.Add(ClubActivity);
             return RedirectToPage("./Index");
         }
     }

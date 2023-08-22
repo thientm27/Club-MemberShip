@@ -15,6 +15,7 @@ builder.Services.AddScoped<IClubActivityService, ClubActivityService>();
 builder.Services.AddScoped<IGradeService, GradeService>();
 builder.Services.AddScoped<IMajorService, MajorService>();
 builder.Services.AddScoped<IMemberShipService, MemberShipService>();
+builder.Services.AddScoped<IParticipantService, ParticipantService>();
 builder.Services.AddRazorPages(options => { options.Conventions.AddPageRoute("/Login", ""); });
 
 var app = builder.Build();

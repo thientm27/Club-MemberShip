@@ -14,6 +14,7 @@ public class UnitOfWork : IUnitOfWork
     private IMemberShipRepo? _memberShipRepo;
     private IClubBoardRepo? _clubBoardRepo;
     private IMemberRoleRepo? _memberRoleRepo;
+    private IParticipantRepo? _participantRepo;
 
     public IClubActivityRepo ClubActivityRepo => _clubActivityRepo ??= new ClubActivityRepo(_context);
     public IClubRepo ClubRepo => _clubRepo ??= new ClubRepo(_context);
@@ -23,6 +24,7 @@ public class UnitOfWork : IUnitOfWork
     public IMemberShipRepo MemberShipRepo => _memberShipRepo ??= new MemberShipRepo(_context);
     public IClubBoardRepo ClubBoardRepo => _clubBoardRepo ??= new ClubBoardRepo(_context);
     public IMemberRoleRepo MemberRoleRepo => _memberRoleRepo ??= new MemberRoleRepo(_context);
+    public IParticipantRepo ParticipantRepo => _participantRepo ??= new ParticipantRepo(_context);
 
 
     public int SaveChange()
