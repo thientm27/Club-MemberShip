@@ -22,8 +22,7 @@ namespace ClubMemberShip.Web.Pages.PageUser.ClubBoardManage
             _clubBoardService = clubBoardService;
             _memberRoleService = memberRoleService;
         }
-
-        public IList<Student> Student { get; set; } = default!;
+        
 
         public IList<Student> NotAddStudent { get; set; } = default!;
         public IList<Student> AddedStudent { get; set; } = default!;
