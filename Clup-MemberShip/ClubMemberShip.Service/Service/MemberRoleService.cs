@@ -69,4 +69,16 @@ public class MemberRoleService : GenericService<MemberRole>, IMemberRoleService
 
         UnitOfWork.SaveChange();
     }
+
+    public List<Student> GetAllMemberOfBoard(int clubId)
+    {
+        var memberRole = UnitOfWork.MemberRoleRepo.Get(filter: o => o.ClubBoardId == clubId);
+        var listId = memberRole.Select(o => o.MembershipId);
+
+        var membership =
+            UnitOfWork.MemberShipRepo.Get(filter: o => listId.Contains(o.Id));
+
+        var listStudentId = membership.Select(o => o.Id);
+        return UnitOfWork.StudentRepo.Get(filter: o => listStudentId.Contains(o.Id));
+    }
 }
