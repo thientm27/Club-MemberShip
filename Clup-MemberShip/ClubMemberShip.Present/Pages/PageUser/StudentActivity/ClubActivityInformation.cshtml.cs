@@ -9,6 +9,7 @@ namespace ClubMemberShip.Web.Pages.PageUser.StudentActivity
     {
         private readonly IClubActivityService _clubActivityService;
         private readonly IStudentServices _studentServices;
+        private readonly IParticipantService _participantService;
         public ClubActivity ClubActivity { get; set; } = default!;
         public IList<Student> Student { get; set; } = default!;
         [BindProperty(SupportsGet = true)] public int PageIndex3 { get; set; } = 1;
@@ -17,19 +18,21 @@ namespace ClubMemberShip.Web.Pages.PageUser.StudentActivity
 
         public bool JoinAble { get; set; } = true;
 
-        public ClubActivityInformationModel(IClubActivityService clubActivityService, IStudentServices studentServices)
+        public ClubActivityInformationModel(IClubActivityService clubActivityService, IStudentServices studentServices, IParticipantService participantService)
         {
             _clubActivityService = clubActivityService;
             _studentServices = studentServices;
+            _participantService = participantService;
         }
 
-        public IActionResult OnGetAsync(int? id)
+        public IActionResult OnGet(int? id)
         {
             var studentLogin = _studentServices.GetById(HttpContext.Session.GetString("User"));
             if (studentLogin == null)
             {
                 return RedirectToPage("/Login");
             }
+
             if (id == null)
             {
                 return NotFound();
@@ -53,8 +56,24 @@ namespace ClubMemberShip.Web.Pages.PageUser.StudentActivity
                     JoinAble = false;
                 }
             }
-            
+
             return Page();
         }
+
+        public IActionResult OnPost(int? id)
+        {
+            var studentLogin = _studentServices.GetById(HttpContext.Session.GetString("User"));
+            if (studentLogin == null)
+            {
+                return RedirectToPage("/Login");
+            }
+
+            List<int> studentId = new List<int>();
+            var clubActivity = _clubActivityService.GetById((int)id);
+            studentId.Add(studentLogin.Id);
+            _participantService.AddMultipleMember(clubActivity.ClubId, clubActivity.Id, studentId);
+            return OnGet(clubActivity.Id);
+        }
+        
     }
 }

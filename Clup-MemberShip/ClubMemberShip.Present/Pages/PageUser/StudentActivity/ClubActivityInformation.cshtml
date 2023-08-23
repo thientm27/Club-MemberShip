@@ -120,7 +120,13 @@
     if (@Model.JoinAble)
     {
         <form asp-page="./ClubActivityInformation" method="post">
-            <button type="submit">Join this activity</button>
+            <button type="submit" asp-route-id="@Model.ClubActivity.Id">Join this activity</button>
+        </form>
+    }
+    else
+    {
+         <form asp-page="./ClubActivityInformation" method="post" asp-page-handler="Leave">
+            <button type="submit" asp-route-id="@Model.ClubActivity.Id">Leave this activity</button>
         </form>
     }
 }

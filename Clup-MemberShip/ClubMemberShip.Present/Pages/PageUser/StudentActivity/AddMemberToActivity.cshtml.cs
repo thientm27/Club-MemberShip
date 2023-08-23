@@ -118,11 +118,11 @@ namespace ClubMemberShip.Web.Pages.PageUser.StudentActivity
                 return RedirectToPage("/Login");
             }
 
-            var addedStudent = HttpContext.Session.GetObjectFromJson<AddedStudentObject>("AddedStudent");
+            var addedStudent = HttpContext.Session.GetObjectFromJson<AddedStudentObject>("AddedStudent") ?? new AddedStudentObject();
             var clubActivity = HttpContext.Session.GetObjectFromJson<ClubActivity>("ClubActivity");
 
 
-            if (addedStudent == null || clubActivity == null)
+            if (clubActivity == null)
             {
                 return RedirectToPage("./CreateClubActivity");
             }
