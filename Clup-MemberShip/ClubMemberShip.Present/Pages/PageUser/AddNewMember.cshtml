@@ -15,12 +15,14 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Membership.StudentId" class="control-label"></label>
-                <select asp-for="Membership.StudentId" class="form-control" asp-items="ViewBag.StudentId"></select>
+                <select disabled="disabled" asp-for="Membership.StudentId" class="form-control" asp-items="ViewBag.StudentId"></select>
+                <input type="hidden" asp-for="Membership.StudentId" value="@Model.Membership.StudentId"/>
                 <span asp-validation-for="Membership.StudentId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Membership.ClubId" class="control-label"></label>
-                <select asp-for="Membership.ClubId" class="form-control" asp-items="ViewBag.ClubId"></select>
+                <select disabled="disabled" asp-for="Membership.ClubId" class="form-control" asp-items="ViewBag.ClubId"></select>
+                <input type="hidden" asp-for="Membership.ClubId" value="@Model.Membership.ClubId"/>
                 <span asp-validation-for="Membership.ClubId" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="Membership.Id" value="@Model.Membership.Id"/>
@@ -38,7 +40,7 @@
                 <span asp-validation-for="Membership.NickName" class="text-danger" readonly="readonly"></span>
             </div>
             <div class="form-group" style="margin-top: 10px">
-                <input type="submit"  asp-page-handler="Approve" value="Approve" class="btn btn-primary"/>
+                <input type="submit" asp-page-handler="Approve" value="Approve" class="btn btn-primary"/>
             </div>
             <div class="form-group" style="margin-top: 10px">
                 <input type="submit" asp-page-handler="Reject" value="Reject" class="btn btn-primary"/>
