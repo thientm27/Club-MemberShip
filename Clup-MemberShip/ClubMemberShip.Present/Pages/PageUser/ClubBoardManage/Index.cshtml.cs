@@ -1,32 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Service;
 
 namespace ClubMemberShip.Web.Pages.PageUser.ClubBoardManage
 {
     public class IndexModel : PageModel
     {
-        private readonly ClubMemberShip.Repo.Models.ClubMembershipContext _context;
+        private readonly IClubBoardService _clubBoardService;
+        private readonly IStudentServices _studentServices;
 
-        public IndexModel(ClubMemberShip.Repo.Models.ClubMembershipContext context)
+        public IndexModel(IClubBoardService clubBoardService, IStudentServices studentServices)
         {
-            _context = context;
+            _clubBoardService = clubBoardService;
+            _studentServices = studentServices;
         }
 
-        public IList<ClubBoard> ClubBoard { get;set; } = default!;
+        public IList<ClubBoard> ClubBoard { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public IActionResult OnGetAsync(int? clubid)
         {
-            if (_context.ClubBoards != null)
+            var studentLogin = _studentServices.GetById(HttpContext.Session.GetString("User"));
+            if (studentLogin == null)
             {
-                ClubBoard = await _context.ClubBoards
-                .Include(c => c.Club).ToListAsync();
+                return RedirectToPage("/Login");
             }
+
+            if (clubid == null)
+            {
+                return RedirectToPage("../Index");
+            }
+
+            ClubBoard = _clubBoardService.GetByClubId((int)clubid);
+            return Page();
         }
     }
 }

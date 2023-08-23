@@ -7,7 +7,12 @@
 }
 
 <h3>Member in club</h3>
-<a asp-page="./ClubBoardManage/Index" asp-route-clubid="@Model.ClubId">Manage club board</a>
+@{
+    if (@Model.ClubOwner)
+    {
+        <a asp-page="./ClubBoardManage/Index" asp-route-clubid="@Model.ClubId">Manage club board</a>
+    }
+}
 <table class="table">
     <thead>
     <tr>
