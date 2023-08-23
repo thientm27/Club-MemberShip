@@ -106,16 +106,24 @@
 </table>
 
 @{
-    if (@Model.JoinAble)
+    if (@Model.ClubActivity.TimeLine == 0)
     {
-        <form asp-page="./ClubActivityInformation" method="post" asp-page-handler="Join" asp-route-id="@Model.ClubActivity.Id">
-            <button type="submit" style="background: green">Join this activity</button>
-        </form>
+        if (@Model.JoinAble)
+        {
+            <form asp-page="./ClubActivityInformation" method="post" asp-page-handler="Join" asp-route-id="@Model.ClubActivity.Id">
+                <button type="submit" style="background: green">Join this activity</button>
+            </form>
+        }
+        else
+        {
+            <form method="post" asp-page-handler="Leave" asp-page="./ClubActivityInformation" asp-route-id="@Model.ClubActivity.Id">
+                <button type="submit" style="background: red">Leave this activity</button>
+            </form>
+        }
     }
     else
     {
-        <form method="post" asp-page-handler="Leave" asp-page="./ClubActivityInformation" asp-route-id="@Model.ClubActivity.Id">
-            <button type="submit" style="background: red">Leave this activity</button>
-        </form>
+        <p> Join/leave are locked</p>
     }
+ 
 }
