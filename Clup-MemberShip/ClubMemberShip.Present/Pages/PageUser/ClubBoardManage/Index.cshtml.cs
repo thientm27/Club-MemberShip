@@ -19,8 +19,12 @@ namespace ClubMemberShip.Web.Pages.PageUser.ClubBoardManage
         public IList<ClubBoard> ClubBoard { get; set; } = default!;
         public int ClubId { get; set; }
 
-        public IActionResult OnGetAsync(int? clubid)
+        public IActionResult OnGet(int? clubid)
         {
+            HttpContext.Session.SetObjectAsJson("AddedStudent", null);
+            HttpContext.Session.SetObjectAsJson("ClubBoard", null);
+
+
             var studentLogin = _studentServices.GetById(HttpContext.Session.GetString("User"));
             if (studentLogin == null)
             {
@@ -34,7 +38,7 @@ namespace ClubMemberShip.Web.Pages.PageUser.ClubBoardManage
 
             ClubId = (int)clubid;
             ClubBoard = _clubBoardService.GetByClubId((int)clubid);
-            
+
             return Page();
         }
     }
