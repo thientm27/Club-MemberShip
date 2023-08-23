@@ -1,77 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using ClubMemberShip.Repo.Models;
+using ClubMemberShip.Service;
 
 namespace ClubMemberShip.Web.Pages.PageUser.ClubBoardManage
 {
     public class EditModel : PageModel
     {
-        private readonly ClubMemberShip.Repo.Models.ClubMembershipContext _context;
+        private IClubBoardService _clubBoardService;
+        private IClubServices _clubServices;
+        private IMemberRoleService _memberRoleService;
+        public IList<Student> NotAddStudent { get; set; } = default!;
+        [BindProperty(SupportsGet = true)] public int PageIndex1 { get; set; } = 1;
+        public int PageSize1 { get; set; } = 3;
+        public int TotalPages1;
 
-        public EditModel(ClubMemberShip.Repo.Models.ClubMembershipContext context)
+        public EditModel(IClubBoardService clubBoardService, IClubServices clubServices,
+            IMemberRoleService memberRoleService)
         {
-            _context = context;
+            _clubBoardService = clubBoardService;
+            _clubServices = clubServices;
+            _memberRoleService = memberRoleService;
         }
 
-        [BindProperty]
-        public ClubBoard ClubBoard { get; set; } = default!;
+        [BindProperty] public ClubBoard ClubBoard { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public IActionResult OnGet(int? id)
         {
-            if (id == null || _context.ClubBoards == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var clubboard =  await _context.ClubBoards.FirstOrDefaultAsync(m => m.Id == id);
+            var clubboard = _clubBoardService.GetById(id);
             if (clubboard == null)
             {
                 return NotFound();
             }
+
             ClubBoard = clubboard;
-           ViewData["ClubId"] = new SelectList(_context.Clubs, "Id", "Code");
+            ViewData["ClubId"] = new SelectList(_clubServices.Get(), "Id", "Name");
+
+
+            var data = _memberRoleService.GetPaginationAllMemberOfBoard(PageIndex1 - 1, PageSize1, ClubBoard.Id);
+            TotalPages1 = data.TotalPagesCount;
+            NotAddStudent = data.Items.ToList();
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            _context.Attach(ClubBoard).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ClubBoardExists(ClubBoard.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return RedirectToPage("./Index");
-        }
-
-        private bool ClubBoardExists(int id)
-        {
-          return (_context.ClubBoards?.Any(e => e.Id == id)).GetValueOrDefault();
+            _clubBoardService.Update(ClubBoard);
+            return RedirectToPage("./Index", new { clubId = ClubBoard.ClubId });
         }
     }
 }

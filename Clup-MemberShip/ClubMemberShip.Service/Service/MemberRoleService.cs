@@ -78,7 +78,13 @@ public class MemberRoleService : GenericService<MemberRole>, IMemberRoleService
         var membership =
             UnitOfWork.MemberShipRepo.Get(filter: o => listId.Contains(o.Id));
 
-        var listStudentId = membership.Select(o => o.Id);
-        return UnitOfWork.StudentRepo.Get(filter: o => listStudentId.Contains(o.Id));
+        var listStudentId = membership.Select(o => o.StudentId);
+        return UnitOfWork.StudentRepo.Get(filter: o => listStudentId.Contains(o.Id), includeProperties: "Grade,Major");
+    }
+
+    public Pagination<Student> GetPaginationAllMemberOfBoard(int pageIndex, int pageSize, int boardId)
+    {
+        var listEntities = GetAllMemberOfBoard(boardId);
+        return UnitOfWork.StudentRepo.ToPagination(listEntities, pageIndex, pageSize);
     }
 }
