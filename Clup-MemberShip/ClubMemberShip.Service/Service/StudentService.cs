@@ -148,6 +148,10 @@ public class StudentService : GenericService<Student>, IStudentServices
 
     public override Student? GetById(object? id)
     {
+        if (id == null)
+        {
+            return null;
+        }
         return UnitOfWork.StudentRepo.GetByStudentCode(id.ToString());
     }
 
