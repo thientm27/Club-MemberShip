@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using ClubMemberShip.Repo.Models;
 
 namespace ClubMemberShip.Web.Pages.PageUser.ClubBoardManage
@@ -18,29 +18,16 @@ namespace ClubMemberShip.Web.Pages.PageUser.ClubBoardManage
             _context = context;
         }
 
-        public IActionResult OnGet()
-        {
-        ViewData["ClubId"] = new SelectList(_context.Clubs, "Id", "Code");
-        ViewData["StudentId"] = new SelectList(_context.Students, "Id", "Code");
-            return Page();
-        }
+        public IList<Student> Student { get;set; } = default!;
 
-        [BindProperty]
-        public Membership Membership { get; set; } = default!;
-        
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public async Task OnGetAsync()
         {
-          if (!ModelState.IsValid || _context.Memberships == null || Membership == null)
+            if (_context.Students != null)
             {
-                return Page();
+                Student = await _context.Students
+                .Include(s => s.Grade)
+                .Include(s => s.Major).ToListAsync();
             }
-
-            _context.Memberships.Add(Membership);
-            await _context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
         }
     }
 }

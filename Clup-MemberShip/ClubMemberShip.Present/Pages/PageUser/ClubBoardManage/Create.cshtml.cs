@@ -55,7 +55,7 @@ namespace ClubMemberShip.Web.Pages.PageUser.ClubBoardManage
 
             HttpContext.Session.SetObjectAsJson("ClubBoard", ClubBoard);
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Create2");
         }
     }
 }
