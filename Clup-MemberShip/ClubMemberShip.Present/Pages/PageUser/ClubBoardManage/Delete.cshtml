@@ -46,7 +46,8 @@
     
     <form method="post">
         <input type="hidden" asp-for="ClubBoard.Id" />
+        <input type="hidden" asp-for="ClubBoard.ClubId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
+        <a asp-page="./Index" asp-route-clubId="@Model.ClubId">Back to List</a>
     </form>
 </div>

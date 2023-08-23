@@ -53,6 +53,6 @@ public class ClubBoardService : GenericService<ClubBoard>, IClubBoardService
 
     public List<ClubBoard> GetByClubId(int clubId)
     {
-        return UnitOfWork.ClubBoardRepo.Get(filter: o => o.ClubId == clubId);
+        return UnitOfWork.ClubBoardRepo.Get(filter: o => o.ClubId == clubId, includeProperties: "Club");
     }
 }

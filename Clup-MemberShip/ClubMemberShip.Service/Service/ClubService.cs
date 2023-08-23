@@ -66,16 +66,19 @@ public class ClubService : GenericService<Club>, IClubServices
             includeProperties: "Major,Grade");
         return UnitOfWork.StudentRepo.ToPagination(listEntities, pageIndex, pageSize);
     }
+
     public Pagination<Student> GetStudentInClub(int pageIndex, int pageSize, int clubId, List<int> ignoreList)
     {
         var joinedList =
             UnitOfWork.MemberShipRepo.Get(filter: o => o.ClubId == clubId && o.Status == Status.Active);
         var studentInClubId = joinedList.Select(joined => joined.StudentId).ToList();
-        var listEntities = UnitOfWork.StudentRepo.Get(filter: o => studentInClubId.Contains(o.Id) && !ignoreList.Contains(o.Id),
+        var listEntities = UnitOfWork.StudentRepo.Get(
+            filter: o => studentInClubId.Contains(o.Id) && !ignoreList.Contains(o.Id),
             includeProperties: "Major,Grade");
-        
+
         return UnitOfWork.StudentRepo.ToPagination(listEntities, pageIndex, pageSize);
     }
+
     public Pagination<Student> GetStudentRegisterInClub(int pageIndex, int pageSize, int clubId)
     {
         var joinedList =
@@ -175,7 +178,7 @@ public class ClubService : GenericService<Club>, IClubServices
 
     public ClubBoard? CreateClubBoard(ClubBoard newClubBoard, bool save = true)
     {
-        var maxId = UnitOfWork.ClubBoardRepo.Get().Max(o => o.Id);
+        var maxId = UnitOfWork.ClubBoardRepo.GetIgnoreDeleted().Max(o => o.Id);
         newClubBoard.Id = maxId + 1;
 
         var result = UnitOfWork.ClubBoardRepo.Create(newClubBoard);

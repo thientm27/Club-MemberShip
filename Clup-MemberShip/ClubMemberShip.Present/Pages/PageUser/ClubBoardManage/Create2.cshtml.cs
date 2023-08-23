@@ -9,20 +9,18 @@ namespace ClubMemberShip.Web.Pages.PageUser.ClubBoardManage
     public class Create2Model : PageModel
     {
         private readonly IStudentServices _studentServices;
-        private readonly IParticipantService _participantService;
-        private readonly IClubActivityService _clubActivityService;
-        private readonly IMemberShipService _memberShipService;
         private readonly IClubServices _clubServices;
+        private readonly IClubBoardService _clubBoardService;
+        private readonly IMemberRoleService _memberRoleService;
+
 
         public Create2Model(IStudentServices studentServices, IClubServices clubServices,
-            IParticipantService participantService, IClubActivityService clubActivityService,
-            IMemberShipService memberShipService)
+            IClubBoardService clubBoardService, IMemberRoleService memberRoleService)
         {
             _studentServices = studentServices;
             _clubServices = clubServices;
-            _participantService = participantService;
-            _clubActivityService = clubActivityService;
-            _memberShipService = memberShipService;
+            _clubBoardService = clubBoardService;
+            _memberRoleService = memberRoleService;
         }
 
         public IList<Student> Student { get; set; } = default!;
@@ -101,11 +99,6 @@ namespace ClubMemberShip.Web.Pages.PageUser.ClubBoardManage
                 return NotFound();
             }
 
-            // if (id == studentLogin.Id) // remove current
-            // {
-            //     return OnGet();
-            // }
-
             var sessionData = HttpContext.Session.GetObjectFromJson<AddedStudentObject>("AddedStudent") ??
                               new AddedStudentObject();
             sessionData.List.Remove((int)id);
@@ -124,25 +117,22 @@ namespace ClubMemberShip.Web.Pages.PageUser.ClubBoardManage
 
             var addedStudent = HttpContext.Session.GetObjectFromJson<AddedStudentObject>("AddedStudent") ??
                                new AddedStudentObject();
-            var clubActivity = HttpContext.Session.GetObjectFromJson<ClubActivity>("ClubBoard");
+            var clubBoard = HttpContext.Session.GetObjectFromJson<ClubBoard>("ClubBoard");
 
-
-            if (clubActivity == null)
+            if (clubBoard == null)
             {
                 return RedirectToPage("./Create");
             }
 
-            // var activity = _clubActivityService.AddWithResult(clubActivity);
+            var clubBoardData = _clubServices.CreateClubBoard(clubBoard);
 
-            // if (activity == null)
-            // {
-            //     return RedirectToPage("./Create");
-            // }
+            if (clubBoardData == null)
+            {
+                return RedirectToPage("./Create");
+            }
 
-            // addedStudent.List.Add(studentLogin.Id);
-            // _participantService.AddMultipleMember(activity.ClubId, activity.Id, addedStudent.List);
-
-            return RedirectToPage("../Index");
+            _memberRoleService.AddMultipleMember(clubBoardData.ClubId, clubBoard.Id, addedStudent.List);
+            return RedirectToPage("./Index", new { clubId = clubBoardData.ClubId });
         }
     }
 }
