@@ -17,6 +17,7 @@ namespace ClubMemberShip.Web.Pages.PageUser.ClubBoardManage
         }
 
         public IList<ClubBoard> ClubBoard { get; set; } = default!;
+        public int ClubId { get; set; }
 
         public IActionResult OnGetAsync(int? clubid)
         {
@@ -31,7 +32,9 @@ namespace ClubMemberShip.Web.Pages.PageUser.ClubBoardManage
                 return RedirectToPage("../Index");
             }
 
+            ClubId = (int)clubid;
             ClubBoard = _clubBoardService.GetByClubId((int)clubid);
+            
             return Page();
         }
     }
