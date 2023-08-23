@@ -70,6 +70,24 @@ public class MemberRoleService : GenericService<MemberRole>, IMemberRoleService
         UnitOfWork.SaveChange();
     }
 
+    public void RemoveMultipleMember(int clubId, int clubBoardId, List<int> studentId)
+    {
+        var membership =
+            UnitOfWork.MemberShipRepo.Get(filter: o => o.ClubId == clubId && studentId.Contains(o.StudentId));
+
+        foreach (var o in membership)
+        {
+            var existed = UnitOfWork.MemberRoleRepo.GetIgnoreDeleted(filter: p =>
+                p.MembershipId == o.Id && p.ClubBoardId == clubBoardId);
+
+            if (existed.Count > 0)
+            {
+                existed[0].Status = Status.Deleted;
+            }
+        }
+        UnitOfWork.SaveChange();
+    }
+
     public List<Student> GetAllMemberOfBoard(int clubId)
     {
         var memberRole = UnitOfWork.MemberRoleRepo.Get(filter: o => o.ClubBoardId == clubId);

@@ -9,10 +9,15 @@
 <h1>Edit</h1>
 
 <h4>ClubBoard</h4>
+<form method="post" asp-page-handler="Change" asp-route-boardId="@Model.ClubBoard.Id">
+    <div class="form-group">
+        <input type="submit" value="Change Member" class="btn btn-primary"/>
+    </div>
+</form>
 <hr/>
 <div class="row">
     <div class="col-md-4">
-        <form method="post">
+        <form method="post" asp-page-handler="Update">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ClubBoard.Id"/>
             <div class="form-group">
@@ -102,6 +107,17 @@
     }
     </tbody>
 </table>
+<div>
+    <ul class="pagination">
+        @for (var i = 1; i <= Model.TotalPages1; i++)
+        {
+            <li class="page-item @(i == Model.PageIndex1 ? "active" : "")">
+                <a asp-page="./Create2" asp-route-PageIndex1="@i" class="page-link">@i</a>
+            </li>
+        }
+    </ul>
+</div>
+
 
 <div>
     <a asp-page="./Index" asp-route-clubId="@Model.ClubBoard.ClubId">Back to List</a>
