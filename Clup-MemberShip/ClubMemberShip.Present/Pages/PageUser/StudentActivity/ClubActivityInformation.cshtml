@@ -105,28 +105,17 @@
     </tbody>
 </table>
 
-<div>
-    <ul class="pagination">
-        @for (var i = 1; i <= Model.TotalPages3; i++)
-        {
-            <li class="page-item @(i == Model.PageIndex3 ? "active" : "")">
-                <a asp-page="./ClubActivityInformation" asp-route-PageIndex3="@i" class="page-link">@i</a>
-            </li>
-        }
-    </ul>
-</div>
-
 @{
     if (@Model.JoinAble)
     {
-        <form asp-page="./ClubActivityInformation" method="post">
-            <button type="submit" asp-route-id="@Model.ClubActivity.Id">Join this activity</button>
+        <form asp-page="./ClubActivityInformation" method="post" asp-page-handler="Join" asp-route-id="@Model.ClubActivity.Id">
+            <button type="submit" style="background: green">Join this activity</button>
         </form>
     }
     else
     {
-         <form asp-page="./ClubActivityInformation" method="post" asp-page-handler="Leave">
-            <button type="submit" asp-route-id="@Model.ClubActivity.Id">Leave this activity</button>
+        <form method="post" asp-page-handler="Leave" asp-page="./ClubActivityInformation" asp-route-id="@Model.ClubActivity.Id">
+            <button type="submit" style="background: red">Leave this activity</button>
         </form>
     }
 }
