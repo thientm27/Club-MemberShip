@@ -1,0 +1,52 @@
+﻿@page
+@model ClubMemberShip.Web.Pages.PageUser.ClubBoardManage.DeleteModel
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>ClubBoard</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClubBoard.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClubBoard.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClubBoard.ShortDecription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClubBoard.ShortDecription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClubBoard.LongDecription)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClubBoard.LongDecription)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClubBoard.Club)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClubBoard.Club.Code)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClubBoard.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClubBoard.Status)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="ClubBoard.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./Index">Back to List</a>
+    </form>
+</div>
