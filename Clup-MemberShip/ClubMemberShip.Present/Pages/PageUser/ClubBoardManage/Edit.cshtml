@@ -112,7 +112,7 @@
         @for (var i = 1; i <= Model.TotalPages1; i++)
         {
             <li class="page-item @(i == Model.PageIndex1 ? "active" : "")">
-                <a asp-page="./Create2" asp-route-PageIndex1="@i" class="page-link">@i</a>
+                <a asp-page="./Edit" asp-route-PageIndex1="@i" class="page-link">@i</a>
             </li>
         }
     </ul>
