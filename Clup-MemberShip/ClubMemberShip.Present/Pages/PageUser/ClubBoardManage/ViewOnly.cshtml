@@ -1,0 +1,110 @@
+﻿@page
+@model ClubMemberShip.Web.Pages.PageUser.ClubBoardManage.ViewOnly
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Details of a</h1>
+<h4>ClubBoard</h4>
+
+<hr/>
+<div class="row">
+    <div class="col-md-4">
+        <form method="post" asp-page-handler="Update">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ClubBoard.Id"/>
+            <div class="form-group">
+                <label asp-for="ClubBoard.ClubId" class="control-label"></label>
+                <select disabled="disabled" asp-for="ClubBoard.ClubId" class="form-control" asp-items="ViewBag.ClubId"></select>
+                <input hidden="hidden" asp-for="ClubBoard.ClubId" value="@Model.ClubBoard.ClubId"/>
+                <span asp-validation-for="ClubBoard.ClubId" class="text-danger"></span>
+            </div>s
+            <div class="form-group">
+                <label asp-for="ClubBoard.Name" class="control-label"></label>
+                <input asp-for="ClubBoard.Name" readonly="readonly" class="form-control" required="required"/>
+
+                <span asp-validation-for="ClubBoard.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClubBoard.ShortDecription" class="control-label"></label>
+                <input asp-for="ClubBoard.ShortDecription" class="form-control" required="required" readonly="readonly"/>
+                <span asp-validation-for="ClubBoard.ShortDecription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClubBoard.LongDecription" class="control-label"></label>
+                <input asp-for="ClubBoard.LongDecription" class="form-control" required="required" readonly="readonly"/>
+                <span asp-validation-for="ClubBoard.LongDecription" class="text-danger"></span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NotAddStudent[0].Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NotAddStudent[0].Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NotAddStudent[0].Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NotAddStudent[0].DateOfBirth)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NotAddStudent[0].Grade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NotAddStudent[0].Major)
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.NotAddStudent)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfBirth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grade.GradeYear.Year)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Major.Name)
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+<div>
+    <ul class="pagination">
+        @for (var i = 1; i <= Model.TotalPages1; i++)
+        {
+            <li class="page-item @(i == Model.PageIndex1 ? "active" : "")">
+                <a asp-page="./Edit" asp-route-PageIndex1="@i" class="page-link">@i</a>
+            </li>
+        }
+    </ul>
+</div>
+
+
+<div>
+    <a asp-page="../ClubDetail" asp-route-clubId="@Model.ClubBoard.ClubId">Back to List</a>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

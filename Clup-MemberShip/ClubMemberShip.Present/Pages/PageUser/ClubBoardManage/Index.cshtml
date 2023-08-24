@@ -52,14 +52,12 @@
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">View/Edit</a> |
-
                 @{
                     if (item.Name != "Owner")
                     {
                         <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
                     }
                 }
-
             </td>
         </tr>
     }

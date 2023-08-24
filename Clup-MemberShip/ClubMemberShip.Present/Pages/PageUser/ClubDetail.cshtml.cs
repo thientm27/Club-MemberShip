@@ -9,6 +9,7 @@ namespace ClubMemberShip.Web.Pages.PageUser
     {
         private readonly IStudentServices _studentServices;
         private readonly IClubServices _clubServices;
+        private readonly IClubBoardService _clubBoardService;
         [BindProperty(SupportsGet = true)] public int PageIndex1 { get; set; } = 1;
         public int PageSize1 { get; set; } = 3;
         public int TotalPages1;
@@ -20,15 +21,17 @@ namespace ClubMemberShip.Web.Pages.PageUser
         public int TotalPages3;
 
 
-        public ClubDetailModel(IStudentServices studentServices, IClubServices clubServices)
+        public ClubDetailModel(IStudentServices studentServices, IClubServices clubServices, IClubBoardService clubBoardService)
         {
             _studentServices = studentServices;
             _clubServices = clubServices;
+            _clubBoardService = clubBoardService;
         }
 
         public IList<Student> Student { get; set; } = default!;
         public IList<Student> StudentRequest { get; set; } = default!;
         public IList<ClubActivity> ClubActivity { get; set; } = default!;
+        public IList<ClubBoard> ClubBoard { get; set; } = default!;
         public int ClubId { get; set; } = default!;
         public bool ClubOwner { get; set; }
 
@@ -70,6 +73,7 @@ namespace ClubMemberShip.Web.Pages.PageUser
                 ClubOwner = false;
             }
 
+            ClubBoard = _clubBoardService.GetByClubId((int)id);
             return Page();
         }
     }
